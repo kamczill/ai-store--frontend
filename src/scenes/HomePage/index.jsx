@@ -4,14 +4,15 @@ import Header from './Header'
 import Features from './Features'
 import FreeGuide from './FreeGuide'
 import SocialMedia from './SocialMedia'
-import Accessibility from './Accessibility'
+import TopTools from './TopTools'
+
 const index = () => {
   return (
    <>
     <Header />
     <FreeGuide />
     <Features />
-    <Accessibility />
+    <TopTools />
     <SocialMedia />
    </>
   )
