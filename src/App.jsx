@@ -29,7 +29,7 @@ function App() {
         <header class='self-start'>
           <Navbar />
         </header>
-        <div class='w-full max-w-[1280px] self-center justify-self-center'>
+        <div class='w-full self-center justify-self-center'>
           <Routes>
             <Route path='/' element={currentUser.logged_in ? <UserHomePage /> : <HomePage/> } />
             <Route path='/book.epub' element={currentUser.logged_in ? <Reader /> : <Navigate to='/'/> } />

@@ -23,10 +23,10 @@ const Navbar = () => {
 
   return (
     <header>
-    <nav class='flex justify-between items-center p-5 lg:grid lg:grid-cols-3 lg:justify-center'>
+    <nav class='flex justify-between items-center p-5 lg:grid lg:grid-cols-3 lg:justify-center '>
         <h2 className='col-span-1 text-3xl font-bold lg:col-start-2 lg:text-center'>
             <Link to='/' class='hover:text-black'>
-                Pokonaj <span className='text-green-400'>Zakola</span>
+            <span className='text-green-400'>ai.</span>swiat
             </Link>
         </h2>
         <div class='lg:hidden'>
