@@ -8,7 +8,7 @@ const Footer = () => {
             <Link to="/regulamin">Regulamin</Link>
             <a class='cursor-pointer'>Polityka Prywatności</a>
         </div>
-        <p>2023 © pokonajzakola.pl</p>
+        <p>2023 © ai.swiat</p>
     </footer>
   )
 }

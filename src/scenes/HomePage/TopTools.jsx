@@ -7,10 +7,10 @@ import icon4 from '../../assets/icon-4.png'
 
 const TopTools = () => {
   return (
-    <div class='flex justify-center items-center'>
+    <div class='flex justify-center items-center bg-[#f8f8f8] py-16'>
         <div class='flex flex-col max-w-[1200px]'>
             <div>
-                <h2 class='text-3xl mt-12 text-center'>Najlepsze narzędzia AI</h2>
+                <h2 class='text-3xl text-center'>Najlepsze narzędzia AI</h2>
             </div>
             <div class='mt-10 grid gap-10 lg:grid-cols-2'>
                 <AiTool 

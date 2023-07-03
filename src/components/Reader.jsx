@@ -5,11 +5,21 @@ import { Document, Page } from 'react-pdf';
 import eb from '../assets/e-book.pdf'
 import { pdfjs } from 'react-pdf';
 import axios from 'axios';
+import Contents from './Contents';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
   import.meta.url,
 ).toString();
+
+const spis = {
+    "wprowadzenie": 3,
+    "o autorze": 4,
+    "finasteryd": 6,
+    "minoxidil": 8,
+    "microneedling": 9,
+    "conclusion": 11
+}
 
 const Reader = () => {
     const [numPages, setNumPages] = useState(1);
@@ -49,13 +59,17 @@ const Reader = () => {
     return (
       <div class='w-full h-full flex flex-col justify-center items-center'>
         {
-            ebook ?
-                <Document file={ebook} onLoadSuccess={onDocumentLoadSuccess}  style='display:flex; align-items:center; justify-content: center;'>
-                    <Page pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false} 
-                    width={ window.screen.height > window.screen.width ? window.screen.width - 20 : ''} 
-                    height={ window.screen.height > window.screen.width ? '' : window.screen.height / 1.3} 
-                    />
-                </Document> :
+            ebook ? (
+                <>
+                    <Contents contents={spis}/>
+                    <Document file={ebook} onLoadSuccess={onDocumentLoadSuccess}  style='display:flex; align-items:center; justify-content: center;'>
+                        <Page pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false} 
+                        width={window.screen.width *0.6} 
+                        // height={ window.screen.height > window.screen.width ? '' : window.screen.height / 1.3} 
+                        />
+                    </Document>
+                </>
+                ) :
                 ''
         }
        

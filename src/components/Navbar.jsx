@@ -23,7 +23,7 @@ const Navbar = () => {
 
   return (
     <header>
-    <nav class='flex justify-between items-center p-5 lg:grid lg:grid-cols-3 lg:justify-center '>
+    <nav class='flex justify-between items-center p-5'>
         <h2 className='col-span-1 text-3xl font-bold lg:col-start-2 lg:text-center'>
             <Link to='/' class='hover:text-black'>
             <span className='text-green-400'>ai.</span>swiat
@@ -36,13 +36,19 @@ const Navbar = () => {
             }
         </div>
         {user.logged_in ?
-         <Link
-         class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
-         to='/'
-         onClick={() => logout()}
-         >
-             Wyloguj
-         </Link>
+        <div class='flex gap-3'>
+          <Link to='/materialy' class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Moje materiały</Link>
+                <Link to='/produkty' class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link>
+                <Link to='/zamowienia' class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Zamówienia</Link>
+                <Link to='/konto'  class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Konto</Link>
+            <Link
+            class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
+            to='/'
+            onClick={() => logout()}
+            >
+                Wyloguj
+            </Link>
+         </div>
         :
         <Link
         class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
@@ -53,9 +59,17 @@ const Navbar = () => {
     }
     </nav>
     {menuIsOpen && (
-        <div class='border-t-2 mt-3 flex justify-center lg:hidden'>
-            { user.logged_in ?
-                <Link to='/login' onClick={() => logout()} class='mt-5 bg-gray-700 text-white px-5 py-2'>Wyloguj się</Link> :
+        <div class='border-t-2 mt-3 flex flex-col justify-center lg:hidden'>
+            { user.logged_in ? (
+                <>
+                <Link to='/materialy' class='mt-5 bg-gray-700 text-white px-5 py-2 text-center'>Moje materiały</Link>
+                <Link to='/produkty' class='mt-5 bg-gray-700 text-white px-5 py-2 text-center'>Produkty</Link>
+                <Link to='/zamowienia' class='mt-5 bg-gray-700 text-white px-5 py-2 text-center'>Zamówienia</Link>
+                <Link to='/konto'  class='mt-5 bg-gray-700 text-white px-5 py-2 text-center'>Konto</Link>
+                <Link to='/login' onClick={() => logout()} class='mt-5 bg-gray-700 text-white px-5 py-2 text-center'>Wyloguj się</Link>
+
+                </>
+                ) :
                 <Link to='/login' onClick={() => logout()} class='mt-5 bg-gray-700 text-white px-5 py-2'>Zaloguj się</Link>
             }
         </div>
