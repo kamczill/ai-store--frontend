@@ -36,7 +36,7 @@ const Navbar = () => {
             }
         </div>
         {user.logged_in ?
-        <div class='flex gap-3'>
+        <div class='hidden lg:flex lg:gap-3'>
           <Link to='/materialy' class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Moje materiały</Link>
                 <Link to='/produkty' class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link>
                 <Link to='/zamowienia' class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Zamówienia</Link>

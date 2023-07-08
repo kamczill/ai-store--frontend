@@ -15,7 +15,6 @@ axiosInstance.interceptors.response.use(
       const originalRequest = error?.config
   
       if (error?.response?.status === 401 && !originalRequest?.sent) {
-        console.log('chuij')
         originalRequest.sent = true
         await axios
               .post('http://127.0.0.1:8001/users/refresh/', {'refresh': 'refresh'}, {
@@ -33,3 +32,4 @@ axiosInstance.interceptors.response.use(
   )
 
 
+export default axiosInstance
