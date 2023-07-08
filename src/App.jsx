@@ -13,6 +13,7 @@ import AccountPage from './scenes/AccountPage'
 import MaterialsPage from './scenes/MaterialsPage'
 import OrdersPage from './scenes/OrdersPage'
 import ProductsPage from './scenes/ProductsPage'
+import ProductPage from './scenes/ProductPage'
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import Cookies from 'js-cookie';
@@ -43,6 +44,7 @@ function App() {
             <Route path='/konto' element={currentUser.logged_in ? <AccountPage /> : <HomePage/> } />
             <Route path='/zamowienia' element={currentUser.logged_in ? <OrdersPage /> : <HomePage/> } />
             <Route path='/produkty' element={currentUser.logged_in ? <ProductsPage /> : <HomePage/> } />
+            <Route path='/produkty/:id' element={currentUser.logged_in ? <ProductPage /> : <HomePage/> } />
             <Route path='/materialy' element={currentUser.logged_in ? <MaterialsPage /> : <HomePage/> } />
           </Routes>
         </div>

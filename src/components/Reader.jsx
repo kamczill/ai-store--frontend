@@ -32,7 +32,7 @@ const Reader = () => {
  
 
     const getEbook = async () => {
-        await axiosInstance('http://127.0.0.1:8001/users/e-book/', {
+        await axiosInstance('users/e-book/', {
             withCredentials:true,
             responseType: 'blob',
         }).then(res => {
