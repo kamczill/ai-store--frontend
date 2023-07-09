@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import axiosInstance from '../../axios/axios';
+import { toast } from 'react-toastify'
 
 const index = () => {
   const { id } = useParams();
@@ -27,9 +28,22 @@ const index = () => {
 
   const addToCart = () => {
     const items = JSON.parse(localStorage.getItem('cart')) || []
-    console.log(items)
     localStorage.setItem('cart', JSON.stringify([...items,product?.id]));
     setIsInCart(true)
+    successNotification();
+  }
+
+  const successNotification = () => {
+    toast.success(`Dodałeś produkt do koszyka!`, {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
   }
 
   useEffect(() => {
