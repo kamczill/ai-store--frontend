@@ -20,6 +20,7 @@ import Cookies from 'js-cookie';
 import Reader from './components/Reader';
 
 export const AuthContext = createContext()
+export const CartContext = createContext()
 
 export const clearWaitingQueue = () => {
   toast.clearWaitingQueue();
@@ -27,30 +28,38 @@ export const clearWaitingQueue = () => {
 
 function App() {
   const [currentUser, setCurrentUser] = useState({'logged_in': Cookies.get('logged_in') === 'true' ? true : false});
+  const [amountOfProducts, setAmountOfProducts] = useState(JSON.parse(localStorage.getItem('cart'))?.length || 0)
+  console.log(amountOfProducts)
+
+  const updateCart = (newValue) => {
+    setAmountOfProducts(newValue)
+  }
 
   return (
     <>
     <AuthContext.Provider value={currentUser}>
-      <div class='min-h-screen w-full bg-gray-100 grid gap-1'>
-        <header class='self-start'>
-          <Navbar />
-        </header>
-        <div class='w-full self-center justify-self-center'>
-          <Routes>
-            <Route path='/' element={currentUser.logged_in ? <UserHomePage /> : <HomePage/> } />
-            <Route path='/book.epub' element={currentUser.logged_in ? <Reader /> : <Navigate to='/'/> } />
-            <Route path="/regulamin" element={<ShopRulesPage/>} />
-            <Route path="/login" element={<LoginPage/>} />
-            <Route path='/konto' element={currentUser.logged_in ? <AccountPage /> : <HomePage/> } />
-            <Route path='/zamowienia' element={currentUser.logged_in ? <OrdersPage /> : <HomePage/> } />
-            <Route path='/produkty' element={currentUser.logged_in ? <ProductsPage /> : <HomePage/> } />
-            <Route path='/produkty/:id' element={currentUser.logged_in ? <ProductPage /> : <HomePage/> } />
-            <Route path='/materialy' element={currentUser.logged_in ? <MaterialsPage /> : <HomePage/> } />
-          </Routes>
+      <CartContext.Provider value={{amountOfProducts, updateCart }}>
+        <div class='min-h-screen w-full bg-gray-100 grid gap-1'>
+          <header class='self-start'>
+            <Navbar />
+          </header>
+          <div class='w-full self-center justify-self-center'>
+            <Routes>
+              <Route path='/' element={currentUser.logged_in ? <UserHomePage /> : <HomePage/> } />
+              <Route path='/book.epub' element={currentUser.logged_in ? <Reader /> : <Navigate to='/'/> } />
+              <Route path="/regulamin" element={<ShopRulesPage/>} />
+              <Route path="/login" element={<LoginPage/>} />
+              <Route path='/konto' element={currentUser.logged_in ? <AccountPage /> : <HomePage/> } />
+              <Route path='/zamowienia' element={currentUser.logged_in ? <OrdersPage /> : <HomePage/> } />
+              <Route path='/produkty' element={currentUser.logged_in ? <ProductsPage /> : <HomePage/> } />
+              <Route path='/produkty/:id' element={currentUser.logged_in ? <ProductPage /> : <HomePage/> } />
+              <Route path='/materialy' element={currentUser.logged_in ? <MaterialsPage /> : <HomePage/> } />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-      <ToastContainer limit={1} />
+        <ToastContainer limit={1} />
+      </CartContext.Provider>
     </AuthContext.Provider>
     </>
   )

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-
+import { CartContext } from '../App'
 // https://edit.org/images/cat/book-covers-big-2019101610.jpg
 
 const ProductCard = ({product}) => {
   const [isInCart, setIsInCart] = useState()
+  const {amountOfProducts, updateCart } = useContext(CartContext)
 
 
   const checkProductCart = () => {
@@ -19,6 +20,7 @@ const ProductCard = ({product}) => {
     const items = JSON.parse(localStorage.getItem('cart')) || []
     localStorage.setItem('cart', JSON.stringify([...items,product?.id]));
     setIsInCart(true)
+    updateCart(amountOfProducts + 1)
     successNotification();
   }
 
