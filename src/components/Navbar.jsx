@@ -40,7 +40,17 @@ const Navbar = () => {
     }
 
     const toggleCart = () => {
+        setOverlay();
         setCartIsOpen(prev => !prev )
+    }
+
+    const setOverlay = () => {
+        const mainSection = document.querySelector('#main')
+        if(!cartIsOpen){
+            mainSection.classList.add('blur')   
+        } else {
+            mainSection.classList.remove('blur')   
+        }
     }
 
   return (
@@ -66,15 +76,8 @@ const Navbar = () => {
             }
         </div>
         {user.logged_in ?
-        <div class='hidden lg:flex lg:gap-3'>
-                <div class='relative'>
-                <BsCartFill size={30}/> 
-                {
-                    amountOfProducts > 0 ?
-                    <div class='absolute top-[-5px] right-[-5px] text-black w-[20px] h-[20px] rounded-xl bg-white flex items-center justify-center'>{amountOfProducts}</div>: 
-                    ''
-                }
-            </div>
+        <div class='hidden lg:flex lg:justify-center lg:items-center lg:gap-3'>
+                
                 <div onClick={(e) => handleClick(e)}><Link  to='/materialy' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Moje materiały</Link></div>
                 <div onClick={(e) => handleClick(e)}><Link  to='/produkty' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link></div>
                 <div onClick={(e) => handleClick(e)}><Link  to='/zamowienia' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Zamówienia</Link></div>
@@ -86,6 +89,14 @@ const Navbar = () => {
                 >
                     Wyloguj
                 </Link>
+                <div class='relative cursor-pointer' onClick={() => toggleCart()}>
+                <BsCartFill size={30}/> 
+                {
+                    amountOfProducts > 0 ?
+                    <div class='absolute top-[-5px] right-[-5px] text-black w-[20px] h-[20px] rounded-xl bg-white flex items-center justify-center'>{amountOfProducts}</div>: 
+                    ''
+                }
+            </div>
          </div>
         :
         <Link
