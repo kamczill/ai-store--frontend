@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 import { BsCartFill } from 'react-icons/bs'
@@ -8,7 +8,10 @@ import Cart from './Cart';
 
 const Navbar = () => {
     const [menuIsOpen, setMenuIsOpen ] = useState(false);
-    const [cartIsOpen, setCartIsOpen ] = useState(true);
+    const [cartIsOpen, setCartIsOpen ] = useState(false);
+    const [clickedOutside, setClickedOutside ] = useState(false);
+    const cartRef = useRef();
+    const cartIconRef = useRef();
 
     const [activeItem, setActiveItem] = useState('');
     const user = useContext(AuthContext)
@@ -36,22 +39,64 @@ const Navbar = () => {
         e.preventDefault();
         e.target.classList.add('underline', 'decoration-2', 'underline-offset-2', 'decoration-green-500')
         setActiveItem(e)
-        // if (menuIsOpen) setMenuIsOpen(false)
+    }
+
+    const handleOpenMenu = (e) => {
+        if(!menuIsOpen) setMenuIsOpen(true);
     }
 
     const toggleCart = () => {
-        setOverlay();
-        setCartIsOpen(prev => !prev )
+        setCartIsOpen(prev => !prev );
     }
 
     const setOverlay = () => {
+        const container = document.querySelector('#container')
+        // min-h-[110vh]
         const mainSection = document.querySelector('#main')
-        if(!cartIsOpen){
+        // mainSection.classList.toggle('blur')
+        console.log(mainSection)
+        const viewport = window.innerWidth;
+        console.log(cartIsOpen)
+        if(cartIsOpen){
             mainSection.classList.add('blur')   
+            container.classList.add('min-h-[113vh]')
+            if (viewport < 640) {
+                mainSection.classList.add('hidden')   
+            }
         } else {
             mainSection.classList.remove('blur')   
+            container.classList.remove('min-h-[113vh]')
+            if (viewport < 640) {
+                mainSection.classList.remove('hidden')   
+            }
         }
     }
+
+    const handleClickOutside = (event) => {
+        console.log(cartIconRef)
+        if (cartRef.current && !cartRef.current.contains(event.target) && !cartIconRef.current.contains(event.target)) {
+          // Close the cart here. Replace with your own logic.
+          console.log('Clicked outside of cart. Closing cart.');
+        //   setClickedOutside(true)
+        // setOverlay();
+        toggleCart();
+        // setCartIsOpen(prev => !prev)
+        }
+      };
+
+    useEffect(() => {
+        setOverlay();
+    }, [cartIsOpen])
+
+    useEffect(() => {
+        // Add event listener when component mounts
+    document.addEventListener('click', handleClickOutside);
+
+    // Cleanup when component unmounts
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+    }, [])
 
   return (
     <header>
@@ -62,7 +107,7 @@ const Navbar = () => {
             </Link>
         </h2>
         <div class='flex gap-5 lg:hidden'>
-            <div class='relative' onClick={() => toggleCart()}>
+            <div class='relative' onClick={() => toggleCart()} ref={cartIconRef}>
                 <BsCartFill size={30}/> 
                 {
                     amountOfProducts > 0 ?
@@ -89,7 +134,7 @@ const Navbar = () => {
                 >
                     Wyloguj
                 </Link>
-                <div class='relative cursor-pointer' onClick={() => toggleCart()}>
+                <div class='relative cursor-pointer' onClick={() => toggleCart()} ref={cartIconRef}>
                 <BsCartFill size={30}/> 
                 {
                     amountOfProducts > 0 ?
@@ -131,7 +176,11 @@ const Navbar = () => {
         </div>
     )}
     { cartIsOpen ? 
-        <Cart /> :
+        <div class='absolute w-full min-h-screen z-30 bg-transparent'>
+            <div  ref={cartRef}>
+            <Cart closeState={clickedOutside}/>
+            </div>
+        </div> :
         ''
     }
     

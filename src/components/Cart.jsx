@@ -4,7 +4,7 @@ import axiosInstance from '../axios/axios'
 import ProductCart from './ProductCart'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 
-const Cart = () => {
+const Cart = ({clickedOutside}) => {
     const { amountOfProducts } = useContext(CartContext)
     const [itemsInCart, setItemsInCart] = useState(JSON.parse(localStorage.getItem('cart')) || 0)
     const [detailedItems, setDetailedItems] = useState([])
@@ -38,7 +38,7 @@ const Cart = () => {
     }, [])
 
   return (
-    <div class='absolute h-full right-0 w-full max-w-[500px] flex flex-col items-center gap-4 px-2 pt-5 pb-10 bg-white z-10 sm:right-5 sm:rounded'>
+    <div class='absolute h-full right-0 w-full max-w-[640px] flex flex-col items-center gap-4 px-2 pt-5 pb-10 bg-white z-10 sm:right-5 sm:rounded'>
         <div>
             <h3 class='text-lg font-ms font-bold'>Mój Koszyk</h3>
         </div>

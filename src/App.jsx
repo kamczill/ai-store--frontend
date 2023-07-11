@@ -39,7 +39,7 @@ function App() {
     <>
     <AuthContext.Provider value={currentUser}>
       <CartContext.Provider value={{amountOfProducts, updateCart }}>
-        <div class='min-h-screen h-full w-full bg-gray-100 grid gap-1'>
+        <div class='min-h-screen h-full w-full bg-gray-100 grid gap-1' id='container'>
           <header class='self-start'>
             <Navbar />
           </header>
