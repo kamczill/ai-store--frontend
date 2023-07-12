@@ -5,7 +5,7 @@ import ProductCart from './ProductCart'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 
 const Cart = ({clickedOutside}) => {
-    const { amountOfProducts } = useContext(CartContext)
+    const { amountOfProducts, setAmountOfProducts } = useContext(CartContext)
     const [itemsInCart, setItemsInCart] = useState(JSON.parse(localStorage.getItem('cart')) || 0)
     const [detailedItems, setDetailedItems] = useState([])
     const [totalPrice, setTotalPrice] = useState()
@@ -34,6 +34,10 @@ const Cart = ({clickedOutside}) => {
     }
 
     useEffect(() => {
+        getProducts()
+    }, [itemsInCart])
+
+    useEffect(() => {
         getProducts();
     }, [])
 
@@ -44,7 +48,7 @@ const Cart = ({clickedOutside}) => {
         </div>
         <div class='flex flex-col gap-3'>
             {detailedItems.map(item => (
-                <ProductCart product={item} />
+                <ProductCart product={item} setItemsInCart={setItemsInCart} />
             )
             )}
         </div>

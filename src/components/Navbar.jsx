@@ -2,16 +2,18 @@ import React, { useState, useContext, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 import { BsCartFill } from 'react-icons/bs'
+import { BiSolidUser } from 'react-icons/bi'
 import { AuthContext, CartContext } from '../App';
 import axiosInstance from '../axios/axios'
 import Cart from './Cart';
 
 const Navbar = () => {
     const [menuIsOpen, setMenuIsOpen ] = useState(false);
-    const [cartIsOpen, setCartIsOpen ] = useState(false);
+    const [cartIsOpen, setCartIsOpen ] = useState(true);
     const [clickedOutside, setClickedOutside ] = useState(false);
     const cartRef = useRef();
     const cartIconRef = useRef();
+    const cartIconDesktopRef = useRef();
 
     const [activeItem, setActiveItem] = useState('');
     const user = useContext(AuthContext)
@@ -39,10 +41,6 @@ const Navbar = () => {
         e.preventDefault();
         e.target.classList.add('underline', 'decoration-2', 'underline-offset-2', 'decoration-green-500')
         setActiveItem(e)
-    }
-
-    const handleOpenMenu = (e) => {
-        if(!menuIsOpen) setMenuIsOpen(true);
     }
 
     const toggleCart = () => {
@@ -74,13 +72,13 @@ const Navbar = () => {
 
     const handleClickOutside = (event) => {
         console.log(cartIconRef)
-        if (cartRef.current && !cartRef.current.contains(event.target) && !cartIconRef.current.contains(event.target)) {
-          // Close the cart here. Replace with your own logic.
-          console.log('Clicked outside of cart. Closing cart.');
-        //   setClickedOutside(true)
-        // setOverlay();
+        if (
+            cartRef.current 
+            && !cartRef.current.contains(event.target) 
+            && !cartIconRef.current.contains(event.target) 
+            && !cartIconDesktopRef.current.contains(event.target)
+        ) {
         toggleCart();
-        // setCartIsOpen(prev => !prev)
         }
       };
 
@@ -134,14 +132,17 @@ const Navbar = () => {
                 >
                     Wyloguj
                 </Link>
-                <div class='relative cursor-pointer' onClick={() => toggleCart()} ref={cartIconRef}>
+                <div class='relative cursor-pointer' onClick={() => toggleCart()} ref={cartIconDesktopRef}>
+                <BiSolidUser size={30}/>
+                </div>
+                <div class='relative cursor-pointer' onClick={() => toggleCart()} ref={cartIconDesktopRef}>
                 <BsCartFill size={30}/> 
                 {
                     amountOfProducts > 0 ?
                     <div class='absolute top-[-5px] right-[-5px] text-black w-[20px] h-[20px] rounded-xl bg-white flex items-center justify-center'>{amountOfProducts}</div>: 
                     ''
                 }
-            </div>
+                </div>
          </div>
         :
         <Link
@@ -177,7 +178,7 @@ const Navbar = () => {
     )}
     { cartIsOpen ? 
         <div class='absolute w-full min-h-screen z-30 bg-transparent'>
-            <div  ref={cartRef}>
+            <div ref={cartRef}>
             <Cart closeState={clickedOutside}/>
             </div>
         </div> :
