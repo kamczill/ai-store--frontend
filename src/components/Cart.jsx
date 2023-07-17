@@ -42,7 +42,7 @@ const Cart = ({clickedOutside}) => {
     }, [])
 
   return (
-    <div class='absolute h-full right-0 w-full max-w-[640px] flex flex-col items-center gap-4 px-2 pt-5 pb-10 bg-white z-10 sm:right-5 sm:rounded'>
+    <div class='absolute h-full right-0 w-full max-w-[640px] flex flex-col items-center gap-4 px-2 pt-5 pb-10 bg-white z-10 sm:right-5 sm:h-fit sm:rounded sm:drop-shadow-xl'>
         <div>
             <h3 class='text-lg font-ms font-bold'>Mój Koszyk</h3>
         </div>

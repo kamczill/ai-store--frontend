@@ -9,7 +9,7 @@ import Cart from './Cart';
 
 const Navbar = () => {
     const [menuIsOpen, setMenuIsOpen ] = useState(false);
-    const [cartIsOpen, setCartIsOpen ] = useState(true);
+    const [cartIsOpen, setCartIsOpen ] = useState(false);
     const [clickedOutside, setClickedOutside ] = useState(false);
     const cartRef = useRef();
     const cartIconRef = useRef();

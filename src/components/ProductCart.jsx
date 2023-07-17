@@ -3,7 +3,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import { CartContext } from '../App'
 
 const ProductCart = ({product, setItemsInCart }) => {
-  const { amountOfProducts, updateCart } = useContext(CartContext)
+  const {amountOfProducts, updateCart } = useContext(CartContext)
 
   const removeProduct = () => {
     const allProductsInCart = JSON.parse(localStorage.getItem('cart'));
@@ -24,7 +24,7 @@ const ProductCart = ({product, setItemsInCart }) => {
           <h3 class='font-bold text-gray-600'>{product?.title}</h3>
           <p>{product?.net_price} zł </p>
         </div>
-        <div class='pt-3 justify-self-end w-[20px]'>
+        <div class='pt-3 justify-self-end w-[20px] cursor-pointer'>
           <AiOutlineClose size={20} color={'#9c9c9c'} onClick={() => removeProduct()}/>
         </div>
     </div>

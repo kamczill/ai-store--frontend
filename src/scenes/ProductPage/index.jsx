@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { useParams } from 'react-router-dom'
 import axiosInstance from '../../axios/axios';
 import { toast } from 'react-toastify'
+import { CartContext } from '../../App'
 
 const index = () => {
   const { id } = useParams();
+  const {amountOfProducts, updateCart } = useContext(CartContext)
   const [product, setProduct] = useState();
   const [isInCart, setIsInCart] = useState()
   console.log(id)
@@ -29,6 +31,7 @@ const index = () => {
   const addToCart = () => {
     const items = JSON.parse(localStorage.getItem('cart')) || []
     localStorage.setItem('cart', JSON.stringify([...items,product?.id]));
+    updateCart(amountOfProducts + 1)
     setIsInCart(true)
     successNotification();
   }

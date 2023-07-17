@@ -13,6 +13,8 @@ const ProductCard = ({product}) => {
     const items = JSON.parse(localStorage.getItem('cart'))
     if (items?.includes(product?.id)){
       setIsInCart(true)
+    } else {
+      setIsInCart(false)
     }
   }
 
@@ -39,7 +41,7 @@ const ProductCard = ({product}) => {
 
   useEffect(() => {
     checkProductCart()
-  }, [isInCart])
+  }, [isInCart, amountOfProducts])
 
   return (
     <div class='max-w-[300px] flex flex-col justify-between items-center border-2 border-black rounded-md p-3 font-ms bg-white'>
