@@ -10,6 +10,7 @@ import Cart from './Cart';
 const Navbar = () => {
     const [menuIsOpen, setMenuIsOpen ] = useState(false);
     const [cartIsOpen, setCartIsOpen ] = useState(false);
+    const [userNavIsOpen, setUserNavIsOpen] = useState(false)
     const [clickedOutside, setClickedOutside ] = useState(false);
     const cartRef = useRef();
     const cartIconRef = useRef();
@@ -45,6 +46,12 @@ const Navbar = () => {
 
     const toggleCart = () => {
         setCartIsOpen(prev => !prev );
+        setUserNavIsOpen(false)
+    }
+
+    const toggleUserNav = () => {
+        setUserNavIsOpen(prev => !prev);
+        setCartIsOpen(false)
     }
 
     const setOverlay = () => {
@@ -124,17 +131,25 @@ const Navbar = () => {
                 <div onClick={(e) => handleClick(e)}><Link  to='/materialy' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Moje materiały</Link></div>
                 <div onClick={(e) => handleClick(e)}><Link  to='/produkty' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link></div>
                 <div onClick={(e) => handleClick(e)}><Link  to='/zamowienia' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Zamówienia</Link></div>
-                <div onClick={(e) => handleClick(e)}><Link  to='/konto'  class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Konto</Link></div>
-                <Link
-                class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
-                to='/'
-                onClick={() => logout()}
-                >
-                    Wyloguj
-                </Link>
-                <div class='relative cursor-pointer' onClick={() => toggleCart()} ref={cartIconDesktopRef}>
-                <BiSolidUser size={30}/>
+                
+                <div class='relative cursor-pointer' onClick={() => toggleUserNav()} ref={cartIconDesktopRef}>
+                    <BiSolidUser size={30}/>
+                    { userNavIsOpen ?
+                        <div  class='absolute top-9 right-0 bg-white px-[3rem] py-3 flex flex-col items-center gap-1 z-10 sm:rounded sm:drop-shadow-xl'>
+                            <div onClick={(e) => handleClick(e)}><Link  to='/konto'  class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Konto</Link></div>
+                            <Link
+                            class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
+                            to='/'
+                            onClick={() => logout()}
+                            >
+                                Wyloguj
+                            </Link>
+                        </div> 
+                        : ''    
+                    }
                 </div>
+
+
                 <div class='relative cursor-pointer' onClick={() => toggleCart()} ref={cartIconDesktopRef}>
                 <BsCartFill size={30}/> 
                 {
