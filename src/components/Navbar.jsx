@@ -42,6 +42,8 @@ const Navbar = () => {
         e.preventDefault();
         e.target.classList.add('underline', 'decoration-2', 'underline-offset-2', 'decoration-green-500')
         setActiveItem(e)
+        setUserNavIsOpen(false)
+        setCartIsOpen(false)
     }
 
     const toggleCart = () => {
