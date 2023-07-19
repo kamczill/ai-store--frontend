@@ -4,7 +4,7 @@ import axiosInstance from '../../axios/axios'
 import { parseISO, format } from 'date-fns'
 import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz'
 import { pl } from 'date-fns/locale'
-
+import { Link } from 'react-router-dom'
 const index = () => {
   const [userOrders, setUserOrders] = useState()
   
@@ -44,7 +44,7 @@ const index = () => {
   <tbody class='w-1/2'>
     {userOrders?.map((order) => (
     <tr>
-      <td class='text-center text-lg'><a class='underline' href='#'>{order.id}</a></td>
+      <td class='text-center text-lg'><Link to={`/zamowienia/${order.id}`}>{order.id}</Link></td>
       <td class='text-center'>{formatDate(order.purchase_timestamp)}</td>
     </tr> 
     ))

@@ -12,6 +12,7 @@ import LoginPage from './scenes/LoginPage'
 import AccountPage from './scenes/AccountPage'
 import MaterialsPage from './scenes/MaterialsPage'
 import OrdersPage from './scenes/OrdersPage'
+import OrderPage from './scenes/OrderPage'
 import ProductsPage from './scenes/ProductsPage'
 import ProductPage from './scenes/ProductPage'
 
@@ -26,7 +27,7 @@ export const clearWaitingQueue = () => {
   toast.clearWaitingQueue();
 }
 
-function App() {
+const App = () => {
   const [currentUser, setCurrentUser] = useState({'logged_in': Cookies.get('logged_in') === 'true' ? true : false});
   const [amountOfProducts, setAmountOfProducts] = useState(JSON.parse(localStorage.getItem('cart'))?.length || 0)
   console.log(amountOfProducts)
@@ -51,6 +52,7 @@ function App() {
               <Route path="/login" element={<LoginPage/>} />
               <Route path='/konto' element={currentUser.logged_in ? <AccountPage /> : <HomePage/> } />
               <Route path='/zamowienia' element={currentUser.logged_in ? <OrdersPage /> : <HomePage/> } />
+              <Route path='/zamowienia/:id' element={currentUser.logged_in ? <OrderPage /> : <HomePage/> } />
               <Route path='/produkty' element={currentUser.logged_in ? <ProductsPage /> : <HomePage/> } />
               <Route path='/produkty/:id' element={currentUser.logged_in ? <ProductPage /> : <HomePage/> } />
               <Route path='/materialy' element={currentUser.logged_in ? <MaterialsPage /> : <HomePage/> } />
