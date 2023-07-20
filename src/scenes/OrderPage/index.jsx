@@ -39,7 +39,7 @@ const index = () => {
   }, [])
 
   return (
-    <div class='p-5 flex flex-col gap-10 items-center justify-center font-ms'>
+    <div class='p-5 flex flex-col gap-10 items-center font-ms'>
         <div>
             <h3 class='font-bold text-xl'>Zamówienie nr. {id}</h3>
         </div>
@@ -47,7 +47,7 @@ const index = () => {
       {products?.map((product) => <OrderProduct product={product?.product} />)}
       </div>
       <div>
-        <p>Koszt zamówienia: {totalPrice.toFixed(2)} PLN</p>
+        <p><span class='font-bold pr-1'>Koszt zamówienia(z VAT):</span> {totalPrice.toFixed(2)} PLN</p>
       </div>
     </div>
   )

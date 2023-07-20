@@ -31,7 +31,7 @@ const index = () => {
     getUserOrders();
   }, [])
   return (
-    <div class='font-ms w-full h-full'>
+    <div class='font-ms w-full h-full pt-10'>
       <h1 class='text-center font-bold text-xl'>Twoje zamówienia</h1>
       <div class='flex w-full justify-center mt-10'>
       <table class="table-fixed w-full max-w-[500px]">

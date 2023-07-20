@@ -37,14 +37,14 @@ const App = () => {
   }
 
   return (
-    <>
+   <>
     <AuthContext.Provider value={currentUser}>
       <CartContext.Provider value={{amountOfProducts, updateCart }}>
-        <div class='min-h-screen h-full w-full bg-gray-100 grid gap-1' id='container'>
-          <header class='self-start'>
+        <div className='flex flex-col min-h-screen w-full bg-gray-100' id='container'>
+          <header>
             <Navbar />
           </header>
-          <div class='w-full self-center justify-self-center' id='main'>
+          <div className='h-full grid grid-flow-row gap-10 flex-grow' id='main'>
             <Routes>
               <Route path='/' element={currentUser.logged_in ? <UserHomePage /> : <HomePage/> } />
               <Route path='/book.epub' element={currentUser.logged_in ? <Reader /> : <Navigate to='/'/> } />
@@ -63,7 +63,7 @@ const App = () => {
         <ToastContainer limit={1} />
       </CartContext.Provider>
     </AuthContext.Provider>
-    </>
+  </>
   )
 }
 

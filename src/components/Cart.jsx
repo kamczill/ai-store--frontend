@@ -54,7 +54,7 @@ const Cart = ({clickedOutside}) => {
         </div>
         <div class='flex flex-col w-full font-ms p-3'>
             <h3 class='text-md font-bold text-gray-800'>Ilość produktów: {amountOfProducts} </h3>
-            <h3 class='text-md font-bold text-gray-800'>Razem do zapłaty: <span>{totalPrice} zł</span></h3>
+            <h3 class='text-md font-bold text-gray-800'>Razem do zapłaty(z VAT): <span>{totalPrice} zł</span></h3>
         </div>
         <div class='w-full flex items-center justify-center'>
             <button class='bg-green-400 text-white p-3 flex items-center gap-3'>PRZEJDŹ DO KASY <AiOutlineShoppingCart /> </button>

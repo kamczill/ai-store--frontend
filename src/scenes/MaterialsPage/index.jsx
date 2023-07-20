@@ -22,7 +22,7 @@ const index = () => {
   }, [])
 
   return (
-    <div class='p-5'>
+    <div class='p-5 pt-10 flex flex-col items-center'>
       <ProductCard/>
     </div>
   )
