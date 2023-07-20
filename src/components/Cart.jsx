@@ -22,7 +22,7 @@ const Cart = ({clickedOutside}) => {
             items.forEach(item => {
                 if(itemsInCart.includes(item?.id)){
                     detailedItemsFromCart.push(item)
-                    price += parseFloat(item?.net_price)
+                    price += (parseFloat(item?.net_price) + (parseFloat(item?.net_price) * (parseFloat(item?.tax) /100)))
                 }
             })
             console.log(detailedItemsFromCart)

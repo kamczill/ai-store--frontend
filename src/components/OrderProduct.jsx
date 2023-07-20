@@ -9,7 +9,7 @@ const OrderProduct = ({product}) => {
         </div>
         <div class='flex flex-col justify-center gap-3'> 
             <h4>{product?.title}</h4>
-            <p>{product?.net_price} PLN</p>
+            <p>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} PLN</p>
         </div>
     </div>
   )

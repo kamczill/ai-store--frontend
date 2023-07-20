@@ -62,7 +62,7 @@ const index = () => {
         <div class='max-w-[400px] lg:p-5 lg:max-w-[700px]'>
             <p class='text-lg'>{product?.author}</p>
             <h3 class='font-ms font-bold text-xl pointer lg:hover:underline lg:hover:decoration-2'>{product?.title}</h3>
-              <p class='text-2xl py-5'>{product?.net_price} zł</p>
+              <p class='text-2xl py-5'>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} zł</p>
               {
                 isInCart ?
                 <button onClick={() => addToCart()} disabled class='w-full max-w-[357px] bg-green-300 py-2 px-4 text-white rounded'>Dodane do koszyka</button>:

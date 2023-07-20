@@ -52,7 +52,7 @@ const ProductCard = ({product}) => {
             <p class='text-lg'>{product?.author}</p>
             <h3 class='font-ms font-bold text-xl pointer lg:hover:underline lg:hover:decoration-2'><Link to={`/produkty/${product?.id}`}>{product?.title}</Link></h3>
             <div class='flex justify-between items-center px-2  pt-3'>
-            <p class='text-md'>{product?.net_price} zł</p>
+            <p class='text-md'>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} zł</p>
             {
               isInCart ?
               <button disabled class=' bg-green-300 py-2 px-2 text-md text-white rounded'>Dodane do koszyka</button>:

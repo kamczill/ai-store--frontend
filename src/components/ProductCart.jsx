@@ -22,7 +22,7 @@ const ProductCart = ({product, setItemsInCart }) => {
         </div>
         <div class=' w-full flex flex-col justify-center gap-3 sm:w-[250px]'>
           <h3 class='font-bold text-gray-600'>{product?.title}</h3>
-          <p>{product?.net_price} zł </p>
+          <p>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} zł </p>
         </div>
         <div class='pt-3 justify-self-end w-[20px] cursor-pointer'>
           <AiOutlineClose size={20} color={'#9c9c9c'} onClick={() => removeProduct()}/>

@@ -21,7 +21,7 @@ const index = () => {
       let total = 0
       res?.data?.products?.forEach(element => {
         console.log(element.product.net_price)
-        total += parseFloat(element?.product.net_price)
+        total += parseFloat(element?.product?.net_price) + (parseFloat(element?.product?.net_price) * (parseFloat(element?.product?.tax) /100))
       });
       setTotalPrice(total)
       setProducts(res.data.products)
