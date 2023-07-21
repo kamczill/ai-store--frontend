@@ -1,19 +1,13 @@
-import React, {useState} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../App'
 import { clearWaitingQueue } from '../../App'
 
 const validationSchema = yup.object({
-    firstName: yup
-        .string('Wprowadź imie')
-        .required('Imię jest wymagane')
-        .min(3, 'Co najmniej 3 litery'),
-    lastName: yup
-        .string('Wprowadź nazwisko')
-        .required('Nazwisko jest wymagane')
-        .min(3, 'Co najmniej 3 litery'),
     email: yup
         .string('Wprowadź email')
         .email('Wprowadź poprawnie email')
@@ -22,24 +16,20 @@ const validationSchema = yup.object({
         .string('Wprowadź hasło')
         .min(8, 'Hasło musi mieć co najmniej 8 znaków')
         .required('Hasło jest wymagane'),
-    passwordConfirm: yup
-        .string('Potwierdź hasło')
-        .oneOf([yup.ref('password'), null], 'Hasła muszą być takie same'),
 })
 
 const loginInitialValues = {
     email: '',
     password: '',
-    passwordConfirm: '',
-    firstName:'',
-    lastName:''
 }
 
-const RegisterForm = ({ handleSetLoginForm }) => {
+const ResetForm = () => {
     const [errorsFromServer, setErrorsFromServer] = useState();
+    const navigate = useNavigate()
+    const user = useContext(AuthContext)
 
     const successNotification = () => {
-        toast.success('Twoje konto zostało założone! Możesz się zalogować', {
+        toast.success('Success! Check your console to see response data', {
             position: "bottom-center",
             autoClose: 5000,
             hideProgressBar: true,
@@ -50,9 +40,9 @@ const RegisterForm = ({ handleSetLoginForm }) => {
             theme: "light",
         });
     }
-
+    
     const errorNotification = () => {
-        toast.error('Podany email już istnieje', {
+        toast.error('Email/hasło jest niepoprawne', {
             position: "bottom-center",
             autoClose: 5000,
             hideProgressBar: true,
@@ -66,12 +56,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
     
 
     const handleSubmit = async ({values, props}) => {
-        await axios.post('http://127.0.0.1:8001/users/create/', {
-            'email': values.email,
-            'password': values.password,
-            'first_name': values.firstName,
-            'last_name': values.lastName
-        }, {
+        await axios.post('http://127.0.0.1:8001/users/login/', {...values}, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
@@ -79,20 +64,27 @@ const RegisterForm = ({ handleSetLoginForm }) => {
             
         })
         .then(res => {
-            handleSetLoginForm('login');
-            toast.dismiss();
+            console.log(res);
+            user.logged_in = 'true'
+            window.location.reload(false);
             successNotification();
             clearWaitingQueue();
+            // navigate('/');
         })
         .catch(err => {
-            if(err?.response?.status === 400){
-                toast.dismiss();
-                errorNotification();
-                clearWaitingQueue();
-            } else{
-                console.log(err)
-            }
+            console.log(err)
+            errorNotification();
+            clearWaitingQueue();
         })
+        await axios('http://127.0.0.1:8001/users/1/', {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+            
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
     }
     
     const showErrors = (errors) => {
@@ -104,6 +96,12 @@ const RegisterForm = ({ handleSetLoginForm }) => {
             ))
         )
     }
+
+    useEffect(() => {
+        if(user.logged_in){
+            navigate('/')
+        }
+    }, [])
 
   return (
     <>
@@ -119,42 +117,6 @@ const RegisterForm = ({ handleSetLoginForm }) => {
                     class='flex flex-col gap-3 w-full max-w-[350px]'
                 >
                     <div class='flex flex-col'>
-                    <label htmlFor="firstName">
-                        Imie
-                    </label>
-                    <input
-                        name="firstName"
-                        type="text"
-                        onBlur={props.handleBlur}
-                        value={props.values.firstName}
-                        onChange={props.handleChange}
-                        error={props.touched.firstName && Boolean(props.errors.firstName)}
-                        helperText={props.touched.firstName && props.errors.firstName}
-                        class='py-2 px-3 rounded-lg border-red-300'
-                    />
-                     {props.touched.firstName && Boolean(props.errors.firstName) && (
-                        <p class='text-red-500'>{props.errors.firstName}</p>
-                    )}
-                    </div>
-                    <div class='flex flex-col'>
-                    <label htmlFor="lastName">
-                        Nazwisko
-                    </label>
-                    <input
-                        name="lastName"
-                        type="text"
-                        onBlur={props.handleBlur}
-                        value={props.values.lastName}
-                        onChange={props.handleChange}
-                        error={props.touched.lastName && Boolean(props.errors.lastName)}
-                        helperText={props.touched.lastName && props.errors.lastName}
-                        class='py-2 px-3 rounded-lg border-red-300'
-                    />
-                     {props.touched.lastName && Boolean(props.errors.lastName) && (
-                        <p class='text-red-500'>{props.errors.lastName}</p>
-                    )}
-                    </div>
-                    <div class='flex flex-col'>
                     <label htmlFor="email">
                         Email
                     </label>
@@ -168,7 +130,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
                         helperText={props.touched.email && props.errors.email}
                         class='py-2 px-3 rounded-lg border-red-300'
                     />
-                     {props.touched.email && Boolean(props.errors.email) && (
+                    {props.touched.email && Boolean(props.errors.email) && (
                         <p class='text-red-500'>{props.errors.email}</p>
                     )}
                     </div>
@@ -185,13 +147,13 @@ const RegisterForm = ({ handleSetLoginForm }) => {
                             helperText={props.touched.password && props.errors.password}
                             class='py-2 px-3 rounded-lg'
                         />
-                         {props.touched.password && Boolean(props.errors.password) && (
+                        {props.touched.password && Boolean(props.errors.password) && (
                         <p class='text-red-500'>{props.errors.password}</p>
                     )}
                     </div>
                     <div>
                         <button type="submit" class='w-full rounded-md text-center bg-slate-500 p-2'>
-                        Zarejestruj
+                        Zaloguj
                         </button>
                     </div>
                 </form>
@@ -203,4 +165,4 @@ const RegisterForm = ({ handleSetLoginForm }) => {
 }
 
 
-export default RegisterForm
+export default ResetForm

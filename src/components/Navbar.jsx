@@ -81,15 +81,15 @@ const Navbar = () => {
     }
 
     const handleClickOutside = (event) => {
-        console.log(cartIconRef)
-        if (
-            cartRef.current 
-            && !cartRef.current.contains(event.target) 
-            && !cartIconRef.current.contains(event.target) 
-            && !cartIconDesktopRef.current.contains(event.target)
-        ) {
-        toggleCart();
-        }
+        // console.log(cartIconRef)
+        // if (
+        //     cartRef.current 
+        //     && !cartRef.current.contains(event.target) 
+        //     && !cartIconRef.current.contains(event.target) 
+        //     && !cartIconDesktopRef.current.contains(event.target)
+        // ) {
+        // toggleCart();
+        // }
       };
 
     useEffect(() => {
