@@ -190,7 +190,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
                     )}
                     </div>
                     <div>
-                        <button type="submit" class='w-full rounded-md text-center bg-slate-500 p-2'>
+                        <button type="submit" class='w-full rounded-md text-center text-white  bg-slate-500 p-2'>
                         Zarejestruj
                         </button>
                     </div>

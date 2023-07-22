@@ -81,15 +81,15 @@ const Navbar = () => {
     }
 
     const handleClickOutside = (event) => {
-        // console.log(cartIconRef)
-        // if (
-        //     cartRef.current 
-        //     && !cartRef.current.contains(event.target) 
-        //     && !cartIconRef.current.contains(event.target) 
-        //     && !cartIconDesktopRef.current.contains(event.target)
-        // ) {
-        // toggleCart();
-        // }
+        console.log(cartIconRef)
+        if (
+            cartRef.current 
+            && !cartRef.current.contains(event.target) 
+            && !cartIconRef.current.contains(event.target) 
+            && !cartIconDesktopRef.current.contains(event.target)
+        ) {
+        toggleCart();
+        }
       };
 
     useEffect(() => {
@@ -115,14 +115,18 @@ const Navbar = () => {
             </Link>
         </h2>
         <div class='flex gap-5 lg:hidden'>
-            <div class='relative' onClick={() => toggleCart()} ref={cartIconRef}>
-                <BsCartFill size={30}/> 
-                {
-                    amountOfProducts > 0 ?
-                    <div class='absolute top-[-5px] right-[-5px] text-black w-[20px] h-[20px] rounded-xl bg-white flex items-center justify-center'>{amountOfProducts}</div>: 
-                    ''
+            { user.logged_in ? (                    
+                <div class='relative' onClick={() => toggleCart()} ref={cartIconRef}>
+                    <BsCartFill size={30}/> 
+                        {amountOfProducts > 0 ?
+                        <div class='absolute top-[-5px] right-[-5px] text-black w-[20px] h-[20px] rounded-xl bg-white flex items-center justify-center'>{amountOfProducts}</div>: 
+                        ''
+                        }
+                        
+                </div>
+                ): ''
                 }
-            </div>
+
             {menuIsOpen ? 
                 <AiOutlineClose size={30} onClick={() => setMenuIsOpen(!menuIsOpen)} />:
                 <AiOutlineMenu size={30} onClick={() => setMenuIsOpen(!menuIsOpen)}/> 
@@ -194,7 +198,7 @@ const Navbar = () => {
             }
         </div>
     )}
-    { cartIsOpen ? 
+    { cartIsOpen && user.logged_in ? 
         <div class='absolute w-full min-h-screen z-30 bg-transparent'>
             <div ref={cartRef}>
             <Cart closeState={clickedOutside}/>

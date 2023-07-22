@@ -8,28 +8,29 @@ import { AuthContext } from '../../App'
 import { clearWaitingQueue } from '../../App'
 
 const validationSchema = yup.object({
-    email: yup
-        .string('Wprowadź email')
-        .email('Wprowadź poprawnie email')
-        .required('Email jest wymagany'),
     password: yup
         .string('Wprowadź hasło')
+        .min(8, 'Hasło musi mieć co najmniej 8 znaków')
+        .required('Hasło jest wymagane'),
+        password_confirm: yup
+        .string('Wprowadź hasło')
+        .oneOf([yup.ref('password'), null], 'Hasła muszą się zgadzać') 
         .min(8, 'Hasło musi mieć co najmniej 8 znaków')
         .required('Hasło jest wymagane'),
 })
 
 const loginInitialValues = {
-    email: '',
     password: '',
+    password_confirm: ''
 }
 
-const LoginForm = () => {
+const ResetPasswordForm = ({token}) => {
     const [errorsFromServer, setErrorsFromServer] = useState();
     const navigate = useNavigate()
     const user = useContext(AuthContext)
 
     const successNotification = () => {
-        toast.success('Success! Check your console to see response data', {
+        toast.success('Twoje hasło zostało zmienione! Możesz się zalogować', {
             position: "bottom-center",
             autoClose: 5000,
             hideProgressBar: true,
@@ -42,7 +43,7 @@ const LoginForm = () => {
     }
     
     const errorNotification = () => {
-        toast.error('Email/hasło jest niepoprawne', {
+        toast.error('Coś poszło nie tak! Link jest niepoprawny lub wygasł', {
             position: "bottom-center",
             autoClose: 5000,
             hideProgressBar: true,
@@ -56,7 +57,11 @@ const LoginForm = () => {
     
 
     const handleSubmit = async ({values, props}) => {
-        await axios.post('http://127.0.0.1:8001/users/login/', {...values}, {
+        await axios.post('http://127.0.0.1:8001/users/reset_password/confirm/', {
+            token: token,
+            password: values.password
+        
+        }, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
@@ -64,11 +69,9 @@ const LoginForm = () => {
             
         })
         .then(res => {
-            console.log(res);
-            user.logged_in = 'true'
-            window.location.reload(false);
-            successNotification();
+            props.resetForm();
             clearWaitingQueue();
+            successNotification();
             // navigate('/');
         })
         .catch(err => {
@@ -76,15 +79,6 @@ const LoginForm = () => {
             errorNotification();
             clearWaitingQueue();
         })
-        await axios('http://127.0.0.1:8001/users/1/', {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-            }
-            
-        })
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
     }
     
     const showErrors = (errors) => {
@@ -96,12 +90,6 @@ const LoginForm = () => {
             ))
         )
     }
-
-    useEffect(() => {
-        if(user.logged_in){
-            navigate('/')
-        }
-    }, [])
 
   return (
     <>
@@ -117,25 +105,7 @@ const LoginForm = () => {
                     class='flex flex-col gap-3 w-full max-w-[350px]'
                 >
                     <div class='flex flex-col'>
-                    <label htmlFor="email">
-                        Email
-                    </label>
-                    <input
-                        name="email"
-                        type="text"
-                        onBlur={props.handleBlur}
-                        value={props.values.email}
-                        onChange={props.handleChange}
-                        error={props.touched.email && Boolean(props.errors.email)}
-                        helperText={props.touched.email && props.errors.email}
-                        class='py-2 px-3 rounded-lg border-red-300'
-                    />
-                    {props.touched.email && Boolean(props.errors.email) && (
-                        <p class='text-red-500'>{props.errors.email}</p>
-                    )}
-                    </div>
-                    <div class='flex flex-col'>
-                        <label htmlFor="password">Hasło </label>
+                        <label htmlFor="password">Nowe hasło </label>
                         <input
                             id="password" 
                             name="password" 
@@ -151,9 +121,26 @@ const LoginForm = () => {
                         <p class='text-red-500'>{props.errors.password}</p>
                     )}
                     </div>
+                    <div class='flex flex-col'>
+                        <label htmlFor="password_confirm">Potwierdź hasło </label>
+                        <input
+                            id="password_confirm" 
+                            name="password_confirm" 
+                            type="password" 
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                            value={props.values.password_confirm}
+                            error={props.touched.password_confirm && Boolean(props.errors.password_confirm)}
+                            helperText={props.touched.password_confirm && props.errors.password_confirm}
+                            class='py-2 px-3 rounded-lg'
+                        />
+                        {props.touched.password_confirm && Boolean(props.errors.password_confirm) && (
+                        <p class='text-red-500'>{props.errors.password_confirm}</p>
+                    )}
+                    </div>
                     <div>
                         <button type="submit" class='w-full rounded-md text-center text-white  bg-slate-500 p-2'>
-                        Zaloguj
+                        Zmień hasło
                         </button>
                     </div>
                 </form>
@@ -165,4 +152,4 @@ const LoginForm = () => {
 }
 
 
-export default LoginForm
+export default ResetPasswordForm

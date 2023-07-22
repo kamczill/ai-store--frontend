@@ -12,24 +12,18 @@ const validationSchema = yup.object({
         .string('Wprowadź email')
         .email('Wprowadź poprawnie email')
         .required('Email jest wymagany'),
-    password: yup
-        .string('Wprowadź hasło')
-        .min(8, 'Hasło musi mieć co najmniej 8 znaków')
-        .required('Hasło jest wymagane'),
 })
 
 const loginInitialValues = {
     email: '',
-    password: '',
 }
 
 const ResetForm = () => {
     const [errorsFromServer, setErrorsFromServer] = useState();
     const navigate = useNavigate()
-    const user = useContext(AuthContext)
 
     const successNotification = () => {
-        toast.success('Success! Check your console to see response data', {
+        toast.success('Sprawdź podany adres e-mail!', {
             position: "bottom-center",
             autoClose: 5000,
             hideProgressBar: true,
@@ -42,7 +36,7 @@ const ResetForm = () => {
     }
     
     const errorNotification = () => {
-        toast.error('Email/hasło jest niepoprawne', {
+        toast.error('Podany adres e-mail nie istnieje', {
             position: "bottom-center",
             autoClose: 5000,
             hideProgressBar: true,
@@ -56,7 +50,7 @@ const ResetForm = () => {
     
 
     const handleSubmit = async ({values, props}) => {
-        await axios.post('http://127.0.0.1:8001/users/login/', {...values}, {
+        await axios.post('http://127.0.0.1:8001/users/reset_password/', {...values}, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
@@ -65,10 +59,9 @@ const ResetForm = () => {
         })
         .then(res => {
             console.log(res);
-            user.logged_in = 'true'
-            window.location.reload(false);
-            successNotification();
             clearWaitingQueue();
+            props.resetForm();
+            successNotification();
             // navigate('/');
         })
         .catch(err => {
@@ -76,15 +69,6 @@ const ResetForm = () => {
             errorNotification();
             clearWaitingQueue();
         })
-        await axios('http://127.0.0.1:8001/users/1/', {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-            }
-            
-        })
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
     }
     
     const showErrors = (errors) => {
@@ -96,12 +80,6 @@ const ResetForm = () => {
             ))
         )
     }
-
-    useEffect(() => {
-        if(user.logged_in){
-            navigate('/')
-        }
-    }, [])
 
   return (
     <>
@@ -134,26 +112,10 @@ const ResetForm = () => {
                         <p class='text-red-500'>{props.errors.email}</p>
                     )}
                     </div>
-                    <div class='flex flex-col'>
-                        <label htmlFor="password">Hasło </label>
-                        <input
-                            id="password" 
-                            name="password" 
-                            type="password" 
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                            value={props.values.password}
-                            error={props.touched.password && Boolean(props.errors.password)}
-                            helperText={props.touched.password && props.errors.password}
-                            class='py-2 px-3 rounded-lg'
-                        />
-                        {props.touched.password && Boolean(props.errors.password) && (
-                        <p class='text-red-500'>{props.errors.password}</p>
-                    )}
-                    </div>
+                   
                     <div>
-                        <button type="submit" class='w-full rounded-md text-center bg-slate-500 p-2'>
-                        Zaloguj
+                        <button type="submit" class='w-full rounded-md text-center text-white  bg-slate-500 p-2'>
+                        Zresetuj hasło
                         </button>
                     </div>
                 </form>

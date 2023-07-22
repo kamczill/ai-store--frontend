@@ -45,11 +45,13 @@ const index = () => {
           </p>
         ) : ''
       }
-          <p onClick={() => setTypeOfForm('reset')} class='p-2 mt-3 text-md'>
+          { typeOfForm !== 'reset' ? (
+          <p onClick={() => setTypeOfForm('reset')} class='p-2  text-md'>
             <span class='font-semibold cursor-pointer pl-1 hover:underline'>
               Nie pamiętasz hasła?
             </span>
           </p>
+          ): ''}
   
         </div>
     </div>
