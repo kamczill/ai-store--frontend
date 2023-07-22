@@ -72,7 +72,7 @@ const ResetPasswordForm = ({token}) => {
             props.resetForm();
             clearWaitingQueue();
             successNotification();
-            // navigate('/');
+            navigate('/login');
         })
         .catch(err => {
             console.log(err)
