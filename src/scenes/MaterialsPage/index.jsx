@@ -8,10 +8,11 @@ const index = () => {
   const [products, setProducts] = useState()
 
   const getAllMaterials = async () => {
-    await axios('/products/', {
+    await axios('users/me/products/', {
       withCredentials: true
     }).then(res => {
       setProducts(res?.data)
+      console.log(res?.data)
     }).catch( err => {
       console.log(err)
     })
@@ -23,6 +24,9 @@ const index = () => {
 
   return (
     <div class='p-5 pt-10 flex flex-col items-center'>
+      {
+        products?.map(product => <ProductCard product={product} />)
+      }
       <ProductCard/>
     </div>
   )
