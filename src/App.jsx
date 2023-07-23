@@ -16,6 +16,7 @@ import OrderPage from './scenes/OrderPage'
 import ProductsPage from './scenes/ProductsPage'
 import ProductPage from './scenes/ProductPage'
 import ResetPasswordPage from './scenes/ResetPasswordPage'
+import OpenBoughtProductPage from './scenes/OpenBoughtProductPage'
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import Cookies from 'js-cookie';
@@ -58,6 +59,7 @@ const App = () => {
               <Route path='/produkty' element={currentUser.logged_in ? <ProductsPage /> : <HomePage/> } />
               <Route path='/produkty/:id' element={currentUser.logged_in ? <ProductPage /> : <HomePage/> } />
               <Route path='/materialy' element={currentUser.logged_in ? <MaterialsPage /> : <HomePage/> } />
+              <Route path='/materialy/:id' element={currentUser.logged_in ? <OpenBoughtProductPage/> : <HomePage/> } />
             </Routes>
           </div>
           <Footer />

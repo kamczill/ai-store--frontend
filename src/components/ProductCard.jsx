@@ -2,11 +2,13 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { CartContext } from '../App'
+import { useNavigate } from 'react-router-dom'
 // https://edit.org/images/cat/book-covers-big-2019101610.jpg
 
-const ProductCard = ({product}) => {
+const ProductCard = ({product, isBought}) => {
   const [isInCart, setIsInCart] = useState()
   const {amountOfProducts, updateCart } = useContext(CartContext)
+  const navigate = useNavigate()
 
 
   const checkProductCart = () => {
@@ -24,6 +26,10 @@ const ProductCard = ({product}) => {
     setIsInCart(true)
     updateCart(amountOfProducts + 1)
     successNotification();
+  }
+
+  const openProduct = () => {
+    navigate(product?.id)
   }
 
   const successNotification = () => {
@@ -54,10 +60,16 @@ const ProductCard = ({product}) => {
             <div class='flex justify-between items-center px-2  pt-3'>
             <p class='text-md'>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} zł</p>
             {
-              isInCart ?
-              <button disabled class=' bg-green-300 py-2 px-2 text-md text-white rounded'>Dodane do koszyka</button>:
-              <button onClick={() => addToCart()} class='bg-green-500 py-2 px-2 text-md text-white rounded active:scale-95'>Dodaj do koszyka</button>
+              isBought ? (
+                <button onClick={() => openProduct()} class='bg-blue-500 py-2 px-5 text-md text-white rounded active:scale-95'>Otwórz</button>
+              ): (
+                  isInCart ?
+                  <button disabled class=' bg-green-300 py-2 px-2 text-md text-white rounded'>Dodane do koszyka</button> :
+                  <button onClick={() => addToCart()} class='bg-green-500 py-2 px-2 text-md text-white rounded active:scale-95'>Dodaj do koszyka</button>
+                
+              )
             }
+            
            
             </div>
             {/* <p>Zestaw 600 najlepszych promptów ChatGPT to zasób, który pozwala na maksymalne wykorzystanie potencjału tej AI. </p> */}
