@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Reader from '../../components/Reader'
 import { axiosInstance } from '../../axios/axios'
+import { useParams } from 'react-router-dom'
 
 const index = () => {
   const [currentUser, setCurrentUser] = useState(null)
   const [count, setCount] = useState(0)
+  const { id } = useParams()
 
   const getCurrentUser = async () => {
     await axiosInstance.get('users/me/', {
