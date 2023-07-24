@@ -65,16 +65,17 @@ const Navbar = () => {
         console.log(mainSection)
         const viewport = window.innerWidth;
         console.log(cartIsOpen)
-        if(cartIsOpen){
+        if(cartIsOpen || menuIsOpen){
             mainSection.classList.add('blur')   
             container.classList.add('min-h-[113vh]')
-            if (viewport < 640) {
+            if (viewport < 640 && !menuIsOpen) {
                 mainSection.classList.add('hidden')   
             }
+            if(menuIsOpen && mainSection.classList.contains('hidden')) mainSection.classList.remove('hidden')
         } else {
             mainSection.classList.remove('blur')   
             container.classList.remove('min-h-[113vh]')
-            if (viewport < 640) {
+            if (viewport < 640 && !menuIsOpen) {
                 mainSection.classList.remove('hidden')   
             }
         }
@@ -90,11 +91,30 @@ const Navbar = () => {
         ) {
         toggleCart();
         }
-      };
+    };
+
+    const handleOpenMenu = () => {
+        if(menuIsOpen){
+            setMenuIsOpen(false)
+        } else {
+            setMenuIsOpen(true)
+            if(cartIsOpen) setCartIsOpen(false)
+        }
+    }
+    
+    const handleOpenCart = () => {
+        if(cartIsOpen){
+            setCartIsOpen(false)
+        } else {
+            setCartIsOpen(true)
+            if(menuIsOpen) setMenuIsOpen(false)
+        }
+    }
 
     useEffect(() => {
         setOverlay();
-    }, [cartIsOpen])
+    }, [cartIsOpen, menuIsOpen])
+
 
     useEffect(() => {
         // Add event listener when component mounts
@@ -116,7 +136,7 @@ const Navbar = () => {
         </h2>
         <div class='flex gap-5 lg:hidden'>
             { user.logged_in ? (                    
-                <div class='relative' onClick={() => toggleCart()} ref={cartIconRef}>
+                <div class='relative' onClick={() => handleOpenCart()} ref={cartIconRef}>
                     <BsCartFill size={30}/> 
                         {amountOfProducts > 0 ?
                         <div class='absolute top-[-5px] right-[-5px] text-black w-[20px] h-[20px] rounded-xl bg-white flex items-center justify-center'>{amountOfProducts}</div>: 
@@ -128,13 +148,14 @@ const Navbar = () => {
                 }
 
             {menuIsOpen ? 
-                <AiOutlineClose size={30} onClick={() => setMenuIsOpen(!menuIsOpen)} />:
-                <AiOutlineMenu size={30} onClick={() => setMenuIsOpen(!menuIsOpen)}/> 
+                <AiOutlineClose size={30} onClick={() => handleOpenMenu()} />:
+                <AiOutlineMenu size={30} onClick={() => handleOpenMenu()}/> 
             }
         </div>
         {user.logged_in ?
         <div class='hidden lg:flex lg:justify-center lg:items-center lg:gap-3'>
                 
+                <div onClick={(e) => handleClick(e)}><Link  to='/' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</Link></div>
                 <div onClick={(e) => handleClick(e)}><Link  to='/materialy' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Moje materiały</Link></div>
                 <div onClick={(e) => handleClick(e)}><Link  to='/produkty' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link></div>
                 <div onClick={(e) => handleClick(e)}><Link  to='/zamowienia' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Zamówienia</Link></div>
@@ -176,10 +197,11 @@ const Navbar = () => {
     }
     </nav>
     {menuIsOpen && (
-        <div class='border-t-2 mt-3 flex flex-col justify-center items-center gap-5 lg:hidden'>
+        <div class='border-t-2 m-3 pt-4 flex flex-col justify-center items-center gap-5 lg:hidden'>
             { user.logged_in ? (
                 <>
-               <div onClick={(e) => handleClick(e)}><Link  to='/materialy' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Moje materiały</Link></div>
+                <div onClick={(e) => handleClick(e)}><Link  to='/' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</Link></div>
+                <div onClick={(e) => handleClick(e)}><Link  to='/materialy' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Moje materiały</Link></div>
                 <div onClick={(e) => handleClick(e)}><Link  to='/produkty' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link></div>
                 <div onClick={(e) => handleClick(e)}><Link  to='/zamowienia' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Zamówienia</Link></div>
                 <div onClick={(e) => handleClick(e)}><Link  to='/konto'  class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Konto</Link></div>
@@ -198,14 +220,15 @@ const Navbar = () => {
             }
         </div>
     )}
-    { cartIsOpen && user.logged_in ? 
+    
         <div class='absolute w-full min-h-screen z-30 bg-transparent'>
+        { cartIsOpen && user.logged_in ? 
             <div ref={cartRef}>
-            <Cart closeState={clickedOutside}/>
-            </div>
-        </div> :
-        ''
-    }
+                <Cart closeState={clickedOutside}/>
+            </div>: 
+            ''
+        }
+        </div> 
     
     </header>
   )

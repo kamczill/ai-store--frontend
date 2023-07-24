@@ -48,7 +48,7 @@ const App = () => {
           </header>
           <div className='h-full grid grid-flow-row gap-10 flex-grow' id='main'>
             <Routes>
-              <Route path='/' element={currentUser.logged_in ? <UserHomePage /> : <HomePage/> } />
+              <Route path='/' element={<HomePage/>} />
               <Route path='/book.epub' element={currentUser.logged_in ? <Reader /> : <Navigate to='/'/> } />
               <Route path="/regulamin" element={<ShopRulesPage/>} />
               <Route path="/login" element={<LoginPage/>} />

@@ -16,7 +16,7 @@ const ProductCart = ({product, setItemsInCart }) => {
   }
 
   return (
-    <div class='grid grid-flow-col auto-cols-auto gap-3 p-2 pb-4 border-b-2 font-ms'>
+    <div class='grid grid-flow-col auto-cols-auto gap-3  mx-5 pb-4 border-b-2 font-ms'>
         <div class='max-w-[100px]'>
             <img src={product?.cover}  />
         </div>
