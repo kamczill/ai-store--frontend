@@ -21,9 +21,10 @@ const spis = {
     "conclusion": 11
 }
 
-const Reader = () => {
+const Reader = ({filePath}) => {
     const [numPages, setNumPages] = useState(1);
     const [pageNumber, setPageNumber] = useState(1);
+    const [page, setPage] = useState(1)
     const [ebook, setEbook] = useState();
   
     function onDocumentLoadSuccess({ numPages }) {
@@ -32,7 +33,7 @@ const Reader = () => {
  
 
     const getEbook = async () => {
-        await axiosInstance('users/e-book/', {
+        await axiosInstance(filePath, {
             withCredentials:true,
             responseType: 'blob',
         }).then(res => {
@@ -52,20 +53,29 @@ const Reader = () => {
         }
     }
 
+    const handleChangePage = (event) => {
+        setPage(event.target.value);
+    }
+
+    const handleClickChangePage = () => {
+        if (page < numPages && page > 0) {
+            setPageNumber(parseInt(page))
+        }
+    }
+
     useEffect(() => {
         getEbook();
     }, [])
 
+
     return (
-      <div class='w-full h-full flex flex-col justify-center items-center'>
+      <div class='w-full h-full flex flex-col gap-2 justify-center items-center'>
         {
             ebook ? (
                 <>
-                    <Contents contents={spis}/>
                     <Document file={ebook} onLoadSuccess={onDocumentLoadSuccess}  style='display:flex; align-items:center; justify-content: center;'>
                         <Page pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false} 
-                        width={window.screen.width *0.6} 
-                        // height={ window.screen.height > window.screen.width ? '' : window.screen.height / 1.3} 
+                        width={window.screen.width *0.7}
                         />
                     </Document>
                 </>
@@ -79,6 +89,10 @@ const Reader = () => {
                 {pageNumber} z {numPages}
             </p>
             <button class='p-2 rounded-md lg:hover:bg-slate-600 lg:hover:text-white' onClick={handleNextPage}>Następna</button>
+        </div>
+        <div class='flex gap-2'>
+            <button onClick={() => handleClickChangePage()} class='p-2 rounded-md bg-slate-50 lg:hover:bg-slate-600 lg:hover:text-white'>Przejdź do</button>
+            <input class='text-center' type='number' placeholder='podaj strone' min={1} max={numPages} value={page}  onChange={handleChangePage}/>
         </div>
       </div>
     )

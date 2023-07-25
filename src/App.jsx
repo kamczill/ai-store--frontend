@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar'
 import HomePage from './scenes/HomePage'
 import ShopRulesPage from './scenes/ShopRulesPage'
-import UserHomePage from './scenes/UserHomePage'
 import Footer from './components/Footer'
 import LoginPage from './scenes/LoginPage'
 import AccountPage from './scenes/AccountPage'

@@ -131,7 +131,7 @@ const Navbar = () => {
     <nav class='flex justify-between items-center p-5 font-ms'>
         <h2 className='col-span-1 text-3xl font-bold lg:col-start-2 lg:text-center' onClick={() => handleClick()}>
             <Link to='/' class='hover:text-black'>
-            <span className='text-green-400'>ai.</span>swiat
+            <span className='text-green-400'>AI</span>Szef
             </Link>
         </h2>
         <div class='flex gap-5 lg:hidden'>
@@ -221,14 +221,13 @@ const Navbar = () => {
         </div>
     )}
     
+        { cartIsOpen && user.logged_in ? (
         <div class='absolute w-full min-h-screen z-30 bg-transparent'>
-        { cartIsOpen && user.logged_in ? 
             <div ref={cartRef}>
                 <Cart closeState={clickedOutside}/>
-            </div>: 
-            ''
+            </div> 
+            </div> ): ''
         }
-        </div> 
     
     </header>
   )

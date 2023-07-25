@@ -4,35 +4,35 @@ import { axiosInstance } from '../../axios/axios'
 import { useParams } from 'react-router-dom'
 
 const index = () => {
-  const [currentUser, setCurrentUser] = useState(null)
+  const [product, setProduct] = useState()
   const [count, setCount] = useState(0)
   const { id } = useParams()
 
-  const getCurrentUser = async () => {
-    await axiosInstance.get('users/me/', {
+  const getProduct = async () => {
+    await axiosInstance.get(`products/${id}`, {
       withCredentials:true,
       headers: {
         "Content-Type": "application/json"
       }
     })
-    .then(res => setCurrentUser(res?.data))
+    .then(res => {
+      console.log(res?.data)
+      setProduct(res?.data)
+    })
   }
 
   useEffect(() => {
-    if(count === 0){
-      getCurrentUser();
-      setCount(1)
-    }
+    getProduct();
   }, [])
 
   return (
     <div class='flex flex-col gap-1'>
       <div class='p-5'>
-        <h2 class='text-xl font-bold'>Witaj, {currentUser?.first_name}</h2>
-        <h2>Pamiętaj, los twoich włosów leży w twoich rękach!</h2>
+        <h2 class='text-xl font-bold'>{product?.title}</h2>
+        <h2></h2>
       </div>
       <div class='flex justify-center'>
-      <Reader />
+      {product ? <Reader filePath={product?.file_path} /> : ''}
       </div>
     </div>
   )
