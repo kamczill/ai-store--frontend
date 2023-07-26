@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className='w-full self-end item-center text-center mt-12 p-5'>
         <div class='flex justify-center gap-5'>
             <Link to="/regulamin">Regulamin</Link>
-            <a class='cursor-pointer'>Polityka Prywatności</a>
+            <Link to="/polityka-prywatnosci">Polityka Prywatności</Link>
         </div>
         <p>2023 © ai.swiat</p>
     </footer>

@@ -16,6 +16,7 @@ import ProductsPage from './scenes/ProductsPage'
 import ProductPage from './scenes/ProductPage'
 import ResetPasswordPage from './scenes/ResetPasswordPage'
 import OpenBoughtProductPage from './scenes/OpenBoughtProductPage'
+import PrivatePolicyPage from './scenes/PrivatePolicyPage'
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import Cookies from 'js-cookie';
@@ -50,6 +51,7 @@ const App = () => {
               <Route path='/' element={<HomePage/>} />
               <Route path='/book.epub' element={currentUser.logged_in ? <Reader /> : <Navigate to='/'/> } />
               <Route path="/regulamin" element={<ShopRulesPage/>} />
+              <Route path="/polityka-prywatnosci" element={<PrivatePolicyPage/>} />
               <Route path="/login" element={<LoginPage/>} />
               <Route path="/password-reset/:token" element={<ResetPasswordPage/>} />
               <Route path='/konto' element={currentUser.logged_in ? <AccountPage /> : <HomePage/> } />
