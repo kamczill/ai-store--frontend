@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Reader from '../../components/Reader'
 import { axiosInstance } from '../../axios/axios'
-import ChangePasswordForm from './changePasswordForm'
+import ChangePasswordForm from './ChangePasswordForm'
 
 const index = () => {
   const [currentUser, setCurrentUser] = useState(null)
