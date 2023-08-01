@@ -221,7 +221,11 @@ const Navbar = () => {
                     </div>
                 </>
                 ) :
-                <Link to='/login' onClick={() => logout()} class='mt-5 bg-gray-700 text-white px-5 py-2'>Zaloguj się</Link>
+                <>
+                <div onClick={(e) => handleClick(e)}><Link  to='/' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</Link></div>
+                <div onClick={(e) => handleClick(e)}><Link  to='/produkty' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link></div>
+                <Link to='/login' onClick={() => logout()} class='mt-1 bg-gray-700 text-white px-5 py-2'>Zaloguj się</Link>
+                </>
             }
         </div>
     )}
