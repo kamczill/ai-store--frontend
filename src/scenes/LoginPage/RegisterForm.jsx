@@ -25,6 +25,8 @@ const validationSchema = yup.object({
     passwordConfirm: yup
         .string('Potwierdź hasło')
         .oneOf([yup.ref('password'), null], 'Hasła muszą być takie same'),
+    rulesCheckbox: yup
+        .bool().oneOf([true], 'To pole musi być zaznaczone'),
 })
 
 const loginInitialValues = {
@@ -32,7 +34,8 @@ const loginInitialValues = {
     password: '',
     passwordConfirm: '',
     firstName:'',
-    lastName:''
+    lastName:'',
+    rulesCheckbox: false,
 }
 
 const RegisterForm = ({ handleSetLoginForm }) => {
@@ -116,7 +119,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
             {props => (
                 <form 
                     onSubmit={props.handleSubmit} 
-                    class='flex flex-col gap-3 w-full max-w-[350px]'
+                    class='flex flex-col gap-3 w-full max-w-[350px] font-ms'
                 >
                     <div class='flex flex-col'>
                     <label htmlFor="firstName">
@@ -187,6 +190,25 @@ const RegisterForm = ({ handleSetLoginForm }) => {
                         />
                          {props.touched.password && Boolean(props.errors.password) && (
                         <p class='text-red-500'>{props.errors.password}</p>
+                    )}
+                    </div>
+                    <div class='flex flex-col font-ms'>
+                        <div class='flex justify-between'>
+                        <label htmlFor="rulesCheckbox" class='max-w-[300px]'>*Akceptuję <a href='/regulamin' class='underline'> Regulamin</a> oraz <a href='/polityka-prywatnosci' class='underline'>Politykę Prywatności</a> </label>
+                        <input
+                            id="rulesCheckbox" 
+                            name="rulesCheckbox" 
+                            type="checkbox" 
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                            value={props.values.rulesCheckbox}
+                            error={props.touched.rulesCheckbox && Boolean(props.errors.rulesCheckbox)}
+                            helperText={props.touched.rulesCheckbox && props.errors.rulesCheckbox}
+                            class='w-[20px]'
+                        />
+                        </div>
+                         {props.touched.rulesCheckbox && Boolean(props.errors.rulesCheckbox) && (
+                        <p class='text-red-500'>{props.errors.rulesCheckbox}</p>
                     )}
                     </div>
                     <div>
