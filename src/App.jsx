@@ -57,8 +57,8 @@ const App = () => {
               <Route path='/konto' element={currentUser.logged_in ? <AccountPage /> : <HomePage/> } />
               <Route path='/zamowienia' element={currentUser.logged_in ? <OrdersPage /> : <HomePage/> } />
               <Route path='/zamowienia/:id' element={currentUser.logged_in ? <OrderPage /> : <HomePage/> } />
-              <Route path='/produkty' element={currentUser.logged_in ? <ProductsPage /> : <HomePage/> } />
-              <Route path='/produkty/:id' element={currentUser.logged_in ? <ProductPage /> : <HomePage/> } />
+              <Route path='/produkty' element={<ProductsPage />} />
+              <Route path='/produkty/:id' element={<ProductPage /> } />
               <Route path='/materialy' element={currentUser.logged_in ? <MaterialsPage /> : <HomePage/> } />
               <Route path='/materialy/:id' element={currentUser.logged_in ? <OpenBoughtProductPage/> : <HomePage/> } />
             </Routes>

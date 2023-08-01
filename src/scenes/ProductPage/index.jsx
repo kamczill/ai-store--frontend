@@ -2,13 +2,15 @@ import React, {useEffect, useState, useContext} from 'react'
 import { useParams } from 'react-router-dom'
 import axiosInstance from '../../axios/axios';
 import { toast } from 'react-toastify'
-import { CartContext } from '../../App'
+import { CartContext, AuthContext } from '../../App'
 
 const index = () => {
   const { id } = useParams();
   const {amountOfProducts, updateCart } = useContext(CartContext)
   const [product, setProduct] = useState();
   const [isInCart, setIsInCart] = useState()
+  const user = useContext(AuthContext)
+
   console.log(id)
 
   const getProduct = async () => {
@@ -64,9 +66,15 @@ const index = () => {
             <h3 class='font-ms font-bold text-xl pointer lg:hover:underline lg:hover:decoration-2'>{product?.title}</h3>
               <p class='text-2xl py-5'>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} zł</p>
               {
-                isInCart ?
-                <button onClick={() => addToCart()} disabled class='w-full max-w-[357px] bg-green-300 py-2 px-4 text-white rounded'>Dodane do koszyka</button>:
-                <button onClick={() => addToCart()} class='w-full max-w-[357px] bg-green-500 py-2 px-4 text-white rounded active:scale-95'>Dodaj do koszyka</button>
+                isInCart && user.logged_in ?
+                <button onClick={() => addToCart()} disabled class='w-full max-w-[357px] bg-green-300 py-2 px-4 text-white rounded'>Dodane do koszyka</button>:(
+                  user.logged_in ? (
+                    <button onClick={() => addToCart()} class='w-full max-w-[357px] bg-green-500 py-2 px-4 text-white rounded active:scale-95'>Dodaj do koszyka</button>
+
+                  ): (
+                <button onClick={() => addToCart()} disabled class='w-full max-w-[357px] bg-green-300 py-2 px-4 text-white rounded'>Zaloguj się, aby kupić</button>
+                  )
+                )
 
               }
             <div

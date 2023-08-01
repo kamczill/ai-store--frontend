@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { CartContext } from '../App'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../App'
 // https://edit.org/images/cat/book-covers-big-2019101610.jpg
 
 const ProductCard = ({product, isBought}) => {
   const [isInCart, setIsInCart] = useState()
   const {amountOfProducts, updateCart } = useContext(CartContext)
   const navigate = useNavigate()
-
+  const user = useContext(AuthContext)
 
   const checkProductCart = () => {
     const items = JSON.parse(localStorage.getItem('cart'))
@@ -65,11 +66,21 @@ const ProductCard = ({product, isBought}) => {
             { isBought ? (
                 <button onClick={() => openProduct()} class='bg-blue-500 py-2 px-5 text-md text-white rounded active:scale-95'>Otwórz</button>
                 ): (
-                  isInCart ?
-                  <button disabled class=' bg-green-300 py-2 px-2 text-md text-white rounded'>Dodane do koszyka</button> :
-                  <button onClick={() => addToCart()} class='bg-green-500 py-2 px-2 text-md text-white rounded active:scale-95'>Dodaj do koszyka</button>
+                  isInCart && user.logged_in ?
+                  <button disabled class=' bg-green-300 py-2 px-2 text-md text-white rounded'>Dodane do koszyka</button> : (
+                    user.logged_in ? (
+                      <button onClick={() => addToCart()} class='bg-green-500 py-2 px-2 text-md text-white rounded active:scale-95'>Dodaj do koszyka</button>
+                    ): ''
+                  )
                 
               )
+            }
+
+            
+            {
+              user.logged_in === false ? (
+                <button disabled class=' bg-green-300 py-2 px-2 text-md text-white rounded'>Zaloguj się aby kupić</button>
+              ): ''
             }
             
            

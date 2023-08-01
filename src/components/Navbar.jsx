@@ -164,6 +164,7 @@ const Navbar = () => {
                     <BiSolidUser size={30}/>
                     { userNavIsOpen ?
                         <div  class='absolute top-9 right-0 bg-white px-[3rem] py-3 flex flex-col items-center gap-1 z-10 sm:rounded sm:drop-shadow-xl'>
+                            
                             <div onClick={(e) => handleClick(e)}><Link  to='/konto'  class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Konto</Link></div>
                             <Link
                             class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
@@ -188,12 +189,16 @@ const Navbar = () => {
                 </div>
          </div>
         :
+        <div class='hidden lg:flex'>
+        <div onClick={(e) => handleClick(e)}><Link  to='/' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</Link></div>
+        <div onClick={(e) => handleClick(e)}><Link  to='/produkty' class='hidden  mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link></div>
         <Link
-        class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
+        class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0 lg:ml-7'
         to='/login'
         >
             Zaloguj się
         </Link>
+        </div>
     }
     </nav>
     {menuIsOpen && (
