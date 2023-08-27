@@ -6,6 +6,7 @@ import eb from '../assets/e-book.pdf'
 import { pdfjs } from 'react-pdf';
 import axios from 'axios';
 import Contents from './Contents';
+import Loader from './Loader';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
@@ -80,7 +81,7 @@ const Reader = ({filePath}) => {
                     </Document>
                 </>
                 ) :
-                ''
+                <Loader />
         }
        
         <div class='flex flex-row gap-4 align-center items-center bg-slate-50 shadow-lg  rounded-md mt-5'>
