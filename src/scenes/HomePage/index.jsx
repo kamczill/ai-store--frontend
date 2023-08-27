@@ -12,7 +12,7 @@ const index = () => {
    <>
     <Header />
     <FreeGuide />
-    <NewsetProducts /> 
+    {/* <NewsetProducts />  */}
     <Features />
     <TopTools />
     <SocialMedia />

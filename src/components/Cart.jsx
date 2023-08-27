@@ -33,6 +33,33 @@ const Cart = ({clickedOutside}) => {
         })
     }
 
+    const buyProducts = async () => {
+        await axiosInstance.post('/orders/', {
+            user: 1
+        }, {
+            withCredentials: true,
+        }).then(res => {
+            const orderId = res.data.id
+            console.log(itemsInCart)
+            itemsInCart.forEach(item => {
+                addProductToOrder(orderId, item)
+            })
+            
+        }).catch(err => console.log(err))
+    }
+
+    const addProductToOrder = async (order, product) => {
+        await axiosInstance.post('/orders/order-products/', {
+            order: order,
+            product: product
+        }, {
+            withCredentials: true,
+        }).then(res => {
+            console.log('dodane')
+        }).catch(err => console.log(err))
+    
+    }
+
     useEffect(() => {
         getProducts()
     }, [itemsInCart])
@@ -57,8 +84,11 @@ const Cart = ({clickedOutside}) => {
             <h3 class='text-md font-bold text-gray-800'>Razem do zapłaty(z VAT): <span>{totalPrice} zł</span></h3>
         </div>
         <div class='w-full flex items-center justify-center'>
-            <button class='bg-green-400 text-white p-3 flex items-center gap-3'>PRZEJDŹ DO KASY <AiOutlineShoppingCart /> </button>
-        </div>
+            { itemsInCart.length > 0 
+                ? <button onClick={() => buyProducts()} class='bg-green-400 text-white p-3 flex items-center gap-3'>PRZEJDŹ DO KASY <AiOutlineShoppingCart /> </button>
+                : <button class='bg-green-200 text-white p-3 flex items-center gap-3 cursor-default'>KOSZYK JEST PUSTY <AiOutlineShoppingCart /> </button>
+            }
+            </div>
     </div>
   )
 }
