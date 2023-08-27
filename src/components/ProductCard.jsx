@@ -49,6 +49,7 @@ const ProductCard = ({product, isBought, onLoad}) => {
 
   useEffect(() => {
     checkProductCart()
+    console.log(product)
   }, [isInCart, amountOfProducts])
 
   return (
@@ -67,15 +68,20 @@ const ProductCard = ({product, isBought, onLoad}) => {
             ''
             }
             { isBought ? (
-                <button onClick={() => openProduct()} class='bg-blue-500 py-2 px-5 text-md text-white rounded active:scale-95'>Otwórz</button>
-                ): (
+                <>
+                  <button onClick={() => openProduct()} class='bg-green-500 py-2 px-5 text-md text-white rounded active:scale-95'>Otwórz</button>
+                  { product.is_downloadable 
+                    ? <a href={product.file_path} class='bg-blue-500 py-2 px-5 text-md text-white rounded active:scale-95'>Pobierz</a>
+                    : ''
+                  }
+                </>
+              ): (
                   isInCart && user.logged_in ?
                   <button disabled class=' bg-green-300 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Dodane do koszyka</button> : (
                     user.logged_in ? (
                       <button onClick={() => addToCart()} class='bg-green-500 py-2 px-2 text-md text-white whitespace-nowrap rounded active:scale-95'>Dodaj do koszyka</button>
                     ): ''
                   )
-                
               )
             }
 
