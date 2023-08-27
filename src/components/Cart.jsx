@@ -3,12 +3,15 @@ import { CartContext } from '../App'
 import axiosInstance from '../axios/axios'
 import ProductCart from './ProductCart'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
+import Loader from './Loader'
 
 const Cart = ({clickedOutside}) => {
     const { amountOfProducts, setAmountOfProducts } = useContext(CartContext)
     const [itemsInCart, setItemsInCart] = useState(JSON.parse(localStorage.getItem('cart')) || 0)
     const [detailedItems, setDetailedItems] = useState([])
     const [totalPrice, setTotalPrice] = useState()
+    const [isLoading, setIsLoading] = useState(true);
+    const [loadedImagesCount, setLoadedImagesCount] = useState(0);
 
 
     const getProducts = async () => {
@@ -60,22 +63,31 @@ const Cart = ({clickedOutside}) => {
     
     }
 
+    const handleImageLoad = () => {
+        setLoadedImagesCount(prevCount => prevCount + 1);
+        console.log(':)')
+      };
+    
+    useEffect(() => {
+          if (itemsInCart?.length && loadedImagesCount === itemsInCart?.length) {
+              setIsLoading(false);
+          }
+    }, [loadedImagesCount, itemsInCart]);
+    
+
     useEffect(() => {
         getProducts()
     }, [itemsInCart])
-
-    useEffect(() => {
-        getProducts();
-    }, [])
 
   return (
     <div class='absolute min-h-full right-0 w-full max-w-[640px] flex flex-col items-center gap-4 px-2 pt-5 pb-10 bg-white z-10 sm:right-5 sm:h-fit sm:rounded sm:drop-shadow-xl'>
         <div>
             <h3 class='text-lg font-ms font-bold'>Mój Koszyk</h3>
         </div>
-        <div class='flex flex-col gap-3'>
+        {isLoading ? <Loader/> : ''}
+        <div class={` ${isLoading ? 'hidden': ''} flex flex-col gap-3`}>
             {detailedItems.map(item => (
-                <ProductCart product={item} setItemsInCart={setItemsInCart} />
+                <ProductCart product={item} setItemsInCart={setItemsInCart} onLoad={handleImageLoad} />
             )
             )}
         </div>
