@@ -5,6 +5,8 @@ import { parseISO, format } from 'date-fns'
 import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz'
 import { pl } from 'date-fns/locale'
 import { Link } from 'react-router-dom'
+import Loader from '../../components/Loader'
+
 const index = () => {
   const [userOrders, setUserOrders] = useState()
   
@@ -34,23 +36,29 @@ const index = () => {
     <div class='font-ms w-full h-full pt-10'>
       <h1 class='text-center font-bold text-xl'>Twoje zamówienia</h1>
       <div class='flex w-full justify-center mt-10'>
-      <table class="table-fixed w-full max-w-[500px]">
-  <thead class='w-1/2'>
-    <tr>
-      <th class='w-1/3'>Id</th>
-      <th class='w-2/3'>Data zamówienia</th>
-    </tr>
-  </thead>
-  <tbody class='w-1/2'>
-    {userOrders?.map((order) => (
-    <tr>
-      <td class='text-center text-lg'><Link to={`/zamowienia/${order.id}`}>{order.id}</Link></td>
-      <td class='text-center'>{formatDate(order.purchase_timestamp)}</td>
-    </tr> 
-    ))
-  }
-  </tbody>
-</table>
+        { userOrders ? (
+
+        
+          <table class="table-fixed w-full max-w-[500px]">
+            <thead class='w-1/2'>
+              <tr>
+                <th class='w-1/3'>Id</th>
+                <th class='w-2/3'>Data zamówienia</th>
+              </tr>
+            
+            </thead>
+            <tbody class='w-1/2'>
+              {userOrders?.map((order) => (
+              <tr>
+                <td class='text-center text-lg'><Link to={`/zamowienia/${order.id}`}>{order.id}</Link></td>
+                <td class='text-center'>{formatDate(order.purchase_timestamp)}</td>
+              </tr> 
+              ))
+            }
+            </tbody>
+          </table>)
+        : <Loader />
+        }
       </div>
     </div>
   )

@@ -2,10 +2,13 @@ import React, {useEffect, useState} from 'react'
 import ProductCard from '../../components/ProductCard'
 
 import axios from '../../axios/axios'
-
+import { TailSpin } from 'react-loader-spinner'
+import Loader from '../../components/Loader'
 
 const index = () => {
   const [products, setProducts] = useState()
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedImagesCount, setLoadedImagesCount] = useState(0);
 
   const getAllMaterials = async () => {
     await axios('/products/', {
@@ -18,15 +21,32 @@ const index = () => {
     })
   }
 
+  const handleImageLoad = () => {
+    setLoadedImagesCount(prevCount => prevCount + 1);
+    console.log(':)')
+  };
+
+  useEffect(() => {
+      if (products?.length && loadedImagesCount === products?.length) {
+          setIsLoading(false);
+      }
+  }, [loadedImagesCount, products]);
+
   useEffect(() => {
     getAllMaterials();
   }, [])
 
   return (
-    <div class='pt-10 flex flex-col flex-wrap gap-12 items-center justify-center md:flex-row md:gap-8 md:justify-center md:items-start'>
-      {products?.map(product => <ProductCard product={product}/>)}
-      
+    <>
+    {
+        isLoading 
+        ? <Loader />
+        : ''
+      }
+    <div className={`${isLoading ? 'hidden': ''} pt-10 flex flex-col flex-wrap gap-12 items-center justify-center md:flex-row md:gap-8 md:justify-center md:items-start`}>
+        {products?.map(product => <ProductCard product={product} onLoad={handleImageLoad}/>)}
     </div>
+    </>
   )
 }
 

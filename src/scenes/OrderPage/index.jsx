@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { CartContext } from '../../App'
 import ProductCart from '../../components/ProductCart';
 import OrderProduct from '../../components/OrderProduct';
+import Loader from '../../components/Loader';
 
 const index = () => {
   const { id } = useParams();
@@ -12,6 +13,8 @@ const index = () => {
   const [ userOrder, setUserOrder ] = useState()
   const [products, setProducts] = useState()
   const [totalPrice, setTotalPrice] = useState(0)
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedImagesCount, setLoadedImagesCount] = useState(0);
 
   const getOrder = async () => {
     await axiosInstance(`/orders/${id}`, {
@@ -32,6 +35,16 @@ const index = () => {
     })
   }
 
+  const handleImageLoad = () => {
+    setLoadedImagesCount(prevCount => prevCount + 1);
+    console.log(':)')
+  };
+
+  useEffect(() => {
+      if (products?.length && loadedImagesCount === products?.length) {
+          setIsLoading(false);
+      }
+  }, [loadedImagesCount, products]);
 
 
   useEffect(() => {
@@ -43,8 +56,11 @@ const index = () => {
         <div>
             <h3 class='font-bold text-xl'>Zamówienie nr. {id}</h3>
         </div>
-        <div class='flex flex-col gap-3'>
-      {products?.map((product) => <OrderProduct product={product?.product} />)}
+        {isLoading ? <Loader />: ''}
+        <div class={`${isLoading ? 'hidden': ''} flex flex-col gap-3`}>
+      {products?.map((product) => (
+        <OrderProduct product={product?.product} onLoad={handleImageLoad}/>
+      ))}
       </div>
       <div>
         <p><span class='font-bold pr-1'>Koszt zamówienia(z VAT):</span> {totalPrice.toFixed(2)} PLN</p>

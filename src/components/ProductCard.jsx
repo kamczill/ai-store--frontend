@@ -4,9 +4,10 @@ import { toast } from 'react-toastify'
 import { CartContext } from '../App'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../App'
+import LazyLoad from 'react-lazy-load';
 // https://edit.org/images/cat/book-covers-big-2019101610.jpg
 
-const ProductCard = ({product, isBought}) => {
+const ProductCard = ({product, isBought, onLoad}) => {
   const [isInCart, setIsInCart] = useState()
   const {amountOfProducts, updateCart } = useContext(CartContext)
   const navigate = useNavigate()
@@ -53,7 +54,9 @@ const ProductCard = ({product, isBought}) => {
   return (
     <div class='max-w-[300px] flex flex-col justify-between items-center border-2 border-black rounded-md p-3 font-ms bg-white'>
         <div class=''>
-            <Link to={`/produkty/${product?.id}`}><img src={`${product?.cover}`} alt='cover'/></Link>
+            <Link to={`/produkty/${product?.id}`}>
+              <img src={`${product?.cover}`} alt='cover' onLoad={() => onLoad()}/>
+            </Link>
         </div>
         <div class='w-full pt-1'>
             <p class='text-lg'>{product?.author}</p>
