@@ -4,7 +4,6 @@ import { toast } from 'react-toastify'
 import { CartContext } from '../App'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../App'
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // https://edit.org/images/cat/book-covers-big-2019101610.jpg
 
