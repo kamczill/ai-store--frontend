@@ -50,7 +50,7 @@ const index = () => {
             <tbody class='w-1/2'>
               {userOrders?.map((order) => (
               <tr>
-                <td class='text-center text-lg'><Link to={`/zamowienia/${order.id}`}>{order.id}</Link></td>
+                <td class='text-center text-lg underline'><Link to={`/zamowienia/${order.id}`}>{order.id}</Link></td>
                 <td class='text-center'>{formatDate(order.purchase_timestamp)}</td>
               </tr> 
               ))

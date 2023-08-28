@@ -43,8 +43,10 @@ const index = () => {
         ? <Loader />
         : ''
       }
-    <div className={`${isLoading ? 'hidden': ''} pt-10 flex flex-col flex-wrap gap-12 items-center justify-center md:flex-row md:gap-8 md:justify-center md:items-start`}>
-        {products?.map(product => <ProductCard product={product} onLoad={handleImageLoad}/>)}
+    <div className='mx-auto max-w-[1350px]'>
+      <div className={`${isLoading ? 'hidden': ''} pt-10 flex flex-col flex-wrap gap-12 items-center justify-center md:flex-row md:gap-8 md:justify-start md:items-start`}>
+          {products?.map(product => <ProductCard product={product} onLoad={handleImageLoad}/>)}
+      </div>
     </div>
     </>
   )

@@ -7,7 +7,7 @@ import Loader from './Loader'
 
 const Cart = ({clickedOutside}) => {
     const { amountOfProducts, setAmountOfProducts } = useContext(CartContext)
-    const [itemsInCart, setItemsInCart] = useState(JSON.parse(localStorage.getItem('cart')) || 0)
+    const [itemsInCart, setItemsInCart] = useState(JSON.parse(localStorage.getItem('cart')) || [])
     const [detailedItems, setDetailedItems] = useState([])
     const [totalPrice, setTotalPrice] = useState()
     const [isLoading, setIsLoading] = useState(true);
@@ -43,10 +43,12 @@ const Cart = ({clickedOutside}) => {
             withCredentials: true,
         }).then(res => {
             const orderId = res.data.id
-            console.log(itemsInCart)
             itemsInCart.forEach(item => {
                 addProductToOrder(orderId, item)
             })
+            console.log(itemsInCart)
+            localStorage.setItem('cart', JSON.stringify([]));
+            setItemsInCart([])
             
         }).catch(err => console.log(err))
     }
@@ -57,8 +59,6 @@ const Cart = ({clickedOutside}) => {
             product: product
         }, {
             withCredentials: true,
-        }).then(res => {
-            console.log('dodane')
         }).catch(err => console.log(err))
     
     }

@@ -8,7 +8,7 @@ const OrderProduct = ({product, onLoad}) => {
             <img src={product?.cover} onLoad={onLoad}/>
         </div>
         <div class='flex flex-col justify-center gap-3'> 
-            <h4>{product?.title}</h4>
+            <h4 className='font-bold font-ms'>{product?.title}</h4>
             <p>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} PLN</p>
         </div>
     </div>

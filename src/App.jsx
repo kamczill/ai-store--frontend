@@ -31,8 +31,7 @@ export const clearWaitingQueue = () => {
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({'logged_in': Cookies.get('logged_in') === 'true' ? true : false});
-  const [amountOfProducts, setAmountOfProducts] = useState(JSON.parse(localStorage.getItem('cart'))?.length || 0)
-  console.log(amountOfProducts)
+  const [amountOfProducts, setAmountOfProducts] = useState(JSON.parse(localStorage.getItem('cart'))?.length || [])
 
   const updateCart = (newValue) => {
     setAmountOfProducts(newValue)
