@@ -59,12 +59,8 @@ const Navbar = () => {
 
     const setOverlay = () => {
         const container = document.querySelector('#container')
-        // min-h-[110vh]
         const mainSection = document.querySelector('#main')
-        // mainSection.classList.toggle('blur')
-        console.log(mainSection)
         const viewport = window.innerWidth;
-        console.log(cartIsOpen)
         if(cartIsOpen || menuIsOpen){
             mainSection.classList.add('blur')   
             container.classList.add('min-h-[113vh]')
@@ -233,7 +229,7 @@ const Navbar = () => {
         { cartIsOpen && user.logged_in ? (
         <div class='absolute w-full min-h-screen z-30 bg-transparent'>
             <div ref={cartRef}>
-                <Cart closeState={clickedOutside}/>
+                <Cart closeState={clickedOutside} isOpen={setCartIsOpen}/>
             </div> 
             </div> ): ''
         }

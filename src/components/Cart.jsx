@@ -3,10 +3,11 @@ import { CartContext } from '../App'
 import axiosInstance from '../axios/axios'
 import ProductCart from './ProductCart'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { toast } from 'react-toastify'
 import Loader from './Loader'
 
-const Cart = ({clickedOutside}) => {
-    const { amountOfProducts, setAmountOfProducts } = useContext(CartContext)
+const Cart = ({clickedOutside, isOpen}) => {
+    const { amountOfProducts, updateCart } = useContext(CartContext)
     const [itemsInCart, setItemsInCart] = useState(JSON.parse(localStorage.getItem('cart')) || [])
     const [detailedItems, setDetailedItems] = useState([])
     const [totalPrice, setTotalPrice] = useState()
@@ -42,14 +43,16 @@ const Cart = ({clickedOutside}) => {
         }, {
             withCredentials: true,
         }).then(res => {
-            const orderId = res.data.id
+            const orderId = res.data.id;
             itemsInCart.forEach(item => {
-                addProductToOrder(orderId, item)
+                addProductToOrder(orderId, item);
             })
-            console.log(itemsInCart)
             localStorage.setItem('cart', JSON.stringify([]));
-            setItemsInCart([])
-            
+            setItemsInCart([]);
+            updateCart(0);
+            isOpen(false);
+            toast.clearWaitingQueue();
+            successNotification();
         }).catch(err => console.log(err))
     }
 
@@ -60,8 +63,20 @@ const Cart = ({clickedOutside}) => {
         }, {
             withCredentials: true,
         }).catch(err => console.log(err))
-    
     }
+
+    const successNotification = () => {
+        toast.success(`Dokonałeś zakupu! Kupione materiały znajdziesz w zakładce 'Moje materiały'`, {
+            position: "bottom-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+      }
 
     const handleImageLoad = () => {
         setLoadedImagesCount(prevCount => prevCount + 1);
@@ -69,7 +84,8 @@ const Cart = ({clickedOutside}) => {
       };
     
     useEffect(() => {
-          if (itemsInCart?.length && loadedImagesCount === itemsInCart?.length) {
+        console.log(loadedImagesCount, itemsInCart.length)
+          if (itemsInCart?.length && loadedImagesCount == itemsInCart?.length || itemsInCart?.length === 0) {
               setIsLoading(false);
           }
     }, [loadedImagesCount, itemsInCart]);

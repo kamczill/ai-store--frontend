@@ -4,7 +4,8 @@ import { toast } from 'react-toastify'
 import { CartContext } from '../App'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../App'
-import LazyLoad from 'react-lazy-load';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 // https://edit.org/images/cat/book-covers-big-2019101610.jpg
 
 const ProductCard = ({product, isBought, onLoad}) => {
@@ -24,9 +25,10 @@ const ProductCard = ({product, isBought, onLoad}) => {
 
   const addToCart = () => {
     const items = JSON.parse(localStorage.getItem('cart')) || []
+    console.log(amountOfProducts)
     localStorage.setItem('cart', JSON.stringify([...items,product?.id]));
     setIsInCart(true)
-    updateCart(amountOfProducts + 1)
+    updateCart(parseInt(amountOfProducts) + 1)
     successNotification();
   }
 
