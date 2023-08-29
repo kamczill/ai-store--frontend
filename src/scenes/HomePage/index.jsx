@@ -6,6 +6,7 @@ import FreeGuide from './FreeGuide'
 import SocialMedia from './SocialMedia'
 import TopTools from './TopTools'
 import NewsetProducts from './NewsetProducts'
+import FAQ from './FAQ'
 
 const index = () => {
   return (
@@ -15,6 +16,7 @@ const index = () => {
     <NewsetProducts /> 
     <Features />
     <TopTools />
+    <FAQ />
     <SocialMedia />
    </>
   )
