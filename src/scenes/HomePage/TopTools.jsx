@@ -7,34 +7,39 @@ import icon4 from '../../assets/icon-4.png'
 
 const TopTools = () => {
   return (
-    <div class='flex justify-center items-center bg-[#f8f8f8] py-16'>
-        <div class='flex flex-col max-w-[1200px]'>
+    <div class='flex justify-center items-center font-poppins'>
+        <div class='flex flex-col max-w-[1200px] '>
             <div>
-                <h2 class='text-3xl text-center'>Najlepsze narzędzia AI</h2>
+                <h2 class='text-3xl mt-12 text-center'>Polecane narzędzia AI</h2>
             </div>
-            <div class='mt-10 grid gap-10 lg:grid-cols-2'>
+            <div class='mt-10 px-2 grid gap-10 lg:grid-cols-3 lg:grid-rows-2 lg:max-h-[700px]'>
                 <AiTool 
                     icon={icon1}
-                    name='Glam'
-                    description='Ai Video Generator blah blah blah blah blah blah blah blah blah blah blah blah blah blah'
+                    name='Midjourney'
+                    description='Midjourney to niezwykle popularny ostatnimi czasy generator obrazów, bazujący na sztucznej inteligencji. Na podstawie komunikatu tekstowego, wprowadzanego przez użytkownika (tzw. promptu) tworzy on wizualizacje, które oddają rzeczywistość bądź wręcz przeciwnie – stanowią jej fantazyjną, niekiedy wręcz surrealistyczną wizję. '
                     href='dsda'
+                    grid='lg:col-span-2'
+                    smallImage
                 />
                 <AiTool 
                     icon={icon2}
-                    name='Glam'
-                    description='Ai Video Generator blah blah blah blah blah blah blah blah blah blah blah blah blah blah'
+                    name='ChatGPT'
+                    description='GPT-4 stanowi następną ewolucję w rodzinie modeli językowych GPT. To model uczenia głębokiego, który bazuje na architekturze transformerowej, gwarantującej jego zdolności do przetwarzania ogromnych ilości informacji w niemal natychmiastowym tempie. Dzięki temu GPT-4 osiąga niezwykłe rezultaty w generowaniu tekstu oraz analizie języka naturalnego.
+
+                    Model ten przewyższa swojego poprzednika, GPT-3, pod względem jakości generowanych odpowiedzi, zrozumienia kontekstu i zdolności adaptacyjnych. W porównaniu z wcześniejszymi wersjami, GPT-4 jest bardziej odporny na wprowadzanie w błąd, redukuje błędy oraz generuje bardziej koherentne i precyzyjne odpowiedzi na szeroką gamę zapytań.'
                     href='dsda'
+                    grid='lg:row-span-2'
                 />
                 <AiTool 
                     icon={icon3}
-                    name='Glam'
-                    description='Ai Video Generator blah blah blah blah blah blah blah blah blah blah blah blah blah blah'
+                    name='DALL-E 2'
+                    description='Model uczenia maszynowego zdolny do tworzenia nowych, oryginalnych obrazów na podstawie podanych mu opisów tekstowych. Dall-e 2 zapewnia lepszą jakość generowanych obrazów i bardziej złożone wizualizacje.'
                     href='dsda'
                 />
                 <AiTool 
                     icon={icon4}
-                    name='Glam'
-                    description='Ai Video Generator blah blah blah blah blah blah blah blah blah blah blah blah blah blah'
+                    name='D-ID'
+                    description='Technologia służąca do ochrony tożsamości poprzez modyfikowanie twarzy na zdjęciach w taki sposób, aby były trudne do rozpoznania dla algorytmów rozpoznawania twarzy, zachowując jednocześnie naturalny wygląd.'
                     href='dsda'
                 />
             </div>
@@ -44,4 +49,3 @@ const TopTools = () => {
 }
 
 export default TopTools
-

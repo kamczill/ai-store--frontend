@@ -3,7 +3,7 @@ import tabletLogo from '../../assets/tablet-logo.png'
 import brainSVG from '../../assets/Brain-Computer.svg'
 const Header = () => {
   return (
-    <div className='justify-self-center self-center flex flex-col gap-5 justify-center items-center font-poppins lg:flex-row mt-8'>
+    <div className='justify-self-center self-center flex flex-col gap-5 justify-center items-center font-poppins lg:flex-row mt-12'>
     <div class='w-[80%] max-w-[450px]'>
       <img src={brainSVG} class='w-full'/>
     </div>

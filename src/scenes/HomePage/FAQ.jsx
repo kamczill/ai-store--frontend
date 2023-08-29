@@ -5,7 +5,7 @@ import { questionsAndAnswers } from '../../assets/questionsAndAnswers'
 
 const FAQ = () => {
   return (
-    <div className="w-full px-4 flex flex-col gap-10">
+    <div className="w-full px-4 mt-12 flex flex-col gap-10">
         <div>
                 <h2 class='text-3xl text-center'>FAQ</h2>
         </div>

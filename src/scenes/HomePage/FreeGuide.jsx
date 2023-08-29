@@ -2,7 +2,7 @@ import React from 'react'
 
 const FreeGuide = () => {
   return (
-    <div class='w-full flex justify-center items-center bg-white mt-10  font-poppins p-10 lg:p-[6rem]'>
+    <div class='w-full flex justify-center items-center bg-white mt-12  font-poppins p-10 lg:p-[6rem]'>
         <div class='flex flex-col justify-center items-center gap-5 max-w-[1280px]'>
         <h2 class='text-3xl text-center'>
             Załóż konto i <span class='text-green-600 font-bold'>otrzymaj za darmo</span> PDF z ponad 600 najlepszymi zapytaniami do ChatuGPT!
