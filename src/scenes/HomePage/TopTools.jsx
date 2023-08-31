@@ -7,12 +7,12 @@ import icon4 from '../../assets/icon-4.png'
 
 const TopTools = () => {
   return (
-    <div class='flex justify-center items-center font-poppins'>
+    <div class='flex justify-center items-center font-poppins p-5 py-12'>
         <div class='flex flex-col max-w-[1200px] '>
             <div>
-                <h2 class='text-3xl mt-12 text-center'>Polecane narzędzia AI</h2>
+                <h2 class='text-3xl text-center'>Polecane narzędzia AI</h2>
             </div>
-            <div class='mt-10 px-2 grid gap-10 lg:grid-cols-3 lg:grid-rows-2 lg:max-h-[700px]'>
+            <div class='mt-8 grid gap-8 lg:grid-cols-3 lg:grid-rows-2 lg:max-h-[700px]'>
                 <AiTool 
                     icon={icon1}
                     name='Midjourney'

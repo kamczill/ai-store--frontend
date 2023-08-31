@@ -5,11 +5,11 @@ import { questionsAndAnswers } from '../../assets/questionsAndAnswers'
 
 const FAQ = () => {
   return (
-    <div className="w-full px-4 mt-12 flex flex-col gap-10">
+    <div className="w-full px-5 py-12 flex flex-col gap-8">
         <div>
                 <h2 class='text-3xl text-center'>FAQ</h2>
         </div>
-      <div className="mx-auto w-full max-w-4xl rounded-2xl bg-white p-2">
+      <div className="mx-auto w-full max-w-4xl rounded-2xl bg-white px-2">
         {questionsAndAnswers?.map((object, idx) => (
             <Disclosure as="div" className={`mt-4 ${idx === questionsAndAnswers.length -1 ? 'mb-2': ''}`}>
             {({ open }) => (

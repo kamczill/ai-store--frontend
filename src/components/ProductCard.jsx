@@ -54,7 +54,7 @@ const ProductCard = ({product, isBought, onLoad}) => {
   }, [isInCart, amountOfProducts])
 
   return (
-    <div class='max-w-[300px] flex flex-col justify-between items-center border-2 border-black rounded-md p-3 font-ms bg-white'>
+    <div class='w-[300px] flex flex-col self-stretch justify-between items-center border-2 border-black rounded-md p-3 font-ms bg-white'>
         <div class=''>
             <Link to={`/produkty/${product?.id}`}>
               <img src={`${product?.cover}`} alt='cover' onLoad={() => onLoad()}/>

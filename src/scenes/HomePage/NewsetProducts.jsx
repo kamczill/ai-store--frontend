@@ -34,8 +34,8 @@ const NewsetProducts = () => {
     }, [])
 
   return (
-    <div class='flex justify-center items-center w-full'>
-        <div class='w-[80%] min-h-[500px] flex flex-col gap-10'>
+    <div class='flex justify-center items-center w-full py-12'>
+        <div class='w-[80%] min-h-[500px] flex flex-col gap-8'>
             <div>
                 <h2 class='text-3xl text-center'>Najnowsze produkty</h2>
             </div>

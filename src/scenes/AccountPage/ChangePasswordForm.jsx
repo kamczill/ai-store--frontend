@@ -112,7 +112,7 @@ const ChangePasswordForm = () => {
             {props => (
                 <form 
                     onSubmit={props.handleSubmit} 
-                    class='flex flex-col gap-3 w-full max-w-[350px]'
+                    class='flex flex-col gap-4 w-full max-w-[350px]'
                 >
                     <div class='flex flex-col'>
                         <label htmlFor="password">Stare Hasło </label>
@@ -127,8 +127,8 @@ const ChangePasswordForm = () => {
                             helperText={props.touched.old_password && props.errors.old_password}
                             class='py-2 px-3 rounded-lg'
                         />
-                        {props.touched.oldPassword && Boolean(props.errors.oldPassword) && (
-                        <p class='text-red-500'>{props.errors.oldPassword}</p>
+                        {props.touched.old_password && Boolean(props.errors.old_password) && (
+                        <p class='text-red-500'>{props.errors.old_password}</p>
                     )}
                     </div>
                     <div class='flex flex-col'>

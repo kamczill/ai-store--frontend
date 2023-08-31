@@ -33,9 +33,9 @@ const index = () => {
     getUserOrders();
   }, [])
   return (
-    <div class='font-ms w-full h-full pt-10'>
+    <div class='font-ms w-full h-full pt-6 pb-12'>
       <h1 class='text-center font-bold text-xl'>Twoje zamówienia</h1>
-      <div class='flex w-full justify-center mt-10'>
+      <div class='flex w-full h-full justify-center mt-8'>
         { userOrders ? (
 
         
@@ -50,14 +50,14 @@ const index = () => {
             <tbody class='w-1/2'>
               {userOrders?.map((order) => (
               <tr>
-                <td class='text-center text-lg underline'><Link to={`/zamowienia/${order.id}`}>{order.id}</Link></td>
+                <td class='text-center text-xl underline p-3'><Link to={`/zamowienia/${order.id}`}>{order.id}</Link></td>
                 <td class='text-center'>{formatDate(order.purchase_timestamp)}</td>
               </tr> 
               ))
             }
             </tbody>
           </table>)
-        : <Loader />
+        : <div className='flex'><Loader /></div>
         }
       </div>
     </div>

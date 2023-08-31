@@ -27,7 +27,7 @@ const index = () => {
   return (
     <div class='w-full flex flex-col gap-10 font-ms h-full'>
       <div class='p-5 mt-10 text-center sm:text-left sm:pl-20'>
-        <h2 class='text-xl font-bold'>Witaj, {currentUser?.first_name} {currentUser?.last_name}</h2>
+        <h2 class='text-xl font-bold'>{currentUser?.first_name} {currentUser?.last_name}</h2>
         {/* <h2>Pamiętaj, los twoich włosów leży w twoich rękach!</h2> */}
       </div>
       <div class='flex flex-col gap-12 justify-center p-5'>

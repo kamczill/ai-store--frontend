@@ -3,8 +3,8 @@ import { FaSquareInstagram, FaSquareFacebook, FaSquarePinterest, FaSquareTumblr 
 
 const SocialMedia = () => {
   return (
-    <div className='w-full flex justify-center items-center bg-white mt-12'>
-    <div className='max-w-[1200px] w-full py-6 flex flex-col justify-end items-center gap-5 lg:flex-row lg:pr-4 xl:pr-0'>
+    <div className='w-full flex justify-center items-center bg-white py-12'>
+    <div className='max-w-[1200px] w-full flex flex-col justify-end items-center gap-5 lg:flex-row lg:pr-4 xl:pr-0'>
       <h3 className='text-lg font-ms'>Sprawdź nasze social media</h3>
       <div className='flex gap-3'>
       <FaSquareInstagram size={50} className='scale-90 cursor-pointer hover:scale-100'/>

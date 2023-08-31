@@ -45,7 +45,7 @@ const App = () => {
           <header>
             <Navbar />
           </header>
-          <div className='h-full grid grid-flow-row gap-10 flex-grow' id='main'>
+          <div className='h-full grid grid-flow-row flex-grow' id='main'>
             <Routes>
               <Route path='/' element={<HomePage/>} />
               <Route path='/book.epub' element={currentUser.logged_in ? <Reader /> : <Navigate to='/'/> } />
@@ -64,7 +64,7 @@ const App = () => {
           </div>
           <Footer />
         </div>
-        <ToastContainer limit={1} />
+        <ToastContainer limit={1} className='p-5 md:p-0' />
       </CartContext.Provider>
     </AuthContext.Provider>
   </>

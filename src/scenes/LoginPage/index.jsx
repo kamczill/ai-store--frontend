@@ -13,7 +13,7 @@ const index = () => {
 
   return (
     <div className='flex justify-center align-middle'>
-        <div class='w-full p-5 justify-self-center self-center flex flex-col items-center font-ms'>
+        <div class='w-full p-5 py-12 flex flex-col items-center font-ms md:py-0 md:justify-self-center md:self-center'>
           {typeOfForm == 'login' ? 
           (
           <>

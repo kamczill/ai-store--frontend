@@ -119,7 +119,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
             {props => (
                 <form 
                     onSubmit={props.handleSubmit} 
-                    class='flex flex-col gap-3 w-full max-w-[350px] font-ms'
+                    class='flex flex-col gap-4 w-full max-w-[350px] font-ms'
                 >
                     <div class='flex flex-col'>
                     <label htmlFor="firstName">
