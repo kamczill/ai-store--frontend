@@ -25,11 +25,10 @@ const index = () => {
   
   const handleImageLoad = () => {
     setLoadedImagesCount(prevCount => prevCount + 1);
-    console.log(':)')
   };
 
   useEffect(() => {
-      if (products?.length && loadedImagesCount === products?.length) {
+      if (products?.length && loadedImagesCount === products?.length || products?.length === 0) {
           setIsLoading(false);
       }
   }, [loadedImagesCount, products]);
@@ -47,8 +46,10 @@ const index = () => {
         : ''
       }
       <div className='mx-auto max-w-[1350px]'>
+      {
+          products?.length === 0 && <p>Brak kupionych materiałów</p>
+      }
       <div class={` ${isLoading ? 'hidden': ''} pt-8 flex flex-col flex-wrap gap-8 items-center justify-center md:flex-row md:gap-8 md:justify-center md:items-center`}>
-
         {
           products?.map(product => <ProductCard product={product} onLoad={handleImageLoad} isBought/>)
         }

@@ -36,9 +36,7 @@ const index = () => {
     <div class='font-ms w-full h-full pt-6 pb-12'>
       <h1 class='text-center font-bold text-xl'>Twoje zamówienia</h1>
       <div class='flex w-full h-full justify-center mt-8'>
-        { userOrders ? (
-
-        
+        { userOrders?.length > 0 ? (
           <table class="table-fixed w-full max-w-[500px]">
             <thead class='w-1/2'>
               <tr>
@@ -57,7 +55,10 @@ const index = () => {
             }
             </tbody>
           </table>)
-        : <div className='flex'><Loader /></div>
+        : userOrders ? (
+          <div>Brak złożonych zamówień </div>
+        ): <div className='flex'><Loader /></div>
+
         }
       </div>
     </div>
