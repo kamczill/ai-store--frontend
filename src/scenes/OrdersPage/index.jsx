@@ -56,7 +56,7 @@ const index = () => {
             </tbody>
           </table>)
         : userOrders ? (
-          <div>Brak złożonych zamówień </div>
+          <div className='flex items-center align-center'>Brak złożonych zamówień </div>
         ): <div className='flex'><Loader /></div>
 
         }
