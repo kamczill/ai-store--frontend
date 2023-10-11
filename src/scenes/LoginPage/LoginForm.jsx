@@ -3,10 +3,9 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useHistory } from 'react-router-dom'
 import { AuthContext } from '../../App'
 import { clearWaitingQueue } from '../../App'
-import { useHistory } from "react-router-dom";
 
 
 const validationSchema = yup.object({
