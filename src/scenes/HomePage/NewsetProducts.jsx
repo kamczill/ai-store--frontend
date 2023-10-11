@@ -10,7 +10,7 @@ const NewsetProducts = () => {
     const [loadedImagesCount, setLoadedImagesCount] = useState(0);
 
     const getProducts = async () => {
-        await axiosInstance('products/')
+        await axiosInstance('products/', {withCredentials: true})
         .then(res => {
             setProducts(res?.data.reverse()
             .slice(0,4))
