@@ -5,7 +5,7 @@ export const axiosInstance = axios.create({
     baseURL: "https://be.aiszef.pl/",
     withCredentials: true,
     headers: {
-      'Content-Type': 'application/json'
+      'Access-Control-Allow-Origin': '*'
     }
   });
   
@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
               .post('https://be.aiszef.pl/users/refresh/', {'refresh': 'refresh'}, {
                 withCredentials: true,
                 headers: {
-                    "Content-Type": "application/json"
+                  'Access-Control-Allow-Origin': '*'
                 }
               })
         return axios(originalRequest)

@@ -98,7 +98,7 @@ const LoginForm = () => {
     }
 
     useEffect(() => {
-        if(user.logged_in){
+        if(user.logged_in === 'true'){
             navigate('/')
         }
     }, [])
