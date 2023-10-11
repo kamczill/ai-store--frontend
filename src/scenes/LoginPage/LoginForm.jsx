@@ -61,7 +61,6 @@ const LoginForm = () => {
             headers: {
                 'Access-Control-Allow-Origin': '*'
             }
-            
         })
         .then(res => {
             console.log(res);
@@ -69,7 +68,7 @@ const LoginForm = () => {
             window.location.reload(false);
             successNotification();
             clearWaitingQueue();
-            navigate('/');
+            // navigate('/');
         })
         .catch(err => {
             console.log(err)
