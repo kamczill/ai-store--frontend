@@ -6,8 +6,6 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../App'
 import { clearWaitingQueue } from '../../App'
-import { useHistory } from "react-router-dom";
-
 
 const validationSchema = yup.object({
     email: yup
@@ -29,7 +27,6 @@ const LoginForm = () => {
     const [errorsFromServer, setErrorsFromServer] = useState();
     const navigate = useNavigate()
     const user = useContext(AuthContext)
-    const history = useHistory();
 
     const successNotification = () => {
         toast.success('Udało Ci się zalogować!', {
@@ -89,12 +86,6 @@ const LoginForm = () => {
             ))
         )
     }
-
-    useEffect(() => {
-        if(user.logged_in === 'true'){
-            navigate('/')
-        }
-    }, [user])
 
   return (
     <>
