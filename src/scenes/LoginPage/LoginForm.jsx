@@ -59,7 +59,7 @@ const LoginForm = () => {
         await axios.post('https://be.aiszef.pl/users/login/', {...values}, {
             withCredentials: true,
             headers: {
-                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
             }
             
         })
@@ -79,7 +79,7 @@ const LoginForm = () => {
         await axios('https://be.aiszef.pl/users/1/', {
             withCredentials: true,
             headers: {
-                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
             }
             
         })
