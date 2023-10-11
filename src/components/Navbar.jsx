@@ -22,11 +22,15 @@ const Navbar = () => {
     
 
     const logout = async () => {
-        await axiosInstance('/users/logout/')
-        .then(res => {
-            user.logged_in = false
-            window.location.reload(false);
-        })
+        await axios('https://be.aiszef.pl/users/logout/', {
+            withCredentials: true,
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }}
+            ).then(res => {
+                user.logged_in = false
+                window.location.reload(false);
+            })
     }
 
     const handleClick = (e) => {
