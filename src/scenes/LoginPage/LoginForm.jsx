@@ -29,7 +29,7 @@ const LoginForm = () => {
     const user = useContext(AuthContext)
 
     const successNotification = () => {
-        toast.success('Success! Check your console to see response data', {
+        toast.success('Udało Ci się zalogować!', {
             position: "bottom-center",
             autoClose: 5000,
             hideProgressBar: true,
