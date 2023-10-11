@@ -69,7 +69,7 @@ const LoginForm = () => {
             window.location.reload(false);
             successNotification();
             clearWaitingQueue();
-            // navigate('/');
+            navigate('/');
         })
         .catch(err => {
             console.log(err)

@@ -62,7 +62,6 @@ const ResetForm = () => {
             clearWaitingQueue();
             props.resetForm();
             successNotification();
-            // navigate('/');
         })
         .catch(err => {
             console.log(err)

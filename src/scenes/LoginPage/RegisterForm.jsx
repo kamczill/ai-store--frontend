@@ -69,7 +69,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
     
 
     const handleSubmit = async ({values, props}) => {
-        await axios.post('http://127.0.0.1:8001/users/create/', {
+        await axios.post('https://be.aiszef.pl/users/create/', {
             'email': values.email,
             'password': values.password,
             'first_name': values.firstName,

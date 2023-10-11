@@ -22,7 +22,7 @@ const Navbar = () => {
     
 
     const logout = async () => {
-        await axiosInstance('http://127.0.0.1:8001/users/logout/', {
+        await axiosInstance('https://be.aiszef.pl/users/logout/', {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json'
