@@ -4,7 +4,7 @@ import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 import { BsCartFill } from 'react-icons/bs'
 import { BiSolidUser } from 'react-icons/bi'
 import { AuthContext, CartContext } from '../App';
-import axiosInstance from '../axios/axios'
+import axios from 'axios';
 import Cart from './Cart';
 
 const Navbar = () => {
