@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 export const axiosInstance = axios.create({
-    baseURL: "http://127.0.0.1:8001/",
+    baseURL: "https://ai-store-bba3f15938d4.herokuapp.com/",
   });
   
 
@@ -17,7 +17,7 @@ axiosInstance.interceptors.response.use(
       if (error?.response?.status === 401 && !originalRequest?.sent) {
         originalRequest.sent = true
         await axios
-              .post('http://127.0.0.1:8001/users/refresh/', {'refresh': 'refresh'}, {
+              .post('https://ai-store-bba3f15938d4.herokuapp.com/users/refresh/', {'refresh': 'refresh'}, {
                 withCredentials: true,
                 headers: {
                     "Content-Type": "application/json"

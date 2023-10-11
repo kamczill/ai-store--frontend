@@ -56,7 +56,7 @@ const LoginForm = () => {
     
 
     const handleSubmit = async ({values, props}) => {
-        await axios.post('http://127.0.0.1:8001/users/login/', {...values}, {
+        await axios.post('http://be.aiszef.pl/users/login/', {...values}, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
