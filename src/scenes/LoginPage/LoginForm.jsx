@@ -65,10 +65,10 @@ const LoginForm = () => {
         .then(res => {
             console.log(res);
             user.logged_in = 'true'
-            window.location.reload(false);
-            successNotification();
+            // window.location.reload(false);
             clearWaitingQueue();
-            // navigate('/');
+            navigate('/');
+            successNotification();
         })
         .catch(err => {
             console.log(err)
