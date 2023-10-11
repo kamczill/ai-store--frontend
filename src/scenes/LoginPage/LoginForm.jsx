@@ -67,7 +67,7 @@ const LoginForm = () => {
             user.logged_in = 'true'
             window.location.reload(false);
             clearWaitingQueue();
-            navigate('/');
+            // navigate('/');
             successNotification();
         })
         .catch(err => {
@@ -91,7 +91,7 @@ const LoginForm = () => {
         if(user.logged_in === 'true'){
             navigate('/')
         }
-    }, [])
+    }, [user])
 
   return (
     <>
