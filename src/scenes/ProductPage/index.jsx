@@ -3,8 +3,11 @@ import { useParams } from 'react-router-dom'
 import axiosInstance from '../../axios/axios';
 import { toast } from 'react-toastify'
 import { CartContext, AuthContext } from '../../App'
+import Loader from '../../components/Loader'
+
 
 const index = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const {amountOfProducts, updateCart } = useContext(CartContext)
   const [product, setProduct] = useState();
@@ -19,6 +22,7 @@ const index = () => {
     }).then(res => {
       console.log(res.data)
       setProduct(res?.data)
+      setIsLoading(false)
       checkProductCart(res?.data)
     })
   }
@@ -57,7 +61,14 @@ const index = () => {
 
   return (
     <div class='p-5 flex items-center justify-center font-ms'>
-      <div class='flex flex-col gap-5 lg:flex-row'>
+            {isLoading 
+                ? (
+                    <div className='mt-10'>
+                        <Loader />
+                    </div>
+                ) : ''
+            }
+      <div class={`${isLoading ? 'hidden': 'flex'} flex-col gap-5 lg:flex-row`}>
         <div class='max-w-[400px]'>
           <img src={product?.cover} alt={product?.title} />
         </div>
