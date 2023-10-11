@@ -22,12 +22,7 @@ const Navbar = () => {
     
 
     const logout = async () => {
-        await axiosInstance('https://be.aiszef.pl/users/logout/', {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        await axiosInstance('/users/logout/')
         .then(res => {
             user.logged_in = false
             window.location.reload(false);
