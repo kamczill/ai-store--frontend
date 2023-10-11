@@ -76,15 +76,6 @@ const LoginForm = () => {
             errorNotification();
             clearWaitingQueue();
         })
-        await axios('https://be.aiszef.pl/users/1/', {
-            withCredentials: true,
-            headers: {
-                'Access-Control-Allow-Origin': '*'
-            }
-            
-        })
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
     }
     
     const showErrors = (errors) => {
