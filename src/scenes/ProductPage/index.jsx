@@ -22,7 +22,6 @@ const index = () => {
     }).then(res => {
       console.log(res.data)
       setProduct(res?.data)
-      setIsLoading(false)
       checkProductCart(res?.data)
     })
   }
@@ -70,7 +69,7 @@ const index = () => {
             }
       <div class={`${isLoading ? 'hidden': 'flex'} flex-col gap-5 lg:flex-row`}>
         <div class='max-w-[400px]'>
-          <img src={product?.cover} alt={product?.title} />
+          <img src={product?.cover} alt={product?.title} onLoad={() => setIsLoading(false)}/>
         </div>
         <div class='max-w-[400px] lg:p-5 lg:max-w-[700px]'>
             <p class='text-lg'>{product?.author}</p>

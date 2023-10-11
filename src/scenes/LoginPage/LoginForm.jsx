@@ -56,7 +56,7 @@ const LoginForm = () => {
     
 
     const handleSubmit = async ({values, props}) => {
-        await axios.post('https://ai-store-bba3f15938d4.herokuapp.com/users/login/', {...values}, {
+        await axios.post('https://be.aiszef.pl/users/login/', {...values}, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ const LoginForm = () => {
             errorNotification();
             clearWaitingQueue();
         })
-        await axios('https://ai-store-bba3f15938d4.herokuapp.com/users/1/', {
+        await axios('https://be.aiszef.pl/users/1/', {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
