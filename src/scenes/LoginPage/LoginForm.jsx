@@ -3,9 +3,10 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { useNavigate, useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../App'
 import { clearWaitingQueue } from '../../App'
+import { useHistory } from "react-router-dom";
 
 
 const validationSchema = yup.object({
@@ -67,9 +68,10 @@ const LoginForm = () => {
         .then(res => {
             console.log(res);
             user.logged_in = 'true'
+            // window.location.reload(false);
             clearWaitingQueue();
+            navigate('/');
             successNotification();
-            history.push("/");
         })
         .catch(err => {
             console.log(err)
