@@ -3,9 +3,6 @@ import axios from 'axios'
 
 export const axiosInstance = axios.create({
     baseURL: "https://ai-store-bba3f15938d4.herokuapp.com/",
-    headers: {
-      "Access-Control-Allow-Origin": "*"
-    },
     withCredentials: true
   });
   
