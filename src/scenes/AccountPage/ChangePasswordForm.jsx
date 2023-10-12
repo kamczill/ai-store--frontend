@@ -32,7 +32,7 @@ const loginInitialValues = {
 const ChangePasswordForm = () => {
     const [errorsFromServer, setErrorsFromServer] = useState();
     const navigate = useNavigate()
-    const user = useContext(AuthContext)
+    const {currentUser:user} = useContext(AuthContext)
 
     const successNotification = () => {
         toast.success('Twoje hasło zostało zmienione!', {

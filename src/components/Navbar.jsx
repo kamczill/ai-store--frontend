@@ -17,7 +17,7 @@ const Navbar = () => {
     const cartIconDesktopRef = useRef();
 
     const [activeItem, setActiveItem] = useState('');
-    const user = useContext(AuthContext)
+    const {currentUser: user} = useContext(AuthContext)
     const {amountOfProducts} = useContext(CartContext)
     
 

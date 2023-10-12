@@ -11,7 +11,7 @@ const ProductCard = ({product, isBought, onLoad}) => {
   const [isInCart, setIsInCart] = useState()
   const {amountOfProducts, updateCart } = useContext(CartContext)
   const navigate = useNavigate()
-  const user = useContext(AuthContext)
+  const {currentUser: user} = useContext(AuthContext)
 
   const checkProductCart = () => {
     const items = JSON.parse(localStorage.getItem('cart'))

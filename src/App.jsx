@@ -39,7 +39,7 @@ const App = () => {
 
   return (
    <>
-    <AuthContext.Provider value={currentUser}>
+    <AuthContext.Provider value={{currentUser, setCurrentUser}}>
       <CartContext.Provider value={{amountOfProducts, updateCart }}>
         <div className='flex flex-col min-h-screen w-full bg-gray-100' id='container'>
           <header>

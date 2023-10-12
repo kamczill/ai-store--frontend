@@ -12,7 +12,7 @@ const index = () => {
   const {amountOfProducts, updateCart } = useContext(CartContext)
   const [product, setProduct] = useState();
   const [isInCart, setIsInCart] = useState()
-  const user = useContext(AuthContext)
+  const {currentUser: user} = useContext(AuthContext)
 
   console.log(id)
 

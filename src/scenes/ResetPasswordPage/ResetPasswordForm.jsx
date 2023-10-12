@@ -27,7 +27,7 @@ const loginInitialValues = {
 const ResetPasswordForm = ({token}) => {
     const [errorsFromServer, setErrorsFromServer] = useState();
     const navigate = useNavigate()
-    const user = useContext(AuthContext)
+    const {currentUser: user} = useContext(AuthContext)
 
     const successNotification = () => {
         toast.success('Twoje hasło zostało zmienione! Możesz się zalogować', {

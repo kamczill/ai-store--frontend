@@ -26,7 +26,7 @@ const loginInitialValues = {
 const LoginForm = () => {
     const [errorsFromServer, setErrorsFromServer] = useState();
     const navigate = useNavigate()
-    const user = useContext(AuthContext)
+    const {currentUser, setCurrentUser} = useContext(AuthContext)
 
     const successNotification = () => {
         toast.success('Udało Ci się zalogować!', {
@@ -65,6 +65,7 @@ const LoginForm = () => {
         .then(res => {
             console.log(res);
             user.logged_in = 'true'
+                setCurrentUser({...currentUser, "logged_in": true})
             // window.location.reload(false);
             clearWaitingQueue();
             navigate('/');
