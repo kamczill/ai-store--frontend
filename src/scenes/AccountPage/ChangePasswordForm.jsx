@@ -42,11 +42,11 @@ const ChangePasswordForm = () => {
     const handleSubmit = async ({values}) => {
         try{
             await axiosInstance.post('users/change-password/', {...values})
-            setCurrentUser("true")
+            setCurrentUser(true)
             clearWaitingQueue();
             successNotification();
         } catch (err){
-            console.log(err)
+            console.log(`${err.response.status}: ${err.response.statusText}`)
             setErrors(err)
             errorNotification();
             clearWaitingQueue();
@@ -59,7 +59,7 @@ const ChangePasswordForm = () => {
         <Formik
             initialValues={loginInitialValues}
             validationSchema={validationSchema}
-            onSubmit={(values, props) => handleSubmit({values, props})}
+            onSubmit={handleSubmit}
         >
             {props => (
                 <form 

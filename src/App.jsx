@@ -40,13 +40,12 @@ const App = () => {
   const { currentUser, setCurrentUser } = useCurrentUser();
   const [amountOfProducts, setAmountOfProducts] = useState()
 
-  const getLenghtOfCart = () => JSON.parse(localStorage.getItem('cart'))?.length || 0
-
   const updateCart = (newValue) => {
     setAmountOfProducts(newValue)
   }
 
   useEffect(() => {
+    const getLenghtOfCart = () => JSON.parse(localStorage.getItem('cart'))?.length || 0
     setAmountOfProducts(getLenghtOfCart())
   }, [])
 
