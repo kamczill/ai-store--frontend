@@ -37,7 +37,7 @@ const index = () => {
       <h1 class='text-center font-bold text-xl'>Twoje zamówienia</h1>
       <div class='flex w-full h-full justify-center mt-8'>
         { userOrders?.length > 0 ? (
-          <table class="table-fixed w-full max-w-[500px]">
+          <table class="table-fixed w-full h-fit max-w-[500px]">
             <thead class='w-1/2'>
               <tr>
                 <th class='w-1/3'>Id</th>
