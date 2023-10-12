@@ -63,9 +63,7 @@ const LoginForm = () => {
             }
         })
         .then(res => {
-            console.log(res);
-            user.logged_in = 'true'
-                setCurrentUser({...currentUser, "logged_in": true})
+            setCurrentUser({...currentUser, "logged_in": true})
             // window.location.reload(false);
             clearWaitingQueue();
             navigate('/');
