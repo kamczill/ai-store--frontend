@@ -1,7 +1,4 @@
-import React from 'react'
-import featureAvatar from './../../assets/feature-avatar-1.svg'
 import Feature from '../../components/Feature'
-
 import {AiOutlineFilePdf, AiOutlineArrowRight, AiOutlineArrowDown } from 'react-icons/ai'
 import {VscAccount } from 'react-icons/vsc'
 import {BsFillCartCheckFill } from 'react-icons/bs'
