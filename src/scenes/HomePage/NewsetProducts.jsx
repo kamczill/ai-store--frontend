@@ -7,19 +7,11 @@ import Loader from '../../components/Loader'
 const NewsetProducts = () => {
     const [products, setProducts] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null)
     const [loadedImagesCount, setLoadedImagesCount] = useState(0);
-
-    const getProducts = async () => {
-        await axiosInstance('products/')
-        .then(res => {
-            setProducts(res?.data.reverse()
-            .slice(0,4))
-        }).catch(err => console.log(err))
-    }
 
     const handleImageLoad = () => {
         setLoadedImagesCount(prevCount => prevCount + 1);
-        console.log(':)')
       };
     
       useEffect(() => {
@@ -30,7 +22,17 @@ const NewsetProducts = () => {
 
 
     useEffect(() => {
-        getProducts();
+        const fetchProducts = async () => {
+            try{
+                const response = await axiosInstance('products/')
+                setProducts(response.data.reverse().slice(0,4))
+            } catch (err) {
+                setError(err)
+                console.log(err)
+            }
+        }
+
+        fetchProducts();
     }, [])
 
   return (
@@ -40,23 +42,26 @@ const NewsetProducts = () => {
                 <h2 class='text-3xl text-center'>Najnowsze produkty</h2>
             </div>
             
-            {isLoading 
-                ? (
-                    <div className='mt-10'>
-                        <Loader />
-                    </div>
-                ) : ''
-            }
-            <div className={`${isLoading ? 'hidden': ''} flex flex-wrap gap-8 justify-center`}>
+            {isLoading && (
+                <div className='mt-10'>
+                    <Loader />
+                </div>
+            )}
+             <div className='flex flex-wrap gap-8 justify-center'>
                 {
                     products?.map(product => (
                         <ProductCard product={product} onLoad={handleImageLoad} />
                     ))
                 }
             </div>
+            {error && (
+                <div className='text-red-500 text-center mt-4'>
+                    Something went wrong: {error.message}
+                </div>
+            )}
         </div>
     </div>
   )
 }
 
-export default NewsetProducts
+export default NewsetProducts;
