@@ -47,7 +47,7 @@ const NewsetProducts = () => {
                     <Loader />
                 </div>
             )}
-             <div className='flex flex-wrap gap-8 justify-center'>
+             <div className={` ${isLoading ? 'hidden': 'flex'} flex-wrap gap-8 justify-center`}>
                 {
                     products?.map(product => (
                         <ProductCard product={product} onLoad={handleImageLoad} />
