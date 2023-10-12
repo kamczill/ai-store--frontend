@@ -5,8 +5,6 @@ import { CartContext } from '../App'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../App'
 
-// https://edit.org/images/cat/book-covers-big-2019101610.jpg
-
 const ProductCard = ({product, isBought, onLoad}) => {
   const [isInCart, setIsInCart] = useState()
   const {amountOfProducts, updateCart } = useContext(CartContext)
@@ -99,7 +97,6 @@ const ProductCard = ({product, isBought, onLoad}) => {
             
            
             </div>
-            {/* <p>Zestaw 600 najlepszych promptów ChatGPT to zasób, który pozwala na maksymalne wykorzystanie potencjału tej AI. </p> */}
         </div>
     </div>
   )

@@ -56,10 +56,10 @@ const LoginForm = () => {
     
 
     const handleSubmit = async ({values, props}) => {
-        await axios.post('https://be.aiszef.pl/users/login/', {...values}, {
+        await axios.post('http://127.0.0.1:8001/users/login/', {...values}, {
             withCredentials: true,
             headers: {
-                'Access-Control-Allow-Origin': '*'
+                // 'Access-Control-Allow-Origin': '*'
             }
         })
         .then(res => {

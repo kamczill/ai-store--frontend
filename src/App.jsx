@@ -1,41 +1,54 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import './App.css'
+// Third-party libraries
+import { createContext, useState, useEffect } from 'react';
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import Navbar from './components/Navbar'
-import HomePage from './scenes/HomePage'
-import ShopRulesPage from './scenes/ShopRulesPage'
-import Footer from './components/Footer'
-import LoginPage from './scenes/LoginPage'
-import AccountPage from './scenes/AccountPage'
-import MaterialsPage from './scenes/MaterialsPage'
-import OrdersPage from './scenes/OrdersPage'
-import OrderPage from './scenes/OrderPage'
-import ProductsPage from './scenes/ProductsPage'
-import ProductPage from './scenes/ProductPage'
-import ResetPasswordPage from './scenes/ResetPasswordPage'
-import OpenBoughtProductPage from './scenes/OpenBoughtProductPage'
-import PrivatePolicyPage from './scenes/PrivatePolicyPage'
-
-import { Routes, Route, Navigate } from "react-router-dom";
 import Cookies from 'js-cookie';
-import Reader from './components/Reader';
 
-export const AuthContext = createContext()
-export const CartContext = createContext()
+// Components
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
+// Scenes/Pages
+import HomePage from './scenes/HomePage';
+import ShopRulesPage from './scenes/ShopRulesPage';
+import LoginPage from './scenes/LoginPage';
+import AccountPage from './scenes/AccountPage';
+import MaterialsPage from './scenes/MaterialsPage';
+import OrdersPage from './scenes/OrdersPage';
+import OrderPage from './scenes/OrderPage';
+import ProductsPage from './scenes/ProductsPage';
+import ProductPage from './scenes/ProductPage';
+import ResetPasswordPage from './scenes/ResetPasswordPage';
+import OpenBoughtProductPage from './scenes/OpenBoughtProductPage';
+import PrivatePolicyPage from './scenes/PrivatePolicyPage';
+
+// Styles
+import './App.css';
+
+// Contexts
+export const AuthContext = createContext();
+export const CartContext = createContext();
 export const clearWaitingQueue = () => {
   toast.clearWaitingQueue();
-}
+};
+
+// Hooks
+import { useCurrentUser } from './hooks/useCurrentUser';
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState({'logged_in': Cookies.get('logged_in') === 'true' ? true : false});
-  const [amountOfProducts, setAmountOfProducts] = useState(JSON.parse(localStorage.getItem('cart'))?.length || 0)
+  const { currentUser, setCurrentUser } = useCurrentUser();
+  const [amountOfProducts, setAmountOfProducts] = useState()
+
+  const getLenghtOfCart = () => JSON.parse(localStorage.getItem('cart'))?.length || 0
 
   const updateCart = (newValue) => {
     setAmountOfProducts(newValue)
   }
+
+  useEffect(() => {
+    setAmountOfProducts(getLenghtOfCart())
+  }, [])
 
   return (
    <>
@@ -48,16 +61,16 @@ const App = () => {
           <div className='h-full grid grid-flow-row flex-grow' id='main'>
             <Routes>
               <Route path='/' element={<HomePage/>} />
-              <Route path='/book.epub' element={currentUser.logged_in ? <Reader /> : <Navigate to='/'/> } />
               <Route path="/regulamin" element={<ShopRulesPage/>} />
               <Route path="/polityka-prywatnosci" element={<PrivatePolicyPage/>} />
               <Route path="/login" element={<LoginPage/>} />
               <Route path="/password-reset/:token" element={<ResetPasswordPage/>} />
+              <Route path='/produkty' element={<ProductsPage />} />
+              <Route path='/produkty/:id' element={<ProductPage /> } />
+              
               <Route path='/konto' element={currentUser.logged_in ? <AccountPage /> : <HomePage/> } />
               <Route path='/zamowienia' element={currentUser.logged_in ? <OrdersPage /> : <HomePage/> } />
               <Route path='/zamowienia/:id' element={currentUser.logged_in ? <OrderPage /> : <HomePage/> } />
-              <Route path='/produkty' element={<ProductsPage />} />
-              <Route path='/produkty/:id' element={<ProductPage /> } />
               <Route path='/materialy' element={currentUser.logged_in ? <MaterialsPage /> : <HomePage/> } />
               <Route path='/materialy/:id' element={currentUser.logged_in ? <OpenBoughtProductPage/> : <HomePage/> } />
             </Routes>
