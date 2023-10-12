@@ -56,13 +56,17 @@ const ProductCard = ({product, isBought, onLoad}) => {
   return (
     <div class='w-[300px] flex flex-col self-stretch justify-between items-center border-2 border-black rounded-md p-3 font-ms bg-white'>
         <div class=''>
-            <Link to={`/produkty/${product?.id}`}>
+            <Link to={isBought ? `materialy/${product?.id}`:`/produkty/${product?.id}`}>
               <img src={`${product?.cover}`} alt='cover' onLoad={() => onLoad()}/>
             </Link>
         </div>
         <div class='w-full pt-1'>
             <p class='text-lg'>{product?.author}</p>
-            <h3 class='font-ms font-bold text-xl pointer lg:hover:underline lg:hover:decoration-2'><Link to={`/produkty/${product?.id}`}>{product?.title}</Link></h3>
+            <h3 class='font-ms font-bold text-xl pointer lg:hover:underline lg:hover:decoration-2'>
+              <Link to={isBought ? `materialy/${product?.id}`:`/produkty/${product?.id}`}>
+                {product?.title}
+              </Link>
+            </h3>
             <div class={`flex ${isBought ? 'justify-center': 'justify-between'} items-center px-2  pt-3 gap-3`}>
             { !isBought ? 
             <p class='text-md whitespace-nowrap'>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} zł</p>: 
