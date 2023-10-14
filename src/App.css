@@ -1,3 +1,11 @@
 body {
     height: 100%;
 }
+
+.active {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+    text-decoration-color: #48bb78; /* This color value is based on Tailwind's green-500 */
+
+}

@@ -1,46 +1,32 @@
 import React, { useState, useContext, useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 import { BsCartFill } from 'react-icons/bs'
 import { BiSolidUser } from 'react-icons/bi'
 import { AuthContext, CartContext } from '../App';
 import axios from 'axios';
 import Cart from './Cart';
+import { setOverlay, logout } from '../utils/navbarHelpers';
+import MobileMenu from './MobileMenu';
 
-const Navbar = () => {
+
+const Navbar = ({mainRef, containerRef}) => {
     const [menuIsOpen, setMenuIsOpen ] = useState(false);
     const [cartIsOpen, setCartIsOpen ] = useState(false);
     const [userNavIsOpen, setUserNavIsOpen] = useState(false)
     const [clickedOutside, setClickedOutside ] = useState(false);
-    const cartRef = useRef();
-    const cartIconRef = useRef();
-    const cartIconDesktopRef = useRef();
-
     const [activeItem, setActiveItem] = useState('');
+    
     const {currentUser: user} = useContext(AuthContext)
     const {amountOfProducts} = useContext(CartContext)
-    
 
-    const logout = async () => {
-        await axios('https://be.aiszef.pl/users/logout/', {
-            withCredentials: true,
-            headers: {
-                'Access-Control-Allow-Origin': '*'
-            }}
-            ).then(res => {
-                user.logged_in = false
-                window.location.reload(false);
-            })
-    }
+    const cartRef = useRef(null);
+    const cartIconRef = useRef(null);
+    const cartIconDesktopRef = useRef(null);
+
 
     const handleClick = (e) => {
-        if (activeItem?.target?.classList.contains('underline')){
-            activeItem?.target?.classList.remove('underline')
-        }
         if (!e) return;
-        e.preventDefault();
-        e.target.classList.add('underline', 'decoration-2', 'underline-offset-2', 'decoration-green-500')
-        setActiveItem(e)
         setCartIsOpen(false)
         if (userNavIsOpen) setUserNavIsOpen(false)
         if (menuIsOpen) setMenuIsOpen(false)
@@ -56,28 +42,7 @@ const Navbar = () => {
         setCartIsOpen(false)
     }
 
-    const setOverlay = () => {
-        const container = document.querySelector('#container')
-        const mainSection = document.querySelector('#main')
-        const viewport = window.innerWidth;
-        if(cartIsOpen || menuIsOpen){
-            mainSection.classList.add('blur')   
-            container.classList.add('min-h-[113vh]')
-            if (viewport < 640 && !menuIsOpen) {
-                mainSection.classList.add('hidden')   
-            }
-            if(menuIsOpen && mainSection.classList.contains('hidden')) mainSection.classList.remove('hidden')
-        } else {
-            mainSection.classList.remove('blur')   
-            container.classList.remove('min-h-[113vh]')
-            if (viewport < 640 && !menuIsOpen) {
-                mainSection.classList.remove('hidden')   
-            }
-        }
-    }
-
     const handleClickOutside = (event) => {
-        console.log(cartIconRef)
         if (
             cartRef.current 
             && !cartRef.current.contains(event.target) 
@@ -107,35 +72,33 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-        setOverlay();
-    }, [cartIsOpen, menuIsOpen])
+        setOverlay(mainRef, containerRef, cartIsOpen, menuIsOpen);
+    }, [mainRef, containerRef, cartIsOpen, menuIsOpen])
 
 
     useEffect(() => {
-        // Add event listener when component mounts
-    document.addEventListener('click', handleClickOutside);
-
-    // Cleanup when component unmounts
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
+        document.addEventListener('click', handleClickOutside);
+        
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
     }, [])
 
   return (
     <header>
-    <nav class='flex justify-between items-center p-5 font-ms'>
+    <nav className='flex justify-between items-center p-5 font-ms'>
         <h2 className='col-span-1 text-3xl font-bold lg:col-start-2 lg:text-center' onClick={() => handleClick()}>
-            <Link to='/' class='hover:text-black'>
+            <Link to='/' className='hover:text-black'>
             <span className='text-green-400'>AI</span>Szef
             </Link>
         </h2>
-        <div class='flex gap-5 lg:hidden'>
+        <div className='flex gap-5 lg:hidden'>
             { user.logged_in ? (                    
-                <div class='relative' onClick={() => handleOpenCart()} ref={cartIconRef}>
+                <div className='relative' onClick={() => handleOpenCart()} ref={cartIconRef}>
                     <BsCartFill size={30}/> 
                         {amountOfProducts > 0 ?
-                        <div class='absolute top-[-5px] right-[-5px] text-black w-[20px] h-[20px] rounded-xl bg-white flex items-center justify-center'>{amountOfProducts}</div>: 
-                        ''
+                        <div className='absolute top-[-5px] right-[-5px] text-black w-[20px] h-[20px] rounded-xl bg-white flex items-center justify-center'>{amountOfProducts}</div>: 
+                        null
                         }
                         
                 </div>
@@ -148,91 +111,66 @@ const Navbar = () => {
             }
         </div>
         {user.logged_in ?
-        <div class='hidden lg:flex lg:justify-center lg:items-center lg:gap-3'>
+        <div className='hidden lg:flex lg:justify-center lg:items-center lg:gap-3'>
                 
-                <div onClick={(e) => handleClick(e)}><Link  to='/' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</Link></div>
-                <div onClick={(e) => handleClick(e)}><Link  to='/materialy' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Moje materiały</Link></div>
-                <div onClick={(e) => handleClick(e)}><Link  to='/produkty' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link></div>
-                <div onClick={(e) => handleClick(e)}><Link  to='/zamowienia' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Zamówienia</Link></div>
+                <div onClick={(e) => handleClick(e)}><NavLink  to='/' className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</NavLink></div>
+                <div onClick={(e) => handleClick(e)}><NavLink  to='/materialy' className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Moje materiały</NavLink></div>
+                <div onClick={(e) => handleClick(e)}><NavLink  to='/produkty' className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</NavLink></div>
+                <div onClick={(e) => handleClick(e)}><NavLink  to='/zamowienia' className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Zamówienia</NavLink></div>
                 
-                <div class='relative cursor-pointer' onClick={() => toggleUserNav()} ref={cartIconDesktopRef}>
+                <div className='relative cursor-pointer' onClick={() => toggleUserNav()} ref={cartIconDesktopRef}>
                     <BiSolidUser size={30}/>
                     { userNavIsOpen ?
-                        <div  class='absolute top-9 right-0 bg-white px-[3rem] py-3 flex flex-col items-center gap-1 z-10 sm:rounded sm:drop-shadow-xl'>
+                        <div  className='absolute top-9 right-0 bg-white px-[3rem] py-3 flex flex-col items-center gap-1 z-10 sm:rounded sm:drop-shadow-xl'>
                             
-                            <div onClick={(e) => handleClick(e)}><Link  to='/konto'  class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Konto</Link></div>
-                            <Link
-                            class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
+                            <div onClick={(e) => handleClick(e)}><NavLink  to='/konto'  className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Konto</NavLink></div>
+                            <NavLink
+                            className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
                             to='/'
-                            onClick={() => logout()}
+                            onClick={() => logout(user)}
                             >
                                 Wyloguj
-                            </Link>
+                            </NavLink>
                         </div> 
                         : ''    
                     }
                 </div>
 
 
-                <div class='relative cursor-pointer' onClick={() => toggleCart()} ref={cartIconDesktopRef}>
+                <div className='relative cursor-pointer' onClick={() => toggleCart()} ref={cartIconDesktopRef}>
                 <BsCartFill size={30}/> 
                 {
                     amountOfProducts > 0 ?
-                    <div class='absolute top-[-5px] right-[-5px] text-black w-[20px] h-[20px] rounded-xl bg-white flex items-center justify-center'>{amountOfProducts}</div>: 
+                    <div className='absolute top-[-5px] right-[-5px] text-black w-[20px] h-[20px] rounded-xl bg-white flex items-center justify-center'>{amountOfProducts}</div>: 
                     ''
                 }
                 </div>
          </div>
         :
-        <div class='hidden lg:flex'>
-        <div onClick={(e) => handleClick(e)}><Link  to='/' class='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</Link></div>
-        <div onClick={(e) => handleClick(e)}><Link  to='/produkty' class='hidden  mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link></div>
-        <Link
-        class='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0 lg:ml-7'
+        <div className='hidden lg:flex'>
+        <div onClick={(e) => handleClick(e)}><NavLink  to='/' className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</NavLink></div>
+        <div onClick={(e) => handleClick(e)}><NavLink  to='/produkty' className='hidden  mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</NavLink></div>
+        <NavLink
+        className='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0 lg:ml-7'
         to='/login'
         >
             Zaloguj się
-        </Link>
+        </NavLink>
         </div>
     }
     </nav>
     {menuIsOpen && (
-        <div class='border-t-2 m-3 pt-4 flex flex-col justify-center items-center gap-5 lg:hidden'>
-            { user.logged_in ? (
-                <>
-                <div onClick={(e) => handleClick(e)}><Link  to='/' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</Link></div>
-                <div onClick={(e) => handleClick(e)}><Link  to='/materialy' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Moje materiały</Link></div>
-                <div onClick={(e) => handleClick(e)}><Link  to='/produkty' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link></div>
-                <div onClick={(e) => handleClick(e)}><Link  to='/zamowienia' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Zamówienia</Link></div>
-                <div onClick={(e) => handleClick(e)}><Link  to='/konto'  class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Konto</Link></div>
-                <div>
-                    <Link
-                    class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
-                    to='/'
-                    onClick={() => logout()}
-                    >
-                        Wyloguj
-                    </Link>
-                    </div>
-                </>
-                ) :
-                <>
-                <div onClick={(e) => handleClick(e)}><Link  to='/' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</Link></div>
-                <div onClick={(e) => handleClick(e)}><Link  to='/produkty' class='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</Link></div>
-                <Link to='/login' onClick={() => logout()} class='mt-1 bg-gray-700 text-white px-5 py-2'>Zaloguj się</Link>
-                </>
-            }
-        </div>
+        <MobileMenu user={user} handleClick={handleClick} />
     )}
     
         { cartIsOpen && user.logged_in ? (
-        <div class='absolute w-full min-h-screen z-30 bg-transparent'>
-            <div ref={cartRef}>
-                <Cart closeState={clickedOutside} isOpen={setCartIsOpen}/>
+            <div className='absolute w-full min-h-screen z-30 bg-transparent'>
+                <div ref={cartRef}>
+                    <Cart closeState={clickedOutside} isOpen={setCartIsOpen}/>
+                </div> 
             </div> 
-            </div> ): ''
+        ): null
         }
-    
     </header>
   )
 }

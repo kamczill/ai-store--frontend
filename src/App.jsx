@@ -1,5 +1,5 @@
 // Third-party libraries
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useRef } from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -39,6 +39,8 @@ import { useCurrentUser } from './hooks/useCurrentUser';
 const App = () => {
   const { currentUser, setCurrentUser } = useCurrentUser();
   const [amountOfProducts, setAmountOfProducts] = useState()
+  const containerRef = useRef(null)
+  const mainRef = useRef(null)
 
   const updateCart = (newValue) => {
     setAmountOfProducts(newValue)
@@ -53,11 +55,11 @@ const App = () => {
    <>
     <AuthContext.Provider value={{currentUser, setCurrentUser}}>
       <CartContext.Provider value={{amountOfProducts, updateCart }}>
-        <div className='flex flex-col min-h-screen w-full bg-gray-100' id='container'>
+        <div className='flex flex-col min-h-screen w-full bg-gray-100' id='container' ref={containerRef}>
           <header>
-            <Navbar />
+            <Navbar mainRef={mainRef} containerRef={containerRef} />
           </header>
-          <div className='h-full grid grid-flow-row flex-grow' id='main'>
+          <div className='h-full grid grid-flow-row flex-grow' id='main' ref={mainRef}>
             <Routes>
               <Route path='/' element={<HomePage/>} />
               <Route path="/regulamin" element={<ShopRulesPage/>} />
