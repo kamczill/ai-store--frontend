@@ -15,7 +15,6 @@ const index = () => {
         withCredentials: true,
       });
       setProducts(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -38,11 +37,11 @@ const index = () => {
   return (
     <>
     <h1 className='text-center font-bold font-ms text-xl pt-6'>Moje materiały</h1>
-    {isLoading ? <Loader /> : null}
+    {isLoading && <Loader />}
     <div className='mx-auto max-w-[1350px]'>
-      {products.length === 0 && <p>Brak kupionych materiałów</p>}
+      {products?.length === 0 && <p>Brak kupionych materiałów</p>}
       <div className={`${isLoading ? 'hidden' : ''} pt-8 flex flex-col flex-wrap gap-8 items-center justify-center md:flex-row md:gap-8 md:justify-center md:items-center`}>
-        {products.map((product) => <ProductCard key={product.id} product={product} onLoad={handleImageLoad} isBought />)}
+        {products?.map((product, idx) => <ProductCard key={`${product.id}--${idx}`} product={product} onLoad={handleImageLoad} isBought />)}
       </div>
     </div>
   </>
