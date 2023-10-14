@@ -1,7 +1,6 @@
 import React from 'react'
 
 const OrderProduct = ({product, onLoad}) => {
-    console.log(product)
   return (
     <div class='flex w-full gap-5'>
         <div class='max-w-[100px]'>
