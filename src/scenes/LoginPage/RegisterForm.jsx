@@ -1,218 +1,152 @@
 import React, {useState} from 'react'
 import { Formik } from 'formik'
-import * as yup from 'yup'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { clearWaitingQueue } from '../../App'
 
-const validationSchema = yup.object({
-    firstName: yup
-        .string('Wprowadź imie')
-        .required('Imię jest wymagane')
-        .min(3, 'Co najmniej 3 litery'),
-    lastName: yup
-        .string('Wprowadź nazwisko')
-        .required('Nazwisko jest wymagane')
-        .min(3, 'Co najmniej 3 litery'),
-    email: yup
-        .string('Wprowadź email')
-        .email('Wprowadź poprawnie email')
-        .required('Email jest wymagany'),
-    password: yup
-        .string('Wprowadź hasło')
-        .min(8, 'Hasło musi mieć co najmniej 8 znaków')
-        .required('Hasło jest wymagane'),
-    passwordConfirm: yup
-        .string('Potwierdź hasło')
-        .oneOf([yup.ref('password'), null], 'Hasła muszą być takie same'),
-    rulesCheckbox: yup
-        .bool().oneOf([true], 'To pole musi być zaznaczone'),
-})
+import { registerInitialValues, registerValidationSchema } from './validation'
 
-const loginInitialValues = {
-    email: '',
-    password: '',
-    passwordConfirm: '',
-    firstName:'',
-    lastName:'',
-    rulesCheckbox: false,
-}
+import { errorNotification, successNotification } from '../../utils/notifications'
 
 const RegisterForm = ({ handleSetLoginForm }) => {
-    const [errorsFromServer, setErrorsFromServer] = useState();
 
-    const successNotification = () => {
-        toast.success('Twoje konto zostało założone! Możesz się zalogować', {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    }
-
-    const errorNotification = () => {
-        toast.error('Podany email już istnieje', {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    }
-    
-
-    const handleSubmit = async ({values, props}) => {
-        await axios.post('https://be.aiszef.pl/users/create/', {
-            'email': values.email,
-            'password': values.password,
-            'first_name': values.firstName,
-            'last_name': values.lastName
-        }, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-            }
-            
-        })
-        .then(res => {
+    const handleSubmit = async (values) => {
+        try{
+            await axios.post('http://127.0.0.1:8001/users/create/', {
+                'email': values.email,
+                'password': values.password,
+                'first_name': values.firstName,
+                'last_name': values.lastName
+            }, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+                
+            })
             handleSetLoginForm('login');
             toast.dismiss();
-            successNotification();
+            successNotification('Twoje konto zostało założone! Możesz się zalogować');
             clearWaitingQueue();
-        })
-        .catch(err => {
+        } catch (err) {
             if(err?.response?.status === 400){
                 toast.dismiss();
-                errorNotification();
+                errorNotification('Podany email już istnieje');
                 clearWaitingQueue();
             } else{
-                console.log(err)
+                errorNotification('Coś poszło nie tak');
             }
-        })
-    }
-    
-    const showErrors = (errors) => {
-        return(
-        Object.entries(errors)?.map( err => (
-            <p key={err[0]} color='red' fontFamily='Inter'>
-                <p variant='span' fontWeight={600}>{err[0]}: </p>{err[1]}
-            </p>
-            ))
-        )
+        }
     }
 
   return (
     <>
-    <div class='w-full flex flex-col justify-center items-center'>
+    <div className='w-full flex flex-col justify-center items-center'>
         <Formik
-            initialValues={loginInitialValues}
-            validationSchema={validationSchema}
-            onSubmit={(values, props) => handleSubmit({values, props})}
+            initialValues={registerInitialValues}
+            validationSchema={registerValidationSchema}
+            onSubmit={handleSubmit}
         >
-            {props => (
+            {({ handleSubmit, handleBlur, handleChange, values, touched, errors }) => (
                 <form 
-                    onSubmit={props.handleSubmit} 
-                    class='flex flex-col gap-4 w-full max-w-[350px] font-ms'
+                    onSubmit={handleSubmit} 
+                    className='flex flex-col gap-4 w-full max-w-[350px] font-ms'
                 >
-                    <div class='flex flex-col'>
-                    <label htmlFor="firstName">
+                    <div className='flex flex-col'>
+                    <label htmlFor="firstNameInput">
                         Imie
                     </label>
                     <input
+                        id="firstNameInput"
                         name="firstName"
                         type="text"
-                        onBlur={props.handleBlur}
-                        value={props.values.firstName}
-                        onChange={props.handleChange}
-                        error={props.touched.firstName && Boolean(props.errors.firstName)}
-                        helperText={props.touched.firstName && props.errors.firstName}
-                        class='py-2 px-3 rounded-lg border-red-300'
+                        onBlur={handleBlur}
+                        value={values.firstName}
+                        onChange={handleChange}
+                        error={touched.firstName && Boolean(errors.firstName)}
+                        helpertext={touched.firstName && errors.firstName}
+                        className='py-2 px-3 rounded-lg border-red-300'
                     />
-                     {props.touched.firstName && Boolean(props.errors.firstName) && (
-                        <p class='text-red-500'>{props.errors.firstName}</p>
+                     {touched.firstName && Boolean(errors.firstName) && (
+                        <p className='text-red-500'>{errors.firstName}</p>
                     )}
                     </div>
-                    <div class='flex flex-col'>
-                    <label htmlFor="lastName">
+                    <div className='flex flex-col'>
+                    <label htmlFor="lastNameInput">
                         Nazwisko
                     </label>
                     <input
+                        id="lastNameInput"
                         name="lastName"
                         type="text"
-                        onBlur={props.handleBlur}
-                        value={props.values.lastName}
-                        onChange={props.handleChange}
-                        error={props.touched.lastName && Boolean(props.errors.lastName)}
-                        helperText={props.touched.lastName && props.errors.lastName}
-                        class='py-2 px-3 rounded-lg border-red-300'
+                        onBlur={handleBlur}
+                        value={values.lastName}
+                        onChange={handleChange}
+                        error={touched.lastName && Boolean(errors.lastName)}
+                        helpertext={touched.lastName && errors.lastName}
+                        className='py-2 px-3 rounded-lg border-red-300'
                     />
-                     {props.touched.lastName && Boolean(props.errors.lastName) && (
-                        <p class='text-red-500'>{props.errors.lastName}</p>
+                     {touched.lastName && Boolean(errors.lastName) && (
+                        <p className='text-red-500'>{errors.lastName}</p>
                     )}
                     </div>
-                    <div class='flex flex-col'>
-                    <label htmlFor="email">
+                    <div className='flex flex-col'>
+                    <label htmlFor="emailInput">
                         Email
                     </label>
                     <input
+                        id="emailInput"
                         name="email"
                         type="text"
-                        onBlur={props.handleBlur}
-                        value={props.values.email}
-                        onChange={props.handleChange}
-                        error={props.touched.email && Boolean(props.errors.email)}
-                        helperText={props.touched.email && props.errors.email}
-                        class='py-2 px-3 rounded-lg border-red-300'
+                        onBlur={handleBlur}
+                        value={values.email}
+                        onChange={handleChange}
+                        error={touched.email && Boolean(errors.email)}
+                        helpertext={touched.email && errors.email}
+                        className='py-2 px-3 rounded-lg border-red-300'
                     />
-                     {props.touched.email && Boolean(props.errors.email) && (
-                        <p class='text-red-500'>{props.errors.email}</p>
+                     {touched.email && Boolean(errors.email) && (
+                        <p className='text-red-500'>{errors.email}</p>
                     )}
                     </div>
-                    <div class='flex flex-col'>
+                    <div className='flex flex-col'>
                         <label htmlFor="password">Hasło </label>
                         <input
                             id="password" 
                             name="password" 
                             type="password" 
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                            value={props.values.password}
-                            error={props.touched.password && Boolean(props.errors.password)}
-                            helperText={props.touched.password && props.errors.password}
-                            class='py-2 px-3 rounded-lg'
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password}
+                            error={touched.password && Boolean(errors.password)}
+                            helpertext={touched.password && errors.password}
+                            className='py-2 px-3 rounded-lg'
                         />
-                         {props.touched.password && Boolean(props.errors.password) && (
-                        <p class='text-red-500'>{props.errors.password}</p>
+                         {touched.password && Boolean(errors.password) && (
+                        <p className='text-red-500'>{errors.password}</p>
                     )}
                     </div>
-                    <div class='flex flex-col font-ms'>
-                        <div class='flex justify-between'>
-                        <label htmlFor="rulesCheckbox" class='max-w-[300px]'>*Akceptuję <a href='/regulamin' class='underline'> Regulamin</a> oraz <a href='/polityka-prywatnosci' class='underline'>Politykę Prywatności</a> </label>
+                    <div className='flex flex-col font-ms'>
+                        <div className='flex justify-between'>
+                        <label htmlFor="rulesCheckbox" className='max-w-[300px]'>*Akceptuję <a href='/regulamin' className='underline'> Regulamin</a> oraz <a href='/polityka-prywatnosci' className='underline'>Politykę Prywatności</a> </label>
                         <input
                             id="rulesCheckbox" 
                             name="rulesCheckbox" 
                             type="checkbox" 
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                            value={props.values.rulesCheckbox}
-                            error={props.touched.rulesCheckbox && Boolean(props.errors.rulesCheckbox)}
-                            helperText={props.touched.rulesCheckbox && props.errors.rulesCheckbox}
-                            class='w-[20px]'
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            checked={values.rulesCheckbox}
+                            error={touched.rulesCheckbox && Boolean(errors.rulesCheckbox)}
+                            helpertext={touched.rulesCheckbox && errors.rulesCheckbox}
+                            className='w-[20px]'
                         />
                         </div>
-                         {props.touched.rulesCheckbox && Boolean(props.errors.rulesCheckbox) && (
-                        <p class='text-red-500'>{props.errors.rulesCheckbox}</p>
+                         {touched.rulesCheckbox && Boolean(errors.rulesCheckbox) && (
+                        <p className='text-red-500'>{errors.rulesCheckbox}</p>
                     )}
                     </div>
                     <div>
-                        <button type="submit" class='w-full rounded-md text-center text-white  bg-slate-500 p-2'>
+                        <button type="submit" className='w-full rounded-md text-center text-white  bg-slate-500 p-2'>
                         Zarejestruj
                         </button>
                     </div>
