@@ -4,7 +4,6 @@ import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 import { BsCartFill } from 'react-icons/bs'
 import { BiSolidUser } from 'react-icons/bi'
 import { AuthContext, CartContext } from '../App';
-import axios from 'axios';
 import Cart from './Cart';
 import { setOverlay, logout } from '../utils/navbarHelpers';
 import MobileMenu from './MobileMenu';
@@ -14,7 +13,7 @@ const Navbar = ({mainRef, containerRef}) => {
     const [menuIsOpen, setMenuIsOpen ] = useState(false);
     const [cartIsOpen, setCartIsOpen ] = useState(false);
     const [userNavIsOpen, setUserNavIsOpen] = useState(false)
-    const [clickedOutside, setClickedOutside ] = useState(false);
+    const [clickedOutside, setClickedOutside] = useState(false);
     const [activeItem, setActiveItem] = useState('');
     
     const {currentUser: user} = useContext(AuthContext)
@@ -124,13 +123,13 @@ const Navbar = ({mainRef, containerRef}) => {
                         <div  className='absolute top-9 right-0 bg-white px-[3rem] py-3 flex flex-col items-center gap-1 z-10 sm:rounded sm:drop-shadow-xl'>
                             
                             <div onClick={(e) => handleClick(e)}><NavLink  to='/konto'  className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Konto</NavLink></div>
-                            <NavLink
+                            <Link
                             className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
                             to='/'
                             onClick={() => logout(user)}
                             >
                                 Wyloguj
-                            </NavLink>
+                            </Link>
                         </div> 
                         : ''    
                     }
@@ -150,12 +149,12 @@ const Navbar = ({mainRef, containerRef}) => {
         <div className='hidden lg:flex'>
         <div onClick={(e) => handleClick(e)}><NavLink  to='/' className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0 '>Główna</NavLink></div>
         <div onClick={(e) => handleClick(e)}><NavLink  to='/produkty' className='hidden  mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'>Dostępne produkty</NavLink></div>
-        <NavLink
+        <Link
         className='hidden self-end mt-5 bg-gray-700 text-white px-5 py-2 lg:block lg:justify-self-end lg:mt-0 lg:ml-7'
         to='/login'
         >
             Zaloguj się
-        </NavLink>
+        </Link>
         </div>
     }
     </nav>

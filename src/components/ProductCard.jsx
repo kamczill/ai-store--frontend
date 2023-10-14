@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { AuthContext, CartContext } from '../App';
 import PropTypes from 'prop-types';
+import { successNotification } from '../utils/notifications';
 
 const ProductCard = ({ product, isBought, onLoad }) => {
     const [isInCart, setIsInCart] = useState(false);
@@ -20,25 +20,38 @@ const ProductCard = ({ product, isBought, onLoad }) => {
         localStorage.setItem('cart', JSON.stringify([...items, product?.id]));
         setIsInCart(true);
         updateCart(parseInt(amountOfProducts) + 1);
-        successNotification();
+        successNotification('Dodałeś produkt do koszyka!');
     };
 
     const openProduct = () => {
         navigate(product?.id);
     };
 
-    const successNotification = () => {
-        toast.success(`Dodałeś produkt do koszyka!`, {
-            position: "bottom-center",
-            autoClose: 2000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    };
+    const renderButtons = () => {
+        if (isBought) {
+            return (
+                <>
+                    <button onClick={openProduct} className='bg-green-500 py-2 px-5 text-md text-white rounded active:scale-95'>Otwórz</button>
+                    {product.is_downloadable && <a href={product.file_path} className='bg-blue-500 py-2 px-5 text-md text-white rounded active:scale-95'>Pobierz</a>}
+                </>
+            );
+        } else {
+            return (
+                <>
+                    {isInCart && user.logged_in ? (
+                        <button disabled className=' bg-green-300 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Dodane do koszyka</button>
+                    ) : (
+                        user.logged_in && (
+                            <button onClick={addToCart} className='bg-green-500 py-2 px-2 text-md text-white whitespace-nowrap rounded active:scale-95'>Dodaj do koszyka</button>
+                        )
+                    )}
+                    {!user.logged_in && (
+                        <button disabled className=' bg-green-300 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Zaloguj się aby kupić</button>
+                    )}
+                </>
+            );
+        }
+    }
 
     useEffect(() => {
         checkIfProductIsInCart();
@@ -68,32 +81,6 @@ const ProductCard = ({ product, isBought, onLoad }) => {
             </div>
         </div>
     );
-
-    function renderButtons() {
-        if (isBought) {
-            return (
-                <>
-                    <button onClick={openProduct} className='bg-green-500 py-2 px-5 text-md text-white rounded active:scale-95'>Otwórz</button>
-                    {product.is_downloadable && <a href={product.file_path} className='bg-blue-500 py-2 px-5 text-md text-white rounded active:scale-95'>Pobierz</a>}
-                </>
-            );
-        } else {
-            return (
-                <>
-                    {isInCart && user.logged_in ? (
-                        <button disabled className=' bg-green-300 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Dodane do koszyka</button>
-                    ) : (
-                        user.logged_in && (
-                            <button onClick={addToCart} className='bg-green-500 py-2 px-2 text-md text-white whitespace-nowrap rounded active:scale-95'>Dodaj do koszyka</button>
-                        )
-                    )}
-                    {!user.logged_in && (
-                        <button disabled className=' bg-green-300 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Zaloguj się aby kupić</button>
-                    )}
-                </>
-            );
-        }
-    }
 };
 
 ProductCard.propTypes = {

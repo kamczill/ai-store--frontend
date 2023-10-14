@@ -1,26 +1,14 @@
 import React, {useEffect, useState} from 'react'
-import { ReactReader } from 'react-reader'
 import { axiosInstance } from '../axios/axios'
 import { Document, Page } from 'react-pdf';
-import eb from '../assets/e-book.pdf'
 import { pdfjs } from 'react-pdf';
-import axios from 'axios';
-import Contents from './Contents';
 import Loader from './Loader';
+import { errorNotification } from '../utils/notifications';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
   import.meta.url,
 ).toString();
-
-const spis = {
-    "wprowadzenie": 3,
-    "o autorze": 4,
-    "finasteryd": 6,
-    "minoxidil": 8,
-    "microneedling": 9,
-    "conclusion": 11
-}
 
 const Reader = ({filePath}) => {
     const [numPages, setNumPages] = useState(1);
@@ -32,16 +20,6 @@ const Reader = ({filePath}) => {
       setNumPages(numPages);
     }
  
-
-    const getEbook = async () => {
-        await axiosInstance(filePath, {
-            withCredentials:true,
-            responseType: 'blob',
-        }).then(res => {
-            setEbook(res?.data);
-        })
-    }
-
     const handleNextPage = () => {
         if(pageNumber < numPages) {
             setPageNumber(prev => prev + 1)
@@ -65,12 +43,23 @@ const Reader = ({filePath}) => {
     }
 
     useEffect(() => {
+        const getEbook = async () => {
+            try {
+                const res = await axiosInstance(filePath, {
+                    withCredentials:true,
+                    responseType: 'blob',
+                });
+                setEbook(res?.data);
+            } catch (error) {
+                errorNotification('Coś poszło nie tak')
+            }
+        }
         getEbook();
     }, [])
 
 
     return (
-      <div class='w-full h-full flex flex-col gap-2 justify-center items-center'>
+      <div className='w-full h-full flex flex-col gap-2 justify-center items-center'>
         {
             ebook ? (
                 <>
@@ -84,16 +73,16 @@ const Reader = ({filePath}) => {
                 <Loader />
         }
        
-        <div class='flex flex-row gap-4 align-center items-center bg-slate-50 shadow-lg  rounded-md mt-5'>
-            <button onClick={handlePrevPage} class='p-2 rounded-md lg:hover:bg-slate-600 lg:hover:text-white'>Poprzednia</button>
+        <div className='flex flex-row gap-4 align-center items-center bg-slate-50 shadow-lg  rounded-md mt-5'>
+            <button onClick={handlePrevPage} className='p-2 rounded-md lg:hover:bg-slate-600 lg:hover:text-white'>Poprzednia</button>
             <p>
                 {pageNumber} z {numPages}
             </p>
-            <button class='p-2 rounded-md lg:hover:bg-slate-600 lg:hover:text-white' onClick={handleNextPage}>Następna</button>
+            <button className='p-2 rounded-md lg:hover:bg-slate-600 lg:hover:text-white' onClick={handleNextPage}>Następna</button>
         </div>
-        <div class='flex gap-2'>
-            <button onClick={() => handleClickChangePage()} class='p-2 rounded-md bg-slate-50 lg:hover:bg-slate-600 lg:hover:text-white'>Przejdź do</button>
-            <input class='text-center' type='number' placeholder='podaj strone' min={1} max={numPages} value={page}  onChange={handleChangePage}/>
+        <div className='flex gap-2'>
+            <button onClick={() => handleClickChangePage()} className='p-2 rounded-md bg-slate-50 lg:hover:bg-slate-600 lg:hover:text-white'>Przejdź do</button>
+            <input className='text-center' type='number' placeholder='podaj strone' min={1} max={numPages} value={page}  onChange={handleChangePage}/>
         </div>
       </div>
     )
