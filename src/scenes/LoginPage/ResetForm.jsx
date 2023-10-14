@@ -1,119 +1,64 @@
-import React, {useState, useContext, useEffect} from 'react'
-import { Formik } from 'formik'
-import * as yup from 'yup'
-import { toast } from 'react-toastify'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../App'
-import { clearWaitingQueue } from '../../App'
+import { Formik } from 'formik';
+import axios from 'axios';
 
-const validationSchema = yup.object({
-    email: yup
-        .string('Wprowadź email')
-        .email('Wprowadź poprawnie email')
-        .required('Email jest wymagany'),
-})
+import { clearWaitingQueue } from '../../App';
+import { resetInitialValues, resetValidationSchema } from './validation';
+import { errorNotification, successNotification } from '../../utils/notifications';
 
-const loginInitialValues = {
-    email: '',
-}
 
 const ResetForm = () => {
-    const [errorsFromServer, setErrorsFromServer] = useState();
-    const navigate = useNavigate()
-
-    const successNotification = () => {
-        toast.success('Sprawdź podany adres e-mail!', {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    }
-    
-    const errorNotification = () => {
-        toast.error('Podany adres e-mail nie istnieje', {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    }
-    
-
-    const handleSubmit = async ({values, props}) => {
-        await axios.post('http://127.0.0.1:8001/users/reset_password/', {...values}, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-            }
-            
-        })
-        .then(res => {
-            console.log(res);
+    const handleSubmit = async (values, props) => {
+        try{
+            const res = await axios.post('http://127.0.0.1:8001/users/reset_password/', {...values}, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+                
+            })
             clearWaitingQueue();
             props.resetForm();
-            successNotification();
-        })
-        .catch(err => {
-            console.log(err)
-            errorNotification();
+            successNotification('Sprawdź podany adres e-mail!');
+        } catch(err) {
+            errorNotification('Podany adres e-mail nie istnieje');
             clearWaitingQueue();
-        })
+        }
     }
     
-    const showErrors = (errors) => {
-        return(
-        Object.entries(errors)?.map( err => (
-            <p key={err[0]} color='red' fontFamily='Inter'>
-                <p variant='span' fontWeight={600}>{err[0]}: </p>{err[1]}
-            </p>
-            ))
-        )
-    }
-
   return (
     <>
-    <div class='w-full flex flex-col justify-center items-center'>
+    <div className='w-full flex flex-col justify-center items-center'>
         <Formik
-            initialValues={loginInitialValues}
-            validationSchema={validationSchema}
-            onSubmit={(values, props) => handleSubmit({values, props})}
+            initialValues={resetInitialValues}
+            validationSchema={resetValidationSchema}
+            onSubmit={handleSubmit}
         >
-            {props => (
+            {({ handleSubmit, handleBlur, handleChange, values, touched, errors }) => (
                 <form 
-                    onSubmit={props.handleSubmit} 
-                    class='flex flex-col gap-3 w-full max-w-[350px]'
+                    onSubmit={handleSubmit} 
+                    className='flex flex-col gap-3 w-full max-w-[350px]'
                 >
-                    <div class='flex flex-col'>
+                    <div className='flex flex-col'>
                     <label htmlFor="email">
                         Email
                     </label>
                     <input
+                        id="email"
                         name="email"
                         type="text"
-                        onBlur={props.handleBlur}
-                        value={props.values.email}
-                        onChange={props.handleChange}
-                        error={props.touched.email && Boolean(props.errors.email)}
-                        helperText={props.touched.email && props.errors.email}
-                        class='py-2 px-3 rounded-lg border-red-300'
+                        autoComplete='username'
+                        onBlur={handleBlur}
+                        value={values.email}
+                        onChange={handleChange}
+                        className='py-2 px-3 rounded-lg border-red-300'
                     />
-                    {props.touched.email && Boolean(props.errors.email) && (
-                        <p class='text-red-500'>{props.errors.email}</p>
+                    {touched.email && Boolean(errors.email) && (
+                        <p className='text-red-500'>{errors.email}</p>
                     )}
                     </div>
                    
                     <div>
-                        <button type="submit" class='w-full rounded-md text-center text-white  bg-slate-500 p-2'>
+                        <button type="submit" className='w-full rounded-md text-center text-white  bg-slate-500 p-2'>
                         Zresetuj hasło
                         </button>
                     </div>

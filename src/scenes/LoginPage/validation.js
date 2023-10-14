@@ -1,5 +1,18 @@
 import * as yup from 'yup'
 
+// reset
+export const resetValidationSchema = yup.object({
+    email: yup
+        .string('Wprowadź email')
+        .email('Wprowadź poprawnie email')
+        .required('Email jest wymagany'),
+})
+
+export const resetInitialValues = {
+    email: '',
+}
+
+
 // login
 export const loginValidationSchema = yup.object({
     email: yup
