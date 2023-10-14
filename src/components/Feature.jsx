@@ -6,7 +6,6 @@ const Feature = ({img, headline, text}) => {
     <div class='font-poppins flex flex-col justify-center items-center gap-3'>
         <div class='w-[80vw] max-w-[250px] relative'>
             <img src={shape} />
-            {/* <img src= class='w-[170px] absolute m-auto top-9 left-0 right-0'/> */}
             <div class='absolute inset-0 flex justify-center items-center'>
               {img}
             </div>

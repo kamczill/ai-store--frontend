@@ -47,14 +47,14 @@ const ProductCard = ({ product, isBought, onLoad }) => {
     return (
         <div className='w-[300px] flex flex-col self-stretch justify-between items-center border-2 border-black rounded-md p-3 font-ms bg-white'>
             <div>
-                <Link to={isBought ? `/${product?.id}` : `/produkty/${product?.id}`}>
+                <Link to={isBought ? `${product?.id}` : `/produkty/${product?.id}`}>
                     <img src={`${product?.cover}`} alt='cover' onLoad={() => onLoad()} />
                 </Link>
             </div>
             <div className='w-full pt-1'>
                 <p className='text-lg'>{product?.author}</p>
                 <h3 className='font-ms font-bold text-xl pointer lg:hover:underline lg:hover:decoration-2'>
-                    <Link to={isBought ? `/${product?.id}` : `/produkty/${product?.id}`}>
+                    <Link to={isBought ? `${product?.id}` : `/produkty/${product?.id}`}>
                         {product?.title}
                     </Link>
                 </h3>

@@ -1,120 +1,47 @@
-import React, {useEffect, useState, useContext} from 'react'
+import React, {useState, useContext} from 'react'
 import { CartContext } from '../App'
-import axiosInstance from '../axios/axios'
 import ProductCart from './ProductCart'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
-import { toast } from 'react-toastify'
 import Loader from './Loader'
+
+import { buyProducts } from '../utils/orderProcessing';
+import { useProductsInCart } from '../hooks/useProductsInCart'
 
 const Cart = ({clickedOutside, isOpen}) => {
     const { amountOfProducts, updateCart } = useContext(CartContext)
     const [itemsInCart, setItemsInCart] = useState(JSON.parse(localStorage.getItem('cart')) || [])
-    const [detailedItems, setDetailedItems] = useState([])
-    const [totalPrice, setTotalPrice] = useState()
-    const [isLoading, setIsLoading] = useState(true);
     const [loadedImagesCount, setLoadedImagesCount] = useState(0);
+    const [isClicked, setIsClicked] = useState(false)
+    const { detailedItems, totalPrice, isLoading } = useProductsInCart(itemsInCart);
 
-
-    const getProducts = async () => {
-        await axiosInstance('/products/', {
-            withCredentials: true,
-        }).then(res => {
-            const items = res?.data
-            const detailedItemsFromCart = []
-            let price = 0
-            
-            items.forEach(item => {
-                if(itemsInCart.includes(item?.id)){
-                    detailedItemsFromCart.push(item)
-                    price += (parseFloat(item?.net_price) + (parseFloat(item?.net_price) * (parseFloat(item?.tax) /100)))
-                }
-            })
-            console.log(detailedItemsFromCart)
-            setDetailedItems(() => [...detailedItemsFromCart])
-            setTotalPrice(price.toFixed(2))
-        }).catch(err => {
-            console.log(err)
-        })
+    const handleBuyProducts = () => {
+        buyProducts(itemsInCart, updateCart, setItemsInCart, isOpen);
+        setIsClicked(true)
     }
-
-    const buyProducts = async () => {
-        await axiosInstance.post('/orders/', {
-            user: 1
-        }, {
-            withCredentials: true,
-        }).then(res => {
-            const orderId = res.data.id;
-            itemsInCart.forEach(item => {
-                addProductToOrder(orderId, item);
-            })
-            localStorage.setItem('cart', JSON.stringify([]));
-            setItemsInCart([]);
-            updateCart(0);
-            isOpen(false);
-            toast.clearWaitingQueue();
-            successNotification();
-        }).catch(err => console.log(err))
-    }
-
-    const addProductToOrder = async (order, product) => {
-        await axiosInstance.post('/orders/order-products/', {
-            order: order,
-            product: product
-        }, {
-            withCredentials: true,
-        }).catch(err => console.log(err))
-    }
-
-    const successNotification = () => {
-        toast.success(`Dokonałeś zakupu! Kupione materiały znajdziesz w zakładce 'Moje materiały'`, {
-            position: "bottom-center",
-            autoClose: 2000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-      }
 
     const handleImageLoad = () => {
         setLoadedImagesCount(prevCount => prevCount + 1);
-        console.log(':)')
-      };
+    };
     
-    useEffect(() => {
-        console.log(loadedImagesCount, itemsInCart.length)
-          if (itemsInCart?.length && loadedImagesCount == itemsInCart?.length || itemsInCart?.length === 0) {
-              setIsLoading(false);
-          }
-    }, [loadedImagesCount, itemsInCart]);
-    
-
-    useEffect(() => {
-        getProducts()
-    }, [itemsInCart])
-
   return (
-    <div class='absolute min-h-full right-0 w-full max-w-[640px] flex flex-col items-center gap-4 px-2 pt-5 pb-10 bg-white z-10 sm:right-5 sm:min-h-fit sm:rounded sm:drop-shadow-xl'>
+    <div className='absolute min-h-full right-0 w-full max-w-[640px] flex flex-col items-center gap-4 px-2 pt-5 pb-10 bg-white z-10 sm:right-5 sm:min-h-fit sm:rounded sm:drop-shadow-xl'>
         <div>
-            <h3 class='text-lg font-ms font-bold'>Mój Koszyk</h3>
+            <h3 className='text-lg font-ms font-bold'>Mój Koszyk</h3>
         </div>
         {isLoading ? <Loader/> : ''}
-        <div class={` ${isLoading ? 'hidden': ''} flex flex-col gap-3`}>
-            {detailedItems.map(item => (
-                <ProductCart product={item} setItemsInCart={setItemsInCart} onLoad={handleImageLoad} />
-            )
-            )}
+        <div className={`flex flex-col gap-3`}>
+            {detailedItems?.map((item, idx) => (
+                <ProductCart key={idx} product={item} setItemsInCart={setItemsInCart}  onLoad={handleImageLoad} />
+            ))}
         </div>
-        <div class='flex flex-col w-full font-ms p-3'>
-            <h3 class='text-md font-bold text-gray-800'>Ilość produktów: {amountOfProducts} </h3>
-            <h3 class='text-md font-bold text-gray-800'>Razem do zapłaty(z VAT): <span>{totalPrice} zł</span></h3>
+        <div className='flex flex-col w-full font-ms p-3'>
+            <h3 className='text-md font-bold text-gray-800'>Ilość produktów: {amountOfProducts} </h3>
+            <h3 className='text-md font-bold text-gray-800'>Razem do zapłaty(z VAT): <span>{totalPrice} zł</span></h3>
         </div>
-        <div class='w-full flex items-center justify-center'>
+        <div className='w-full flex items-center justify-center'>
             { itemsInCart.length > 0 
-                ? <button onClick={() => buyProducts()} class='bg-green-400 text-white p-3 flex items-center gap-3'>PRZEJDŹ DO KASY <AiOutlineShoppingCart /> </button>
-                : <button class='bg-green-200 text-white p-3 flex items-center gap-3 cursor-default'>KOSZYK JEST PUSTY <AiOutlineShoppingCart /> </button>
+                ? <button onClick={() => handleBuyProducts()} disabled={isClicked} className='bg-green-400 text-white p-3 flex items-center gap-3'>PRZEJDŹ DO KASY <AiOutlineShoppingCart /> </button>
+                : <button className='bg-green-200 text-white p-3 flex items-center gap-3 cursor-default'>KOSZYK JEST PUSTY <AiOutlineShoppingCart /> </button>
             }
             </div>
     </div>
