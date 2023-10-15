@@ -50,7 +50,7 @@ const ResetForm = () => {
                         onBlur={handleBlur}
                         value={values.email}
                         onChange={handleChange}
-                        className='py-2 px-3 rounded-lg border-red-300'
+                        className='py-2 px-3 rounded-lg border border-slate-300'
                     />
                     {touched.email && Boolean(errors.email) && (
                         <p className='text-red-500'>{errors.email}</p>

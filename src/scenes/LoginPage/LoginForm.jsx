@@ -56,7 +56,7 @@ const LoginForm = () => {
                         onChange={handleChange}
                         error={touched.email && Boolean(errors.email)}
                         helpertext={touched.email && errors.email}
-                        className='py-2 px-3 rounded-lg border-red-300'
+                        className='py-2 px-3 rounded-lg border border-slate-300'
                     />
                     {touched.email && Boolean(errors.email) && (
                         <p className='text-red-500'>{errors.email}</p>
@@ -74,7 +74,7 @@ const LoginForm = () => {
                             value={values.password}
                             error={touched.password && Boolean(errors.password)}
                             helpertext={touched.password && errors.password}
-                            className='py-2 px-3 rounded-lg'
+                            className='py-2 px-3 rounded-lg border border-slate-300'
                         />
                         {touched.password && Boolean(errors.password) && (
                         <p className='text-red-500'>{errors.password}</p>

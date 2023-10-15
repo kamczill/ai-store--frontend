@@ -59,7 +59,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
                         onChange={handleChange}
                         error={touched.firstName && Boolean(errors.firstName)}
                         helpertext={touched.firstName && errors.firstName}
-                        className='py-2 px-3 rounded-lg border-red-300'
+                        className='py-2 px-3 rounded-lg border border-slate-300'
                     />
                      {touched.firstName && Boolean(errors.firstName) && (
                         <p className='text-red-500'>{errors.firstName}</p>
@@ -78,7 +78,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
                         onChange={handleChange}
                         error={touched.lastName && Boolean(errors.lastName)}
                         helpertext={touched.lastName && errors.lastName}
-                        className='py-2 px-3 rounded-lg border-red-300'
+                        className='py-2 px-3 rounded-lg border border-slate-300'
                     />
                      {touched.lastName && Boolean(errors.lastName) && (
                         <p className='text-red-500'>{errors.lastName}</p>
@@ -97,7 +97,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
                         onChange={handleChange}
                         error={touched.email && Boolean(errors.email)}
                         helpertext={touched.email && errors.email}
-                        className='py-2 px-3 rounded-lg border-red-300'
+                        className='py-2 px-3 rounded-lg border border-slate-300'
                     />
                      {touched.email && Boolean(errors.email) && (
                         <p className='text-red-500'>{errors.email}</p>
@@ -114,7 +114,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
                             value={values.password}
                             error={touched.password && Boolean(errors.password)}
                             helpertext={touched.password && errors.password}
-                            className='py-2 px-3 rounded-lg'
+                            className='py-2 px-3 rounded-lg border border-slate-300'
                         />
                          {touched.password && Boolean(errors.password) && (
                         <p className='text-red-500'>{errors.password}</p>
@@ -132,7 +132,7 @@ const RegisterForm = ({ handleSetLoginForm }) => {
                             checked={values.rulesCheckbox}
                             error={touched.rulesCheckbox && Boolean(errors.rulesCheckbox)}
                             helpertext={touched.rulesCheckbox && errors.rulesCheckbox}
-                            className='w-[20px]'
+                            className='w-[20px] border border-slate-300'
                         />
                         </div>
                          {touched.rulesCheckbox && Boolean(errors.rulesCheckbox) && (
