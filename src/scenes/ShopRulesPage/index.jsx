@@ -6,14 +6,14 @@ const index = () => {
       <h1 className='font-bold text-xl w-full text-center p-5'>Regulamin Sklepu www.aiszef.pl</h1>
     <div className='max-w-[1200px]'>
         <h2 className="font-bold text-lg mt-3">§ 1 Postanowienia wstępne</h2>
-        <p>Aplikacja internetowa oraz sklep internetowy dostępny pod adresem internetowym www.aiszef.pl, prowadzony przez Kamila Chrobaka z siedzibą w Podsarniu 43A, Raba Wyżna (34-721) prowadzącego działalność nierejestrowaną zgodnie z ustawą z dnia 6 marca 2018 r. – Prawo przedsiębiorców zwanym dalej „Usługodawcą”.</p>
+        <p>Aplikacja internetowa oraz sklep internetowy dostępny pod adresem internetowym www.aiszef.pl, prowadzony przez prowadzącego działalność nierejestrowaną zgodnie z ustawą z dnia 6 marca 2018 r. – Prawo przedsiębiorców zwanym dalej „Usługodawcą”.</p>
         <p>Niniejszy regulamin skierowany jest do Konsumentów i określa zasady i tryb zawierania z Konsumentem Umowy Sprzedaży na odległość za pośrednictwem Sklepu.</p>
 
         <h2 className="font-bold text-lg mt-3">§ 2. Kontakt ze Sklepem</h2>
-        <p>1. Adres Sprzedawcy: Podsarnie 43A, 34-721 Raba Wyżna.</p>
+        <p>1. Adres Sprzedawcy: Podsarnie 42424, 34-721 Raba Wyżna.</p>
         <p>2. Adres e-mail Sprzedawcy: kontakt@aiszef.pl</p>
-        <p>3. Numer telefonu Sprzedawcy: 889 327 672</p>
-        <p>4. Numer rachunku bankowego Sprzedawcy 53 1140 2004 0000 3402 7862 9579</p>
+        <p>3. Numer telefonu Sprzedawcy: 654 231 434</p>
+        <p>4. Numer rachunku bankowego Sprzedawcy 22 3333 4444 2222 1111</p>
         <p>5. Klient może porozumieć się telefonicznie ze Sprzedawcą od pn.-pt. w godzinach 10.00-20.00</p>
 
         <h2 className="font-bold text-lg mt-3">§ 3. Definicje</h2>

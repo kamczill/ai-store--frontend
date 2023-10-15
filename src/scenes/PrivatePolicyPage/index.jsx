@@ -6,7 +6,7 @@ const index = () => {
         <h1 className='font-bold text-xl w-full text-center p-5'>Polityka Prywatności Sklepu www.aiszef.pl</h1>
     <div className='max-w-[1200px]'>
         <p className="mb-4">Niniejsza Polityka Prywatności określa zasady gromadzenia, przetwarzania i wykorzystywania danych osobowych pozyskanych przez Sklep Internetowy aiszef.pl (zwany dalej: „Sklepu”).</p>
-        <p className="mb-4">Właścicielem Sklepu i jednocześnie Administratorem Danych Osobowych jest Kamil Chrobak z siedzibą w Podsarniu 43A, 34-721 Raba Wyżna -  prowadzącego działalność nierejestrowaną zgodnie z ustawą z dnia 6 marca 2018 r. – Prawo przedsiębiorców zwanym dalej „Aiszef".</p>
+        <p className="mb-4">Właścicielem Sklepu i jednocześnie Administratorem Danych Osobowych jest -  prowadzącego działalność nierejestrowaną zgodnie z ustawą z dnia 6 marca 2018 r. – Prawo przedsiębiorców zwanym dalej „Aiszef".</p>
         <p className="mb-4">Aiszef dokłada szczególnej staranności do poszanowania prywatności Klientów odwiedzających Sklep Internetowy.</p>
 
         <h2 className="font-bold text-lg mt-3">§ 1 Jak zbieramy dane?</h2>
