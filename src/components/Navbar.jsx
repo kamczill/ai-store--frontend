@@ -4,11 +4,11 @@ import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 import { BsCartFill } from 'react-icons/bs'
 import { BiSolidUser } from 'react-icons/bi'
 import { CartContext } from '../App';
-import { useCurrentUser } from '../hooks/useCurrentUser';
 import Cart from './Cart';
 import { setOverlay, logout } from '../utils/navbarHelpers';
 import MobileMenu from './MobileMenu';
 
+import { AuthContext } from '../App';
 
 const Navbar = ({mainRef, containerRef}) => {
     const [menuIsOpen, setMenuIsOpen ] = useState(false);
@@ -16,7 +16,7 @@ const Navbar = ({mainRef, containerRef}) => {
     const [userNavIsOpen, setUserNavIsOpen] = useState(false)
     const [clickedOutside, setClickedOutside] = useState(false);
     
-    const { currentUser: user, setCurrentUser } = useCurrentUser();
+    const { currentUser: user, setCurrentUser } = useContext(AuthContext);
     const {amountOfProducts} = useContext(CartContext)
 
     const cartRef = useRef(null);

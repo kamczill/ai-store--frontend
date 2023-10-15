@@ -3,16 +3,16 @@ import { Formik } from 'formik'
 import axios from '../../axios/axios'
 import { useNavigate } from 'react-router-dom'
 
+import { AuthContext } from '../../App'
 import { clearWaitingQueue } from '../../App'
 
 import { loginInitialValues, loginValidationSchema } from './validation'
 
 import { successNotification, errorNotification } from '../../utils/notifications'
-import { useCurrentUser } from '../../hooks/useCurrentUser'
 
 const LoginForm = () => {
     const navigate = useNavigate()
-    const {currentUser, setCurrentUser} = useCurrentUser();
+    const {currentUser: user, setCurrentUser} = useContext(AuthContext)
 
     const handleSubmit = async (values) => {
         try {
