@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Formik } from 'formik'
-import axios from 'axios'
+import axios from '../../axios/axios'
 import { useNavigate } from 'react-router-dom'
 
 import { AuthContext } from '../../App'
@@ -16,7 +16,7 @@ const LoginForm = () => {
 
     const handleSubmit = async (values) => {
         try {
-            await axios.post('http://127.0.0.1:8001/users/login/', values, {
+            await axios.post('users/login/', values, {
                 withCredentials: true,
             });
             setCurrentUser({ ...currentUser, "logged_in": true });

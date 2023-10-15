@@ -14,7 +14,6 @@ const Navbar = ({mainRef, containerRef}) => {
     const [cartIsOpen, setCartIsOpen ] = useState(false);
     const [userNavIsOpen, setUserNavIsOpen] = useState(false)
     const [clickedOutside, setClickedOutside] = useState(false);
-    const [activeItem, setActiveItem] = useState('');
     
     const {currentUser: user} = useContext(AuthContext)
     const {amountOfProducts} = useContext(CartContext)

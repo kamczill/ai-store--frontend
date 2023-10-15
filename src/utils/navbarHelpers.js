@@ -1,5 +1,5 @@
 import { errorNotification } from "./notifications";
-
+import axios from '../axios/axios'
 export const setOverlay = (mainRef, containerRef, cartIsOpen, menuIsOpen) => {
     const container = containerRef.current
     const mainSection = mainRef.current
@@ -25,7 +25,7 @@ export const setOverlay = (mainRef, containerRef, cartIsOpen, menuIsOpen) => {
 
 export const logout = async (user) => {
     try {
-        await axios('https://be.aiszef.pl/users/logout/', {
+        await axios('users/logout/', {
             withCredentials: true,
             headers: {
                 'Access-Control-Allow-Origin': '*'

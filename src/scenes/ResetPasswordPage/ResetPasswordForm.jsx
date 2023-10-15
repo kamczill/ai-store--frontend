@@ -1,6 +1,6 @@
 import React from 'react'
 import { Formik } from 'formik'
-import axios from 'axios'
+import axios from '../../axios/axios'
 import { useNavigate } from 'react-router-dom'
 import { clearWaitingQueue } from '../../App'
 import { initialValues, validationSchema } from './validation'
@@ -11,14 +11,9 @@ const ResetPasswordForm = ({token}) => {
 
     const handleSubmit = async (values, props) => {
         try {
-          await axios.post('http://127.0.0.1:8001/users/reset_password/confirm/', {
+          await axios.post('users/reset_password/confirm/', {
             token,
             password: values.password,
-          }, {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
           });
           props.resetForm();
           clearWaitingQueue();

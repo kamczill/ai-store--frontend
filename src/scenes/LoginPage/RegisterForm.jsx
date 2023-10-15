@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Formik } from 'formik'
 import { toast } from 'react-toastify'
-import axios from 'axios'
+import axios from '../../axios/axios'
 import { clearWaitingQueue } from '../../App'
 
 import { registerInitialValues, registerValidationSchema } from './validation'
@@ -12,17 +12,11 @@ const RegisterForm = ({ handleSetLoginForm }) => {
 
     const handleSubmit = async (values) => {
         try{
-            await axios.post('http://127.0.0.1:8001/users/create/', {
+            await axios.post('users/create/', {
                 'email': values.email,
                 'password': values.password,
                 'first_name': values.firstName,
                 'last_name': values.lastName
-            }, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-                
             })
             handleSetLoginForm('login');
             toast.dismiss();
