@@ -30,7 +30,7 @@ const index = () => {
   const AddedToCartButton = ({ disabled }) => (
     <button 
       disabled={disabled} 
-      className='w-full max-w-[357px] bg-green-300 py-2 px-4 text-white rounded'
+      className='w-full max-w-[357px] bg-green-600 py-2 px-4 text-white rounded'
     >
       Dodane do koszyka
     </button>
@@ -40,7 +40,7 @@ const index = () => {
     <button 
       onClick={onClick} 
       disabled={disabled} 
-      className='w-full max-w-[357px] bg-green-300 py-2 px-4 text-white rounded'
+      className='w-full max-w-[357px] bg-green-600 py-2 px-4 text-white rounded'
     >
       Zaloguj się, aby kupić
     </button>

@@ -39,14 +39,14 @@ const ProductCard = ({ product, isBought, onLoad }) => {
             return (
                 <>
                     {isInCart && user.logged_in ? (
-                        <button disabled className=' bg-green-300 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Dodane do koszyka</button>
+                        <button disabled className=' bg-green-600 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Dodane do koszyka</button>
                     ) : (
                         user.logged_in && (
                             <button onClick={addToCart} className='bg-green-500 py-2 px-2 text-md text-white whitespace-nowrap rounded active:scale-95'>Dodaj do koszyka</button>
                         )
                     )}
                     {!user.logged_in && (
-                        <button disabled className=' bg-green-300 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Zaloguj się aby kupić</button>
+                        <button disabled className=' bg-green-600 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Zaloguj się aby kupić</button>
                     )}
                 </>
             );

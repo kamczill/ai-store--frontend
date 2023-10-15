@@ -14,12 +14,12 @@ const FAQ = () => {
             <Disclosure as="div" className={`mt-4 ${idx === questionsAndAnswers.length -1 ? 'mb-2': ''}`}>
             {({ open }) => (
               <>
-                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-green-100 px-4 py-4 text-left text-md font-ms font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-green-600 px-4 py-4 text-left text-white text-md font-ms font-medium hover:bg-green-700 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{object.question}</span>
                   <BsChevronCompactUp
                     className={`${
                       open ? 'rotate-180 transform' : ''
-                    } h-5 w-5 text-green-600`}
+                    } h-5 w-5 text-white`}
                   />
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500 font-ms" >

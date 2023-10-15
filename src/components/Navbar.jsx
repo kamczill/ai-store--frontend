@@ -88,7 +88,7 @@ const Navbar = ({mainRef, containerRef}) => {
     <nav className='flex justify-between items-center p-5 font-ms'>
         <h2 className='col-span-1 text-3xl font-bold lg:col-start-2 lg:text-center' onClick={() => handleClick()}>
             <Link to='/' className='hover:text-black'>
-            <span className='text-green-400'>AI</span>Szef
+            <span className='text-green-600'>AI</span>Szef
             </Link>
         </h2>
         <div className='flex gap-5 lg:hidden'>
