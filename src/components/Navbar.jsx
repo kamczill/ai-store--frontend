@@ -125,7 +125,7 @@ const Navbar = ({mainRef, containerRef}) => {
                             <Link
                             className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
                             to='/'
-                            onClick={() => logout(user)}
+                            onClick={() => logout()}
                             >
                                 Wyloguj
                             </Link>
