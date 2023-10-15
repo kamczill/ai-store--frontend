@@ -3,7 +3,8 @@ import { NavLink, Link } from 'react-router-dom';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 import { BsCartFill } from 'react-icons/bs'
 import { BiSolidUser } from 'react-icons/bi'
-import { AuthContext, CartContext } from '../App';
+import { CartContext } from '../App';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 import Cart from './Cart';
 import { setOverlay, logout } from '../utils/navbarHelpers';
 import MobileMenu from './MobileMenu';
@@ -15,7 +16,7 @@ const Navbar = ({mainRef, containerRef}) => {
     const [userNavIsOpen, setUserNavIsOpen] = useState(false)
     const [clickedOutside, setClickedOutside] = useState(false);
     
-    const {currentUser: user, setCurrentUser} = useContext(AuthContext)
+    const { currentUser: user, setCurrentUser } = useCurrentUser();
     const {amountOfProducts} = useContext(CartContext)
 
     const cartRef = useRef(null);
@@ -100,7 +101,7 @@ const Navbar = ({mainRef, containerRef}) => {
                         }
                         
                 </div>
-                ): ''
+                ): null
                 }
 
             {menuIsOpen ? 
@@ -125,7 +126,7 @@ const Navbar = ({mainRef, containerRef}) => {
                             <Link
                             className='hidden self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
                             to='/'
-                            onClick={() => logout()}
+                            onClick={() => logout(setCurrentUser)}
                             >
                                 Wyloguj
                             </Link>
