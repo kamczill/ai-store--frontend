@@ -25,9 +25,7 @@ export const setOverlay = (mainRef, containerRef, cartIsOpen, menuIsOpen) => {
     }
 }
 
-export const logout = async () => {
-    const { setCurrentUser } = useCurrentUser();
-
+export const logout = async (setCurrentUser) => {
     try {
         await axios('users/logout/', {
             withCredentials: true,

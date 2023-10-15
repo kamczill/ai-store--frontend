@@ -1,8 +1,10 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { logout } from '../utils/navbarHelpers'
+import { useCurrentUser } from '../hooks/useCurrentUser'
 
 const MobileMenu = ({ user, handleClick }) => {
+    const { setCurrentUser } = useCurrentUser()
   return (
     <div className='border-t-2 m-3 pt-4 flex flex-col justify-center items-center gap-5 lg:hidden'>
         { user.logged_in ? (
@@ -16,7 +18,7 @@ const MobileMenu = ({ user, handleClick }) => {
                 <Link
                 className='self-end mt-5 text-slate-700 font-bold px-5 py-2 lg:block lg:justify-self-end lg:mt-0'
                 to='/'
-                onClick={() => logout(user)}
+                onClick={() => logout(setCurrentUser)}
                 >
                     Wyloguj
                 </Link>
