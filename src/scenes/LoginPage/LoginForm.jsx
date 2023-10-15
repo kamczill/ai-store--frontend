@@ -3,23 +3,23 @@ import { Formik } from 'formik'
 import axios from '../../axios/axios'
 import { useNavigate } from 'react-router-dom'
 
-import { AuthContext } from '../../App'
 import { clearWaitingQueue } from '../../App'
 
 import { loginInitialValues, loginValidationSchema } from './validation'
 
 import { successNotification, errorNotification } from '../../utils/notifications'
+import { useCurrentUser } from '../../hooks/useCurrentUser'
 
 const LoginForm = () => {
     const navigate = useNavigate()
-    const {currentUser, setCurrentUser} = useContext(AuthContext)
+    const {currentUser, setCurrentUser} = useCurrentUser();
 
     const handleSubmit = async (values) => {
         try {
             await axios.post('users/login/', values, {
                 withCredentials: true,
             });
-            setCurrentUser({ ...currentUser, "logged_in": true });
+            setCurrentUser({ "logged_in": true });
             clearWaitingQueue();
             navigate('/');
             successNotification('Udało Ci się zalogować!');

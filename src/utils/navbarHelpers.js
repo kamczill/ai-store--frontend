@@ -32,7 +32,7 @@ export const logout = async (setCurrentUser) => {
             headers: {
                 'Access-Control-Allow-Origin': '*'
             }})
-        setCurrentUser({ logged_in: false })
+        setCurrentUser({ "logged_in": false })
     } catch (err) {
         errorNotification("Coś poszło nie tak")
     }
