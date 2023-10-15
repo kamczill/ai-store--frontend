@@ -12,7 +12,7 @@ const TopTools = () => {
             <div>
                 <h2 className='text-3xl text-center'>Polecane narzędzia AI</h2>
             </div>
-            <div className='mt-8 grid gap-8 lg:grid-cols-3 lg:grid-rows-2 lg:max-h-[700px]'>
+            <div className='mt-8 grid gap-8 lg:grid-cols-3 h-full lg:grid-rows-2 lg:max-h-[1000px]'>
                 <AiTool 
                     icon={icon1}
                     name='Midjourney'
