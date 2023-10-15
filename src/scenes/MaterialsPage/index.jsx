@@ -40,7 +40,7 @@ const index = () => {
     {isLoading && <Loader />}
     <div className='mx-auto max-w-[1350px]'>
       {products?.length === 0 && <p>Brak kupionych materiałów</p>}
-      <div className={`${isLoading ? 'hidden' : ''} pt-8 flex flex-col flex-wrap gap-8 items-center justify-center md:flex-row md:gap-8 md:justify-center md:items-center`}>
+      <div className={`${isLoading ? 'hidden' : ''} pt-8 flex flex-col flex-wrap gap-10 items-center justify-center md:flex-row md:gap-8 md:justify-center md:items-center`}>
         {products?.map((product, idx) => <ProductCard key={`${product.id}--${idx}`} product={product} onLoad={handleImageLoad} isBought />)}
       </div>
     </div>

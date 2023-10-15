@@ -39,7 +39,7 @@ const index = () => {
       <h1 className='text-center font-bold font-ms text-xl pt-6'>Dostępne produkty</h1>
       {isLoading && <Loader />}
       <div className='mx-auto max-w-[1350px]'>
-        <div className={` ${isLoading ? 'hidden': ''} pt-8 flex flex-col flex-wrap gap-8 items-center justify-center md:flex-row md:gap-8 md:justify-center md:items-center`}>
+        <div className={` ${isLoading ? 'hidden': ''} pt-8 flex flex-col flex-wrap gap-8 items-center justify-center md:flex-row md:gap-10 md:justify-center md:items-center`}>
           {products?.map((product) => (
             <ProductCard key={product.id} product={product} onLoad={handleImageLoad} />
           ))}

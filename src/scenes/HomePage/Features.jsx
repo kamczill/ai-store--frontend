@@ -5,7 +5,7 @@ import {BsFillCartCheckFill } from 'react-icons/bs'
 
 const Features = () => {
   return (
-    <div className='py-12 px-5 bg-gray-200 '>
+    <div className='py-12 px-5 '>
         <h2 className='text-3xl text-center'>Jak to działa?</h2>
         <div className='flex justify-center'>
         <p className='max-w-[1200px] text-center text-lg font-ms pt-8'>

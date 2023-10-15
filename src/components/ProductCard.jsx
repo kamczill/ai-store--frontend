@@ -46,7 +46,7 @@ const ProductCard = ({ product, isBought, onLoad }) => {
                         )
                     )}
                     {!user.logged_in && (
-                        <button disabled className=' bg-green-600 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Zaloguj się aby kupić</button>
+                        <button disabled className=' bg-green-600 py-2 px-2 text-md text-white rounded whitespace-nowrap'>Zaloguj się by kupić</button>
                     )}
                 </>
             );
@@ -58,7 +58,7 @@ const ProductCard = ({ product, isBought, onLoad }) => {
     }, [isInCart, amountOfProducts]);
 
     return (
-        <div className='w-[300px] flex flex-col self-stretch justify-between items-center border-2 border-black rounded-md p-3 font-ms bg-white'>
+        <div className='w-[300px] p-5 flex flex-col self-stretch justify-between items-center border-2 border-black rounded-md font-ms bg-white'>
             <div>
                 <Link to={isBought ? `${product?.id}` : `/produkty/${product?.id}`}>
                     <img src={`${product?.cover}`} alt='cover' onLoad={() => onLoad()} />
@@ -71,7 +71,7 @@ const ProductCard = ({ product, isBought, onLoad }) => {
                         {product?.title}
                     </Link>
                 </h3>
-                <div className={`flex ${isBought ? 'justify-center' : 'justify-between'} items-center px-2 pt-3 gap-3`}>
+                <div className={`flex ${isBought ? 'justify-center' : 'justify-between'} items-center pt-3 gap-3`}>
                     { !isBought ? 
                         <p className='text-md whitespace-nowrap'>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} zł</p> 
                         : ''
