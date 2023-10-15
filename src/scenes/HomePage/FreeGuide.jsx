@@ -7,9 +7,11 @@ const FreeGuide = () => {
         <h2 className='text-3xl text-center'>
             Załóż konto i <span className='text-green-600 font-bold'>otrzymaj za darmo</span> PDF z ponad 600 najlepszymi zapytaniami do ChatuGPT!
         </h2>
-        <button className='rounded border px-5 py-3 outline-dashed max-w-[200px]'>
-          <Link to='/login'>Zarejestruj mnie!</Link>
+        <Link to='/login'>
+          <button className='rounded border px-5 py-3 outline-dashed max-w-[200px]'>
+            Zarejestruj mnie!
           </button>
+        </Link>
         </div>  
     </div>
   )
