@@ -16,15 +16,15 @@ const ProductCart = ({product, setItemsInCart, onLoad}) => {
   }
 
   return (
-    <div class={`grid grid-flow-col auto-cols-auto gap-3  mx-5 pb-4 border-b-2 font-ms`}>
-        <div class='max-w-[100px]'>
+    <div className={`grid grid-flow-col auto-cols-auto gap-3  mx-5 pb-4 border-b-2 font-ms`}>
+        <div className='max-w-[100px]'>
             <img src={product?.cover} onLoad={() => onLoad()} />
         </div>
-        <div class=' w-full flex flex-col justify-center gap-3 sm:w-[250px]'>
-          <h3 class='font-bold text-gray-600'>{product?.title}</h3>
+        <div className=' w-full flex flex-col justify-center gap-3 sm:w-[250px]'>
+          <h3 className='font-bold text-gray-600'>{product?.title}</h3>
           <p>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} zł </p>
         </div>
-        <button class='pt-3 justify-self-end w-[20px] cursor-pointer'>
+        <button className='pt-3 justify-self-end w-[20px] cursor-pointer'>
           <AiOutlineClose size={20} color={'#9c9c9c'} onClick={() => removeProduct()}/>
         </button>
     </div>

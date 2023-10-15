@@ -51,20 +51,20 @@ const index = () => {
   }, [product, amountOfProducts])
 
   return (
-    <div class='p-5 flex items-center justify-center font-ms'>
+    <div className='p-5 flex items-center justify-center font-ms'>
             { isLoading && (
               <div className='mt-10'>
                   <Loader />
               </div>
             )}
-      <div class={`${isLoading ? 'hidden': 'flex'} flex-col gap-5 lg:flex-row`}>
-        <div class='max-w-[400px]'>
+      <div className={`${isLoading ? 'hidden': 'flex'} flex-col gap-5 lg:flex-row`}>
+        <div className='max-w-[400px]'>
           <img src={product?.cover} alt={product?.title} onLoad={() => setIsLoading(false)}/>
         </div>
-        <div class='max-w-[400px] lg:p-5 lg:max-w-[700px]'>
-            <p class='text-lg'>{product?.author}</p>
-            <h3 class='font-ms font-bold text-xl pointer lg:hover:underline lg:hover:decoration-2'>{product?.title}</h3>
-              <p class='text-2xl py-5'>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} zł</p>
+        <div className='max-w-[400px] lg:p-5 lg:max-w-[700px]'>
+            <p className='text-lg'>{product?.author}</p>
+            <h3 className='font-ms font-bold text-xl pointer lg:hover:underline lg:hover:decoration-2'>{product?.title}</h3>
+              <p className='text-2xl py-5'>{(parseFloat(product?.net_price) + (parseFloat(product?.net_price) * (parseFloat(product?.tax) /100))).toFixed(2)} zł</p>
               {isInCart && isUserLoggedIn ? (
                 <AddedToCartButton disabled={buttonDisabled} />
                 ) : isUserLoggedIn ? (
@@ -74,7 +74,7 @@ const index = () => {
               )}
             <div
               dangerouslySetInnerHTML={{__html: product?.description}}
-              class='py-5'
+              className='py-5'
             />
         </div>
       </div>

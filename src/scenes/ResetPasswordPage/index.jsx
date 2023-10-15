@@ -5,7 +5,7 @@ import ResetPasswordForm from './ResetPasswordForm'
 const index = () => {
     const { token } = useParams()
   return (
-    <div class='h-full flex items-center justify-center'>
+    <div className='h-full flex items-center justify-center'>
         <ResetPasswordForm token={token}/>
     </div>
   )

@@ -32,7 +32,7 @@ const ResetPasswordForm = ({token}) => {
     
   return (
     <>
-    <div class='w-full flex flex-col justify-center items-center'>
+    <div className='w-full flex flex-col justify-center items-center'>
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -41,9 +41,9 @@ const ResetPasswordForm = ({token}) => {
             {({ handleSubmit, handleChange, handleBlur, values, touched, errors }) => (
                 <form 
                     onSubmit={handleSubmit} 
-                    class='flex flex-col gap-3 w-full max-w-[350px]'
+                    className='flex flex-col gap-3 w-full max-w-[350px]'
                 >
-                    <div class='flex flex-col'>
+                    <div className='flex flex-col'>
                         <label htmlFor="password">Nowe hasło </label>
                         <input
                             id="password" 
@@ -54,13 +54,13 @@ const ResetPasswordForm = ({token}) => {
                             value={values.password}
                             error={touched.password && Boolean(errors.password)}
                             helperText={touched.password && errors.password}
-                            class='py-2 px-3 rounded-lg'
+                            className='py-2 px-3 rounded-lg'
                         />
                         {touched.password && Boolean(errors.password) && (
-                        <p class='text-red-500'>{errors.password}</p>
+                        <p className='text-red-500'>{errors.password}</p>
                     )}
                     </div>
-                    <div class='flex flex-col'>
+                    <div className='flex flex-col'>
                         <label htmlFor="password_confirm">Potwierdź hasło </label>
                         <input
                             id="password_confirm" 
@@ -71,14 +71,14 @@ const ResetPasswordForm = ({token}) => {
                             value={values.password_confirm}
                             error={touched.password_confirm && Boolean(errors.password_confirm)}
                             helperText={touched.password_confirm && errors.password_confirm}
-                            class='py-2 px-3 rounded-lg'
+                            className='py-2 px-3 rounded-lg'
                         />
                         {touched.password_confirm && Boolean(errors.password_confirm) && (
-                        <p class='text-red-500'>{errors.password_confirm}</p>
+                        <p className='text-red-500'>{errors.password_confirm}</p>
                     )}
                     </div>
                     <div>
-                        <button type="submit" class='w-full rounded-md text-center text-white  bg-slate-500 p-2'>
+                        <button type="submit" className='w-full rounded-md text-center text-white  bg-slate-500 p-2'>
                         Zmień hasło
                         </button>
                     </div>

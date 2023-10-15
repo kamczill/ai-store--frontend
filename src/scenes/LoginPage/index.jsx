@@ -21,19 +21,19 @@ const index = () => {
 
   return (
     <div className='flex justify-center align-middle'>
-        <div class='w-full p-5 py-12 flex flex-col items-center font-ms md:py-0 md:justify-self-center md:self-center'>
+        <div className='w-full p-5 py-12 flex flex-col items-center font-ms md:py-0 md:justify-self-center md:self-center'>
           {renderForm()}
           {
             typeOfForm == 'login' || typeOfForm !== 'register' ? (
-              <p class='p-2 mt-3 text-md'>Nie masz konta?
-                  <span class='font-semibold cursor-pointer pl-1 hover:underline' 
+              <p className='p-2 mt-3 text-md'>Nie masz konta?
+                  <span className='font-semibold cursor-pointer pl-1 hover:underline' 
                     onClick={() => setTypeOfForm('register')}>
                     Zarejestruj się
                   </span>
                 </p>
             ) : typeOfForm == 'register' ? (
-              <p class='p-2 mt-3 text-md'>Masz konto?
-                <span class='font-semibold cursor-pointer pl-1 hover:underline' 
+              <p className='p-2 mt-3 text-md'>Masz konto?
+                <span className='font-semibold cursor-pointer pl-1 hover:underline' 
                   onClick={() => setTypeOfForm('login')}>
                   Zaloguj się
                 </span>
@@ -41,8 +41,8 @@ const index = () => {
             ) : ''
           }
           { typeOfForm !== 'reset' ? (
-          <p onClick={() => setTypeOfForm('reset')} class='p-2  text-md'>
-            <span class='font-semibold cursor-pointer pl-1 hover:underline'>
+          <p onClick={() => setTypeOfForm('reset')} className='p-2  text-md'>
+            <span className='font-semibold cursor-pointer pl-1 hover:underline'>
               Nie pamiętasz hasła?
             </span>
           </p>

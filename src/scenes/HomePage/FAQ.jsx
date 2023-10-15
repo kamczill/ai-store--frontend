@@ -7,7 +7,7 @@ const FAQ = () => {
   return (
     <div className="w-full px-5 py-12 flex flex-col gap-8">
         <div>
-                <h2 class='text-3xl text-center'>FAQ</h2>
+                <h2 className='text-3xl text-center'>FAQ</h2>
         </div>
       <div className="mx-auto w-full max-w-4xl rounded-2xl bg-white px-2">
         {questionsAndAnswers?.map((object, idx) => (

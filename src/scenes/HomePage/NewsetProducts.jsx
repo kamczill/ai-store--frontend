@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react'
 import ProductCard from '../../components/ProductCard'
 import axiosInstance from '../../axios/axios'
 import Loader from '../../components/Loader'
-
+import { errorNotification } from '../../utils/notifications'
 
 const NewsetProducts = () => {
     const [products, setProducts] = useState();
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null)
     const [loadedImagesCount, setLoadedImagesCount] = useState(0);
 
     const handleImageLoad = () => {
@@ -27,8 +26,8 @@ const NewsetProducts = () => {
                 const response = await axiosInstance('products/')
                 setProducts(response.data.reverse().slice(0,4))
             } catch (err) {
-                setError(err)
                 console.log(err)
+                errorNotification('Coś poszło nie tak')
             }
         }
 
@@ -36,10 +35,10 @@ const NewsetProducts = () => {
     }, [])
 
   return (
-    <div class='flex justify-center items-center w-full py-12'>
-        <div class='w-[80%] min-h-[500px] flex flex-col gap-8'>
+    <div className='flex justify-center items-center w-full py-12'>
+        <div className='w-[80%] min-h-[500px] flex flex-col gap-8'>
             <div>
-                <h2 class='text-3xl text-center'>Najnowsze produkty</h2>
+                <h2 className='text-3xl text-center'>Najnowsze produkty</h2>
             </div>
             
             {isLoading && (
@@ -54,11 +53,6 @@ const NewsetProducts = () => {
                     ))
                 }
             </div>
-            {error && (
-                <div className='text-red-500 text-center mt-4'>
-                    Something went wrong: {error.message}
-                </div>
-            )}
         </div>
     </div>
   )
